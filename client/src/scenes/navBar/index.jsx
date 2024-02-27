@@ -23,6 +23,10 @@ const NavBar = () => {
     const user = useSelector((state)=>state.user);
     const isNonMobile = useMediaQuery("(min-width:1000px)");
 
+    const toLogin = ()=>{
+        navigate('/login')
+    }
+
   return (
     <div>
         <Box sx={{display:"flex", justifyContent:"space-between", alignItems:"center", padding:"10px 30px", borderBottom:"1px solid #e0e0e0"}}>
@@ -30,7 +34,7 @@ const NavBar = () => {
                 <Typography variant="h6" sx={{cursor:"pointer", marginBottom:"10px"}} onClick={()=>navigate("/")}>Logo Placeholder</Typography>
             </div>
             <div className="col-2">
-                <Button variant="contained" sx={{margin: "0 3px"}}>Login</Button>
+                <Button onClick={toLogin} variant="contained" sx={{margin: "0 3px"}}>Login</Button>
                 <Button variant="outlined" sx={{margin: "0 3px"}}>Sign Up</Button>
             </div>
         </Box>

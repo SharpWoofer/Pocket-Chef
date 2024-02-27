@@ -1,0 +1,241 @@
+.login-container {
+    width: 100%;
+    background-color: #fff; 
+    text-align: center;
+    max-width: 400px;
+  }
+  .login-page-container {
+    display: flex;
+    justify-content: center;
+    margin: 50px 0;
+}
+  .login-container form {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .login-description-rounded {
+    font-family: 'Roboto', sans-serif;
+  }
+
+  .welcome-back-text {
+    color: #787878; 
+  }
+  
+  .login-container input[type="text"],
+  .login-container input[type ="password"]{
+    width: 80%;
+    margin: 10px auto;
+  }
+
+  .login-container button{
+    width: 90%;
+    margin: 0 auto;
+    display: block;
+  }
+
+  .login-container h2,
+  .login-container p{
+    margin-bottom: 1rem;
+  }
+
+  .input-group {
+    margin-bottom: 1rem;
+  }
+
+  .input-group input{
+    width: 100%;
+    padding: 10px;
+    margin: 0;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+
+  .login-container input {
+    margin-bottom: 10px; 
+    padding: 10px;
+    border: 1px solid #ccc; 
+    border-radius: 4px; 
+  }
+  
+.forgot-password{
+    text-align: right;
+    margin-bottom: 1rem;
+}
+
+.forgot-password a{
+    color: #6c757d;
+    text-decoration: none;
+    font-size: 0.9rem;
+}
+
+  .forgot-signin {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px; 
+  }
+  
+  .forgot-signin button {
+    padding: 10px 20px;
+    background-color: #6c757d; 
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  .forgot-signin a {
+    color: #6c757d; 
+    text-decoration: none;
+  }
+
+  .signin-button{
+    text-align:center;
+  }
+
+  .signin-button button{
+    width: 100%;
+    max-width: 200px;
+    padding: 10px 20px;
+    background-color:#9DBC98;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    margin: auto;
+    display: block;
+  }
+  
+  .social-login {
+    display: flex;
+    justify-content: center;
+    gap: 10px; 
+  }
+  
+  .social-login button {
+    padding: 10px;
+    border-radius: 50%; 
+    border: none;
+    cursor: pointer;
+  }
+  
+  .forgot-signin button {
+    padding: 10px 20px;
+    background-color: #9DBC98; 
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+
+  @media (max-width: 768px) {
+    .forgot-password {
+      text-align: center; 
+    }
+  }
+  
+
+.divider-container {
+  display: flex;
+  align-items: center;
+  margin: 20px 0;
+}
+
+.divider-line {
+  flex: 1; 
+  height: 2px;
+  background-color: transparent; 
+  margin: 0 10px;
+  position: relative; 
+}
+
+
+.divider-line:first-child::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 100%;
+  width: 100%;
+  background: linear-gradient(to right, rgba(178, 250, 180, 0) 0%, #9DBC98
+  100%); 
+}
+
+
+.divider-line:last-child::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 100%;
+  width: 100%;
+  background: linear-gradient(to right, #9DBC98 0%, rgba(178, 250, 180, 0) 100%); /* Gradient for right line */
+}
+
+.divider-text {
+  padding: 0 15px;
+  background: #fff; /* Ensure the text is above the lines */
+  z-index: 1; 
+  white-space: nowrap;
+}
+
+.social-signin-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.social-icons-container {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  padding: 10px 0;
+}
+
+.social-icon {
+  cursor: pointer;
+  width: 40px; 
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 2px solid white; 
+  background-color: white; 
+  box-shadow: 0 2px 4px rgba(0,0,0,0.2); 
+  position: relative; 
+  margin: 5px; 
+}
+
+.social-icon::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 80%; 
+  height: 80%; 
+  border-radius: 50%;
+  z-index: -1;
+}
+
+
+.google-icon::before { background-color: #DB4437; }
+.facebook-icon{
+  color:#4267B2;
+}
+.facebook-icon::before { background-color: #4267B2; }
+.apple-icon::before { background-color: #000; }
+
+
+.social-icon svg {
+  width: 24px;
+  height: 24px;
+}
+
+
+.social-icon:hover::before {
+  opacity: 0.8;
+}
