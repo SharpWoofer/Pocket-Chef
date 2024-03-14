@@ -44,7 +44,7 @@ app.use("/login", authRouter);
 //app.use("/users", userRoutes);
 
 /* INTEGRATING SPOONACULAR ROUTES */
-app.use("/search", recipeRoutes); // Use the spoonacular routes here
+app.use("/searchRecipe", recipeRoutes); // Use the spoonacular routes here
 
 /* MONGOOSE SETUP */
 // const PORT = process.env.PORT || 5000;
