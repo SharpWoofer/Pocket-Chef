@@ -8,9 +8,8 @@ import helmet from "helmet";
 import morgan from "morgan";
 import path from "path";
 import { fileURLToPath } from "url";
-import authRoutes from "./routes/auth.js";
-import {register} from "./controlles/auth.js";
-import {userRoutes} from "./routes/user.js";
+import recipeRoutes from "./routes/recipeRoutes.js";
+import authRouter from "./routes/auth.js";
 
 /* CONFIGURATIONS */
 const __filename = fileURLToPath(import.meta.url);
@@ -38,17 +37,20 @@ const storage = multer.diskStorage({
 const upload = multer({storage: storage}); //when using upload.single("file") in the route, the file will be stored in the public/assets folder
 
 /* ROUTES  WITH FILES */
-app.post("/auth/register", upload.single("picture"),register);
+//app.post("/auth/register", upload.single("picture"),register);
 
 /* ROUTES */
-app.use("/auth", authRoutes);
-app.use("/users", userRoutes);
+app.use("/login", authRouter);
+//app.use("/users", userRoutes);
+
+/* INTEGRATING SPOONACULAR ROUTES */
+app.use("/search", recipeRoutes); // Use the spoonacular routes here
 
 /* MONGOOSE SETUP */
-const PORT = process.env.PORT || 5000;
+// const PORT = process.env.PORT || 5000;
+const PORT = 5000;
 mongoose.connect(process.env.MONGO_URL, {
     useNewUrlParser: true,
     useUnifiedTopology: true
 }).then(() => app.listen(PORT, () => console.log(`Server running on port: ${PORT}`)))
     .catch((error) => console.log(error.message));
-
