@@ -4,9 +4,10 @@ const apiKey = 'e5735f1495384efd839f2f84d9531754';
 const searchRecipe = async (req, res) => {
     const {query} = req.params;
     try {
-        const response = await axios.get(`https://api.spoonacular.com/recipes/complexSearch?apiKey=${apiKey}&query=${query}`);
+        const response = await axios.get(`https://api.spoonacular.com/recipes/complexSearch?apiKey=e5735f1495384efd839f2f84d9531754`);
         res.status(200).json(response.data);
     } catch (error) {
+        // console.log(response.data);
         res.status(500).json({error: error.message});
     }
 }
@@ -14,7 +15,7 @@ const searchRecipe = async (req, res) => {
 const getRecipeDetails = async (req, res) => {
     const { id } = req.params;
     try {
-        const response = await axios.get(`https://api.spoonacular.com/recipes/${id}/information?apiKey=${apiKey}`);
+        const response = await axios.get(`https://api.spoonacular.com/recipes/715538/information?apiKey=${apiKey}`);
         res.json(response.data);
     } catch (error) {
         res.status(500).json({ error: 'Internal server error' });
