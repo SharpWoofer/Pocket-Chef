@@ -1,16 +1,25 @@
 import axios from 'axios';
 const apiKey = 'e5735f1495384efd839f2f84d9531754';
+import Recipe from '../Models/recipeModel.js';
+
 
 const searchRecipe = async (req, res) => {
-    const {query} = req.params;
+    const { query } = req.params;
     try {
-        const response = await axios.get(`https://api.spoonacular.com/recipes/complexSearch?apiKey=e5735f1495384efd839f2f84d9531754`);
-        res.status(200).json(response.data);
+        const localRecipes = await Recipe.find({
+            title: { $regex: query, $options: 'i' } 
+        });
+
+        if (localRecipes.length) {
+            res.status(200).json(localRecipes);
+        } else {
+            const response = await axios.get(`https://api.spoonacular.com/recipes/complexSearch?query=${query}&apiKey=${apiKey}`);
+            res.status(200).json(response.data);
+        }
     } catch (error) {
-        // console.log(response.data);
-        res.status(500).json({error: error.message});
+        res.status(500).json({ error: error.message });
     }
-}
+};
 
 const getRecipeDetails = async (req, res) => {
     const { id } = req.params;
