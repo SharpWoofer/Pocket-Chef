@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { Box, IconButton, ImageList, ImageListItem, InputBase, Stack, Typography } from '@mui/material';
+import { Box, IconButton, ImageList, ImageListItem, InputBase, Typography } from '@mui/material';
 import { useState } from 'react';
 import { Search } from "@mui/icons-material";
 
@@ -12,7 +12,7 @@ const RecipeDetails = () => {
       setLoading(true)
       const response = await axios.get(`http://localhost:5000/searchRecipe/search/${recipeId}`);
       console.log(response.data.results);
-      setRecipe(response.data); // Assuming your backend returns recipe data in JSON format
+      setRecipe(response.data);
       setLoading(false)
     } catch (error) {
       console.error('Error fetching recipe:', error);
@@ -31,6 +31,7 @@ const RecipeDetails = () => {
         <Box
           sx={{ display: 'flex', alignItems: 'center', background: '#fff' }}
           padding={1}
+          borderBottom={'1px solid #ccc'}
         >
           <InputBase
             placeholder="Search for Recipes"
