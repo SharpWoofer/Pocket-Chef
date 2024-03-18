@@ -40,7 +40,7 @@ const upload = multer({storage: storage}); //when using upload.single("file") in
 //app.post("/auth/register", upload.single("picture"),register);
 
 /* ROUTES */
-app.use("/login", authRouter);
+app.use("/auth", authRouter);
 //app.use("/users", userRoutes);
 
 /* INTEGRATING SPOONACULAR ROUTES */
