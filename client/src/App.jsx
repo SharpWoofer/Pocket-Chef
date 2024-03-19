@@ -4,6 +4,7 @@ import HomePage from "./view/homePage";
 import LoginPage from './view/loginPage';
 import RegPage from './view/regPage';
 import ForgetPasswordPage from './view/forgetPasswordPage';
+import './App.css';
 
 function App() {
 

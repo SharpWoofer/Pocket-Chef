@@ -1,0 +1,60 @@
+.nav-container{
+    height: 4em;
+    width: 100%;
+    display: flex;
+}
+.logo-container{
+    width: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.logo-icon{
+    padding-left: 15px;
+    width: 2em;
+    height: 2em;
+}
+.logo-title{
+    font-size: 24px;
+    font-weight:1000;
+    color: #046E1B;
+    font-family: Inter, serif;
+    padding-top: 35px;
+    padding-left: 10px;
+}
+
+.nav-icon-container{
+    width: 75%;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+.nav-icon{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 15px;
+    font-weight: 800;
+    padding-top: 45px;
+    letter-spacing: 2px;
+    padding-left: 20px;
+}
+
+.login-container{
+    width: 20%;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding-left: 20px;
+}
+
+.search-icon{
+    width: 2em;
+    height: 2em;
+}
+
+.login-icon{
+    width: 2em;
+    height: 2em;
+}
