@@ -1,3 +1,7 @@
+*{
+    font-family: Inter, serif;
+}
+
 .nav-container{
     height: 4em;
     width: 100%;

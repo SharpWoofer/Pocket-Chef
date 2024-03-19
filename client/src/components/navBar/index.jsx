@@ -1,11 +1,11 @@
-import "../../styles/navbarStyles.css";
+import "./style.css";
 
 const NavBar = () => {
 
   return (
     <div className="nav-container">
       <div className="logo-container">
-        <img src="burger.png" className="logo-icon"/>
+        <img src="./nav/burger.png" className="logo-icon"/>
         <p className='logo-title'>Pocket Chef</p>
       </div>
       <div className="nav-icon-container">
@@ -24,10 +24,10 @@ const NavBar = () => {
       </div>
       <div className="login-container">
             <div className="search-icon">
-                <img src="search.png" className="search-icon"/>
+                <img src="./nav/search.png" className="search-icon"/>
             </div>
             <div className="login-icon">
-                <img src="login.png" className="login-icon"/>
+                <img src="./nav/login.png" className="login-icon"/>
             </div>
       </div>
     </div>
