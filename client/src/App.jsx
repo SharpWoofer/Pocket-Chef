@@ -4,12 +4,14 @@ import LoginPage from './view/loginPage';
 import RegPage from './view/regPage';
 import ForgetPasswordPage from './view/forgetPasswordPage';
 import Layout from './layout';
+import './App.css';
 
 function App() {
 
   return (
     <div className="app">
       <BrowserRouter>
+        <NavBar />
         <Routes>
           <Route path="/" element={<Layout />}>
             <Route path="/" element={<HomePage />}></Route>
