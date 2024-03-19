@@ -5,7 +5,7 @@ import User from '../models/user.js';
 /* REGISTER USER */
 export const register = async (req, res) => {
     try {
-        const {username, email, password} = req.body;
+        const {username, email, password, goals, activities, height, width, firstName, lastName, age, gender} = req.body;
 
         if (await User.findOne({
             $or: [
@@ -22,7 +22,15 @@ export const register = async (req, res) => {
             username,
             email,
             password: hashedPassword,
-            picture: req.file.path
+            picture: req.file.path,
+            activities,
+            height,
+            width,
+            goals,
+            firstName,
+            lastName,
+            age,
+            gender
         });
         const savedUser = await newUser.save();
         res.status(201).json({user: savedUser});
