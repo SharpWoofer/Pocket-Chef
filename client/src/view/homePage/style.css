@@ -20,7 +20,7 @@
     font-weight: 1000;
     color: #000000;
     padding-top: 15vh;
-    height: 50vh;
+    height: 28%;
 }
 .landing-page-text-body{
     font-size: 15px;
@@ -29,6 +29,7 @@
     padding-top: 5vh;
     height: 5vh;
     width: 69%;
+    padding-left: 2%;
 }
 
 .button-container{
