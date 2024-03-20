@@ -1,7 +1,7 @@
-import axios from 'axios';
 import { Box, IconButton, ImageList, ImageListItem, InputBase, Typography } from '@mui/material';
 import { useState } from 'react';
 import { Search } from "@mui/icons-material";
+import request from '../../utils/request';
 
 const RecipeDetails = () => {
   const [recipe, setRecipe] = useState({});
@@ -10,7 +10,7 @@ const RecipeDetails = () => {
   const fetchRecipe = async () => {
     try {
       setLoading(true)
-      const response = await axios.get(`http://localhost:5000/searchRecipe/search/${recipeId}`);
+      const response = await request.get(`/searchRecipe/search/${recipeId}`);
       console.log(response.data.results);
       setRecipe(response.data);
       setLoading(false)
