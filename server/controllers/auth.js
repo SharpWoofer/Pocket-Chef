@@ -56,9 +56,6 @@ export const register = async (req, res) => {
 export const login = async (req, res) => {
     try {
         const {email, password} = req.body;
-        if (!email || !username || !password){
-            return res.status(400).json({ error: 'All fields must be filled' })
-        }
         const user = await User.findOne({email});
         !user && res.status(404).json("User does not exist");
         const validPassword = await bcrypt.compare(password, user.password);
