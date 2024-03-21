@@ -43,9 +43,37 @@ const RegPage = () => {
         <form
           onSubmit={async (event) => {
             event.preventDefault()
-            await request.post('/auth/reg', event.target)
-            alert('Reg success')
-            mNavigate('/login')
+            const mELements = event.target.elements
+            
+            const response = await request.post('/auth/register', {
+              email: mELements.email.value,
+              username: mELements.username.value,
+              password: mELements.password.value,
+              goals: mELements.goals.value,
+              activities: mELements.activities.value,
+              height: mELements.height.value,
+              weight: mELements.weight.value,
+              firstName: mELements.firstName.value,
+              lastName: mELements.lastName.value,
+              age: mELements.age.value,
+              gender: mELements.gender.value,
+              //picture: mELements.picture.files[0]
+            })
+            
+            .then((response) => {
+              if (response.status === 201) {
+                console.log('Response from server:', response); // Log the response from the server
+                //localStorage.setItem('user', JSON.stringify(json))
+                alert('Registration success, you will be redirected to login page')
+                mNavigate('/login')
+              }
+            })
+            //const { user, accessToken } = response
+            .catch((error) => {
+              const errorMessage = error.response.data.error
+              alert(errorMessage)
+            })
+            
           }}
         >
           <Stack spacing={4}>
@@ -148,7 +176,7 @@ const RegPage = () => {
               />
               <Stack direction={'row'} spacing={1}>
                 <FormLabel>Avatar</FormLabel>
-                <input name="picture" required type="file" />
+                <input name="picture" type="file" />
               </Stack>
               <Stack alignItems={'center'} justifyContent={'center'}>
                 <Button
