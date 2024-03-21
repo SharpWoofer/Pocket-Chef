@@ -1,11 +1,23 @@
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
-import User from '../models/user.js';
+import validator from 'validator';
+import User from '../Models/user.js';
+
+const createToken = (_id) => {
+    return jwt.sign({_id}, process.env.SECRET_KEY);
+}
 
 /* REGISTER USER */
 export const register = async (req, res) => {
     try {
         const {username, email, password, goals, activities, height, width, firstName, lastName, age, gender} = req.body;
+
+        if (!email || !username || !password){
+            return res.status(400).json({ error: 'All fields must be filled' })
+        }
+        if (!validator.isEmail(email)){
+            return res.status(400).json({ error: 'Invalid email' })
+        }
 
         if (await User.findOne({
             $or: [
@@ -22,7 +34,7 @@ export const register = async (req, res) => {
             username,
             email,
             password: hashedPassword,
-            picture: req.file.path,
+            //picture: req.file.path,
             activities,
             height,
             width,
@@ -33,7 +45,8 @@ export const register = async (req, res) => {
             gender
         });
         const savedUser = await newUser.save();
-        res.status(201).json({user: savedUser});
+        const accessToken = createToken(savedUser._id);
+        res.status(201).json({user: savedUser, accessToken});
     } catch (error) {
         res.status(500).json({error: error.message});
     }
@@ -47,7 +60,7 @@ export const login = async (req, res) => {
         !user && res.status(404).json("User does not exist");
         const validPassword = await bcrypt.compare(password, user.password);
         !validPassword && res.status(400).json("Wrong password");
-        const accessToken = jwt.sign({id: user._id,}, process.env.SECRET_KEY);
+        const accessToken = createToken(user._id);
         delete user.password;
         res.status(200).json({token: accessToken, user});
     } catch (error) {

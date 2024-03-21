@@ -10,6 +10,7 @@ import path from "path";
 import { fileURLToPath } from "url";
 import recipeRoutes from "./routes/recipeRoutes.js";
 import authRouter from "./routes/auth.js";
+//import userRoutes from "./routes/user.js";
 
 /* CONFIGURATIONS */
 const __filename = fileURLToPath(import.meta.url);
@@ -41,7 +42,7 @@ const upload = multer({storage: storage}); //when using upload.single("file") in
 
 /* ROUTES */
 app.use("/auth", authRouter);
-//app.use("/users", userRoutes);
+//app.use("/user", userRoutes);
 
 /* INTEGRATING SPOONACULAR ROUTES */
 app.use("/searchRecipe", recipeRoutes); // Use the spoonacular routes here
