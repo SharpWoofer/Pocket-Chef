@@ -1,4 +1,6 @@
 import "./style.css";
+import RecipeDetails from "../../view/homePage/RecipeDetails.jsx";
+import RecipeDeck from "../../components/recipeDeck/index.jsx";
 
 const HomePage = () => {
   return (
@@ -42,7 +44,7 @@ const HomePage = () => {
           </div>
         </div>
         <div className="deck-container">
-
+            <RecipeDeck/>
         </div>
       </div>
     </div>

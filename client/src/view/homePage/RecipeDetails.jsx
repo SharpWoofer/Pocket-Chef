@@ -1,6 +1,5 @@
-import { Box, IconButton, ImageList, ImageListItem, InputBase, Typography } from '@mui/material';
-import { useState } from 'react';
-import { Search } from "@mui/icons-material";
+import {  ImageList, ImageListItem, Typography } from '@mui/material';
+import {useEffect, useState} from 'react';
 import request from '../../utils/request';
 
 const RecipeDetails = () => {
@@ -10,7 +9,7 @@ const RecipeDetails = () => {
   const fetchRecipe = async () => {
     try {
       setLoading(true)
-      const response = await request.get(`/searchRecipe/search/${recipeId}`);
+      const response = await request.get(`/searchRecipe/search/pasta`);
       console.log(response.data.results);
       setRecipe(response.data);
       setLoading(false)
@@ -20,34 +19,12 @@ const RecipeDetails = () => {
     }
   }
 
+  useEffect(() => {
+    fetchRecipe();
+  },[]);
+
   return (
     <div>
-      <form
-        onSubmit={(event) => {
-          event.preventDefault()
-          fetchRecipe()
-        }}
-      >
-        <Box
-          sx={{ display: 'flex', alignItems: 'center', background: '#fff' }}
-          padding={1}
-          borderBottom={'1px solid #ccc'}
-        >
-          <InputBase
-            placeholder="Search for Recipes"
-            sx={{ marginLeft: 1, flex: 1 }}
-            onChange={(event) => {
-              setRecipeId(event.target.value)
-            }}
-          />
-          <IconButton
-            color="primary"
-            type='submit'
-          >
-            <Search />
-          </IconButton>
-        </Box>
-      </form>
       {
         loading && <div>Loading....</div>
       }

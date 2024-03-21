@@ -287,3 +287,7 @@
     width: 240px;
     height: 56px;
 }
+
+.deck-container{
+    height: 30vh;
+}
