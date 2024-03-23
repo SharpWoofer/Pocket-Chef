@@ -4,16 +4,19 @@ import Recipe from '../Models/recipeModel.js';
 
 
 const searchRecipe = async (req, res) => {
-    const { query } = req.params;
+    const { query } = req
+    const q = query.q;
+    const number = query.number ?? 10;
+
     try {
         const localRecipes = await Recipe.find({
-            title: { $regex: query, $options: 'i' } 
+            title: { $regex: q, $options: 'i' }
         });
 
         if (localRecipes.length) {
-            res.status(200).json(localRecipes);
+            res.status(200).json(localRecipes.slice(0, number));
         } else {
-            const response = await axios.get(`https://api.spoonacular.com/recipes/complexSearch?query=${query}&apiKey=${apiKey}`);
+            const response = await axios.get(`https://api.spoonacular.com/recipes/complexSearch?query=${q}&number=${number}&apiKey=${apiKey}`);
             res.status(200).json(response.data);
         }
     } catch (error) {
@@ -54,4 +57,4 @@ const getRecipeById = async (req, res) => {
 
 
 
-export default {searchRecipe, getRecipeDetails, getRandomRecipes, getRecipeById};
+export default { searchRecipe, getRecipeDetails, getRandomRecipes, getRecipeById };
