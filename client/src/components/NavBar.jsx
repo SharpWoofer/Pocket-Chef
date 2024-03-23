@@ -32,7 +32,7 @@ const NavBar = () => {
       path: "/"
     },
     {
-      name: "Recipe",
+      name: "Recipes",
       path: "/recipes"
     },
     {
@@ -51,7 +51,7 @@ const NavBar = () => {
         <Stack padding={2} direction="row" justifyContent="space-between" alignItems="center">
           <Stack direction="row" spacing={2} alignItems="center" >
             <img src={logo} alt="Logo" style={{ width: '48px', height: '48px' }} />
-            <Typography variant="h1" sx={{
+            <Typography variant="h1" color="primary" sx={{
               fontSize: '1.5rem',
               letterSpacing: '-0.025rem',
               fontWeight: 'bold',
@@ -59,7 +59,7 @@ const NavBar = () => {
               Pocket Chef
             </Typography>
           </Stack>
-          <Stack direction="row" spacing={3}>
+          <Stack direction="row" spacing={5}>
             {links.map(({ name, path }) => (
               <NavLink key={name} to={path} style={{
                 textDecoration: "none",
