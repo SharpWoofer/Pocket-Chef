@@ -49,7 +49,7 @@ const Login = () => {
                         textAlign={'center'}
                         fontWeight={'bold'}
                     >
-                        <Typography fontSize={19}><Link to="/login">Sign in</Link> to track your progress, or <Link to="/reg">register</Link> to personalize</Typography>
+                        <Typography fontSize={19}><Link to="/login">Sign in</Link> to track your progress, or <Link to="/register">register</Link> to personalize</Typography>
                         <Typography fontSize={19}>Your fitness journey with custom workout plans, calorie</Typography>
                         <Typography fontSize={19}>tracking, and more.</Typography>
                     </Box>

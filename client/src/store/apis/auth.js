@@ -15,7 +15,14 @@ export const authApi = createApi({
                 body: { email, password },
             })
         }),
+        register: builder.mutation({
+            query: (payload) => ({
+                url: `/register`,
+                method: 'POST',
+                body: payload,
+            })
+        }),
     }),
 });
 
-export const { useLoginMutation } = authApi;
+export const { useLoginMutation, useRegisterMutation } = authApi;
