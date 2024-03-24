@@ -1,9 +1,10 @@
-import { Box, Container, ImageList, ImageListItem, ImageListItemBar, InputAdornment, Stack, TextField, Typography } from "@mui/material";
+import { Box, Container, ImageList, ImageListItem, ImageListItemBar, InputAdornment, Stack, TextField, Typography, Grid } from "@mui/material";
 import { Search } from "@mui/icons-material";
 import { useDebounce } from "@uidotdev/usehooks"
-import { useState } from "react";
+import { useState} from "react";
 import { Link } from "react-router-dom";
 import { useSearchRecipesQuery } from "../../store/apis/recipe";
+import FavoriteRecipes from "./favoriteRecipes";
 
 function Recipes() {
     const numRecipes = 20;
@@ -14,43 +15,52 @@ function Recipes() {
         number: numRecipes,
     });
     const recipes = data?.results ?? [];
+    const userId = 'user-id-placeholder';
+
+    
 
     return (
         <Container maxWidth="lg">
-            <Stack>
-                <Stack
-                    paddingX={4}
-                    paddingY={2}
-                    borderRadius={2}
-                    direction="row"
-                    gap={4}
-                    alignItems="end"
-                    sx={{ backgroundColor: "white" }}
-                >
-                    <Box>
-                        <Typography variant="overline">
-                            Welcome
-                        </Typography>
+            <Grid container spacing={2}>
+                <Grid item xs={12}>
+                    <Typography variant="overline">
+                        Welcome
+                    </Typography>
+                </Grid>
+                
+                <Grid item xs={12} md={6} lg={4}>
+                    <FavoriteRecipes userId={userId} />
+                </Grid>
+                
+                <Grid item xs={12} md={6} lg={8}></Grid>
+
+                <Grid item xs={12}>
+                    <Box
+                        paddingX={4}
+                        paddingY={2}
+                        borderRadius={2}
+                        sx={{ backgroundColor: "white" }}
+                    >
                         <Typography variant="body1" noWrap>
                             Start a Healthy Diet
                         </Typography>
+                        <TextField
+                            type="search"
+                            placeholder="Search for a recipe..."
+                            InputProps={{
+                                startAdornment: (
+                                    <InputAdornment position="start">
+                                        <Search />
+                                    </InputAdornment>
+                                ),
+                            }}
+                            variant="standard"
+                            fullWidth
+                            onChange={(e) => setQuery(e.target.value)}
+                        />
                     </Box>
+                </Grid>
 
-                    <TextField
-                        type="search"
-                        placeholder="Search for a recipe..."
-                        InputProps={{
-                            startAdornment: (
-                                <InputAdornment position="start">
-                                    <Search />
-                                </InputAdornment>
-                            ),
-                        }}
-                        variant="standard"
-                        fullWidth
-                        onChange={(e) => setQuery(e.target.value)}
-                    />
-                </Stack>
 
                 {isLoading ? (
                     <Typography variant="body1" align="center">
@@ -88,7 +98,7 @@ function Recipes() {
                         </Typography>
 
                 }
-            </Stack>
+            </Grid>
         </Container >
     )
 }
