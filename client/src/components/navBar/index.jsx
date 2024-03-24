@@ -1,4 +1,5 @@
 import "./style.css";
+import { Link } from 'react-router-dom';
 
 const NavBar = () => {
 
@@ -21,6 +22,11 @@ const NavBar = () => {
           <div className="aboutus-nav-icon nav-icon">
             <p>About Us</p>
           </div>
+          <Link to="/calculator" className="calculator-nav-icon nav-icon no-underline">
+  <p>Calculator</p>
+</Link>
+
+          
       </div>
       <div className="login-container">
             <div className="search-icon">

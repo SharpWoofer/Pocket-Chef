@@ -1,0 +1,51 @@
+.calculator-container {
+    max-width: 400px; /* Adjust the width as needed */
+    padding: 20px;
+    margin: auto; /* This centers the container */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1); /* Optional: adds a shadow for depth */
+    background: #f9f9f9; /* Optional: sets a background color for the container */
+  }
+  
+  .input-container {
+    margin-bottom: 5px; /* Reduced space between inputs */
+  }
+  
+  .input-container label,
+  .input-container input {
+    display: block;
+  }
+  
+  .input {
+    width: 100%;
+    height: 30px; /* Adjust height as necessary */
+    padding: 2px 4px; /* Adjust padding as necessary */
+    margin-top: 5px; /* Adjust the top margin to control spacing */
+    box-sizing: border-box;
+    font-size: 1em;
+    border: 1px solid #ccc;
+    outline: none; /* Remove the default focus outline */
+  }
+  
+  .input:focus {
+    border-color: #046E1B; /* Optional: add a custom border color on focus */
+  }
+  
+  
+  
+  
+  .button {
+    width: 100%; /* Optional: if you want the button to match the input width */
+    height: 40px; /* Match input height or as preferred */
+    padding: 8px;
+    box-sizing: border-box;
+    font-size: 1em;
+    cursor: pointer;
+    margin-top: 10px;
+  }
+
+  html, body {
+    height: auto; /* This will allow the height to be determined by the content */
+  }

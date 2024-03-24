@@ -62,3 +62,12 @@
     width: 2em;
     height: 2em;
 }
+
+.no-underline {
+    text-decoration: none;
+  }
+  
+  .no-underline:hover {
+    text-decoration: underline;
+  }
+  
