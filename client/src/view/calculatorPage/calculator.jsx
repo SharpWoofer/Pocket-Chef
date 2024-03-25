@@ -5,7 +5,6 @@ const CalculatorPage = () => {
   const [weight, setWeight] = useState('');
   const [height, setHeight] = useState('');
   const [bmi, setBmi] = useState(null);
-  // States for Measurement Converter
   const [value, setValue] = useState('');
   const [fromUnit, setFromUnit] = useState('grams');
   const [toUnit, setToUnit] = useState('grams');
@@ -13,18 +12,15 @@ const CalculatorPage = () => {
   const conversionRates = {
     grams: 1,
     ounces: 28.3495,
-    tablespoons: 14.3, // this is an approximation and can vary based on the substance
+    tablespoons: 14.3,
     // Add any other units you want to convert from/to grams
   };
   const calculateBMI = () => {
     if (weight > 0 && height > 0) {
-      // Convert height from centimeters to meters before calculation
       const heightInMeters = height / 100;
       const bmi = weight / (heightInMeters ** 2);
-      // Set the BMI state, rounded to two decimal places
       setBmi(bmi.toFixed(2));
     } else {
-      // Set BMI to null or some error state if weight or height are not valid
       setBmi(null);
       alert("Please enter valid weight and height values.");
     }
@@ -67,7 +63,6 @@ const CalculatorPage = () => {
       />
       </div>
       <button className="button" onClick={calculateBMI}>Calculate BMI</button>
-      {/* Result display */}
       {bmi && (
         <div className="result-container">
           <h2>Your BMI is: {bmi}</h2>
@@ -91,7 +86,7 @@ const CalculatorPage = () => {
           <option value="grams">Grams</option>
           <option value="ounces">Ounces</option>
           <option value="tablespoons">Tablespoons</option>
-          {/* Add more options as needed */}
+          {/* Add more options as needed here*/}
         </select>
       </div>
       <div className="input-container">
@@ -100,7 +95,7 @@ const CalculatorPage = () => {
           <option value="grams">Grams</option>
           <option value="ounces">Ounces</option>
           <option value="tablespoons">Tablespoons</option>
-          {/* Add more options as needed */}
+          {/* Add more options as needed here*/}
         </select>
       </div>
       <button className="button" onClick={convertMeasurement}>Convert</button>
