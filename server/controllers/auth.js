@@ -53,22 +53,6 @@ export const register = async (req, res) => {
 };
 
 /* LOGIN USER */
-/*
-export const login = async (req, res) => {
-    try {
-        const {email, password} = req.body;
-        const user = await User.findOne({email});
-        !user && res.status(404).json("User does not exist");
-        const validPassword = await bcrypt.compare(password, user.password);
-        !validPassword && res.status(400).json("Wrong password");
-        const accessToken = createToken(user._id);
-        delete user.password;
-        res.status(200).json({token: accessToken, user});
-    } catch (error) {
-        res.status(500).json({error: error.message});
-    }
-}
-*/
 export const login = async (req, res) => {
     try {
         const { email, password } = req.body;
