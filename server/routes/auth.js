@@ -14,6 +14,6 @@ const upload = multer({storage: storage});
 
 const authRouter = express.Router();
 authRouter.post("/login", login);
-//authRouter.post("/register", upload.single('picture'), register);
+// authRouter.post("/register", upload.single('picture'), register);
 authRouter.post("/register", register);
 export default authRouter;

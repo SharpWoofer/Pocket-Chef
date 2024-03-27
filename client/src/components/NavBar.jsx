@@ -3,6 +3,7 @@ import { styled } from '@mui/material/styles';
 import { NavLink } from 'react-router-dom';
 import logo from '../assets/logo.png';
 import AccountIcon from '@mui/icons-material/AccountCircleOutlined';
+import { useSelector } from 'react-redux';
 
 const LinkWrapper = styled(Box)(({ theme }) => ({
   position: "relative",
@@ -26,6 +27,7 @@ const LinkWrapper = styled(Box)(({ theme }) => ({
 }))
 
 const NavBar = () => {
+  const user = useSelector((state) => state.auth)
   const links = [
     {
       name: "Home",
@@ -72,7 +74,7 @@ const NavBar = () => {
             ))}
           </Stack>
           <Stack direction="row">
-            <NavLink to="/login">
+            <NavLink to={user.token ? "/profile" : "/login"}>
               <Stack justifyContent="center" sx={{
                 padding: 2,
                 position: "relative",

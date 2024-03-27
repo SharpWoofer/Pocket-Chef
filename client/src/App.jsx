@@ -5,6 +5,7 @@ import Root from './routes/root';
 import RecipeBook from './routes/recipes';
 import Recipe from './routes/recipes/recipe';
 import Register from './routes/register';
+import Profile from './routes/profile';
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
             <Route path="recipes/:id" element={<Recipe />} />
             <Route path="login" element={<Login />} />
             <Route path="register" element={<Register />} />
+            <Route path="profile" element={<Profile />} />
           </Route>
         </Routes>
       </BrowserRouter>

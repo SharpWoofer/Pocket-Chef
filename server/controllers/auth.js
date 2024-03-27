@@ -34,7 +34,7 @@ export const register = async (req, res) => {
             username,
             email,
             password: hashedPassword,
-            //picture: req.file.path,
+            // picture: req.file.path,
             activities,
             height,
             width,
@@ -55,11 +55,19 @@ export const register = async (req, res) => {
 /* LOGIN USER */
 export const login = async (req, res) => {
     try {
-        const {email, password} = req.body;
-        const user = await User.findOne({email});
-        !user && res.status(404).json("User does not exist");
+        const {username, password} = req.body;
+        const user = await User.findOne({
+            $or: [{ username }, { email: username }]
+        });
+        if (!user) {
+            return res.status(404).json({ error: "User does not exist" });
+        }
         const validPassword = await bcrypt.compare(password, user.password);
-        !validPassword && res.status(400).json("Wrong password");
+        
+        if (!validPassword) {
+            return res.status(400).json({ error: "Wrong password" })
+        }
+
         const accessToken = createToken(user._id);
         delete user.password;
         res.status(200).json({token: accessToken, user});

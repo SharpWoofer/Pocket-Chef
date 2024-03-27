@@ -9,17 +9,17 @@ export const authApi = createApi({
     }),
     endpoints: (builder) => ({
         login: builder.mutation({
-            query: ({ email, password }) => ({
+            query: (payload) => ({
                 url: `/login`,
                 method: 'POST',
-                body: { email, password },
+                body: payload,
             })
         }),
         register: builder.mutation({
             query: (payload) => ({
                 url: `/register`,
                 method: 'POST',
-                body: payload,
+                body: payload
             })
         }),
     }),
