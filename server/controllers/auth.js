@@ -56,6 +56,9 @@ export const register = async (req, res) => {
 export const login = async (req, res) => {
     try {
         const {username, password} = req.body;
+        if (!username || !password) {
+            return res.status(400).json({ error: "username and password are required" });
+        }
         const user = await User.findOne({
             $or: [{ username }, { email: username }]
         });
@@ -70,8 +73,9 @@ export const login = async (req, res) => {
 
         const accessToken = createToken(user._id);
         delete user.password;
-        res.status(200).json({token: accessToken, user});
+        res.status(200).json({ token: accessToken, user });
     } catch (error) {
-        res.status(500).json({error: error.message});
+        console.error("Error during login:", error);
+        res.status(500).json({ error: "Internal server error" });
     }
-}
+};

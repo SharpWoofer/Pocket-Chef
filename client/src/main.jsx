@@ -5,12 +5,15 @@ import { PersistGate } from "redux-persist/integration/react";  //allows for inf
 import { persistor, store } from './store';
 import App from './App.jsx'
 import '@fontsource/roboto/500.css';
+import { AuthContextProvider } from './context/AuthContext.jsx'
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <Provider store={store}>
       <PersistGate loading={null} persistor={persistor}>
+       <AuthContextProvider>
         <App />
+      </AuthContextProvider>
       </PersistGate>
     </Provider>
   </React.StrictMode>,
