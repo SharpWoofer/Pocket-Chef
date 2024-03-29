@@ -6,6 +6,7 @@ import RecipeBook from './routes/recipes';
 import Recipe from './routes/recipes/recipe';
 import Register from './routes/register';
 import Profile from './routes/profile';
+import Calculator from './routes/calculator'
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
             <Route path="login" element={<Login />} />
             <Route path="register" element={<Register />} />
             <Route path="profile" element={<Profile />} />
+            <Route path="calculator" element={<Calculator />} />
           </Route>
         </Routes>
       </BrowserRouter>
