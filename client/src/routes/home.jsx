@@ -2,6 +2,8 @@ import { Box, Button, Container, Unstable_Grid2 as Grid, Stack, Typography } fro
 import { Link } from "react-router-dom";
 import { useSearchRecipesQuery } from "../store/apis/recipe";
 import cooking from "../assets/cooking.png";
+import CalorieTracker from "./calorietracker/calorieTracker";
+import { useState } from "react";
 
 const Home = () => {
     const { data, isLoading } = useSearchRecipesQuery({
@@ -11,6 +13,7 @@ const Home = () => {
     const recipes = data?.results ?? [];
 
     console.log(recipes)
+    const [results, setResults] =useState([])
 
     return (
         //Landing Page
@@ -51,6 +54,15 @@ const Home = () => {
                     }} />
                 </Box>
             </Stack>
+<<<<<<< Updated upstream
+=======
+            
+            {/* Calorie Tracker*/}
+            <Stack alignItems="center" gap={12} paddingY={10}>
+                <CalorieTracker setResults={setResults} />
+            </Stack>
+
+>>>>>>> Stashed changes
             {/* Recipe Deck */}
             <Box>
                 <Typography varient="h3" sx={{
