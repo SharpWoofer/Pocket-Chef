@@ -1,5 +1,5 @@
 import axios from 'axios';
-const apiKey = 'e5735f1495384efd839f2f84d9531754';
+const apiKey = '8b93f060ebef46dabab75a04b2f2d569';
 import Recipe from '../Models/recipeModel.js';
 
 
@@ -7,18 +7,19 @@ const searchRecipe = async (req, res) => {
     const { query } = req
     const q = query.q;
     const number = query.number ?? 10;
-    const cuisine = query.cuisine ?? 'Chinese';
+    const cuisine = query.cuisine ?? '';
     const minCalories = query.minCalories ?? 0;
-    
+    const maxCalories = query.maxCalories ?? 5000;
+
     try {
         const localRecipes = await Recipe.find({
             title: { $regex: q, $options: 'i' }
         });
-
         if (localRecipes.length) {
             res.status(200).json(localRecipes.slice(0, number));
+
         } else {
-            const response = await axios.get(`https://api.spoonacular.com/recipes/complexSearch?query=${q}&number=${number}&apiKey=${apiKey}&cuisine=${cuisine}&minCalories=${minCalories}`);
+            const response = await axios.get(`https://api.spoonacular.com/recipes/complexSearch?query=${q}&number=${number}&apiKey=${apiKey}&cuisine=${cuisine}&minCalories=${minCalories}&maxCalories=${maxCalories}`);
             res.status(200).json(response.data);
         }
     } catch (error) {
