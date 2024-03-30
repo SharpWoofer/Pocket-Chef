@@ -12,7 +12,7 @@ export const recipeApi = createApi({
             query: (id) => `/${id}`,
         }),
         searchRecipes: builder.query({
-            query: ({ query, number }) => `/search?q=${query}&number=${number}`,
+            query: ({ query, number, cuisine, minCalories }) => `/search?q=${query}&number=${number}&cuisine=${cuisine}&minCalories=${minCalories}`,
         }),
     }),
 });

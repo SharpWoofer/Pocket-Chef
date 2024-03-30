@@ -9,10 +9,14 @@ import FavoriteRecipes from "./favoriteRecipes";
 function Recipes() {
     const numRecipes = 20;
     const [query, setQuery] = useState("");
+    const [cuisine, setCuisine] = useState('');
+    const [minCalories, setminCalories] = useState(0);
     const debouncedQuery = useDebounce(query, 500);
     const { data, isLoading } = useSearchRecipesQuery({
         query: debouncedQuery,
         number: numRecipes,
+        cuisine: cuisine ?? 'Chinese',
+        minCalories: minCalories ?? 0,
     });
     const recipes = data?.results ?? [];
     const userId = 'user-id-placeholder';
@@ -57,6 +61,54 @@ function Recipes() {
                             variant="standard"
                             fullWidth
                             onChange={(e) => setQuery(e.target.value)}
+                        />
+                    </Box>
+                    <Box
+                        paddingX={4}
+                        paddingY={2}
+                        borderRadius={2}
+                        sx={{ backgroundColor: "white" }}
+                    >
+                        <Typography variant="body1" noWrap>
+                            Start a Healthy Diet
+                        </Typography>
+                        <TextField
+                            type="search"
+                            placeholder="Search for a recipe..."
+                            InputProps={{
+                                startAdornment: (
+                                    <InputAdornment position="start">
+                                        <Search />
+                                    </InputAdornment>
+                                ),
+                            }}
+                            variant="standard"
+                            fullWidth
+                            onChange={(e) => setCuisine(e.target.value)}
+                        />
+                    </Box>
+                    <Box
+                        paddingX={4}
+                        paddingY={2}
+                        borderRadius={2}
+                        sx={{ backgroundColor: "white" }}
+                    >
+                        <Typography variant="body1" noWrap>
+                            Start a Healthy Diet
+                        </Typography>
+                        <TextField
+                            type="search"
+                            placeholder="Search for a recipe..."
+                            InputProps={{
+                                startAdornment: (
+                                    <InputAdornment position="start">
+                                        <Search />
+                                    </InputAdornment>
+                                ),
+                            }}
+                            variant="standard"
+                            fullWidth
+                            onChange={(e) => setminCalories(e.target.value)}
                         />
                     </Box>
                 </Grid>

@@ -7,7 +7,9 @@ const searchRecipe = async (req, res) => {
     const { query } = req
     const q = query.q;
     const number = query.number ?? 10;
-
+    const cuisine = query.cuisine ?? 'Chinese';
+    const minCalories = query.minCalories ?? 0;
+    
     try {
         const localRecipes = await Recipe.find({
             title: { $regex: q, $options: 'i' }
@@ -16,7 +18,7 @@ const searchRecipe = async (req, res) => {
         if (localRecipes.length) {
             res.status(200).json(localRecipes.slice(0, number));
         } else {
-            const response = await axios.get(`https://api.spoonacular.com/recipes/complexSearch?query=${q}&number=${number}&apiKey=${apiKey}`);
+            const response = await axios.get(`https://api.spoonacular.com/recipes/complexSearch?query=${q}&number=${number}&apiKey=${apiKey}&cuisine=${cuisine}&minCalories=${minCalories}`);
             res.status(200).json(response.data);
         }
     } catch (error) {
