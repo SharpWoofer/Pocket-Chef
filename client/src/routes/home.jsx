@@ -54,15 +54,11 @@ const Home = () => {
                     }} />
                 </Box>
             </Stack>
-<<<<<<< Updated upstream
-=======
-            
             {/* Calorie Tracker*/}
             <Stack alignItems="center" gap={12} paddingY={10}>
                 <CalorieTracker setResults={setResults} />
             </Stack>
 
->>>>>>> Stashed changes
             {/* Recipe Deck */}
             <Box>
                 <Typography varient="h3" sx={{
