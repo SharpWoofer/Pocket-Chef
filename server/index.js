@@ -10,6 +10,7 @@ import path from "path";
 import { fileURLToPath } from "url";
 import recipeRoutes from "./routes/recipeRoutes.js";
 import authRouter from "./routes/auth.js";
+import calorieTrackerRouter from "./routes/calorieRoutes.js";
 //import userRoutes from "./routes/user.js";
 
 /* CONFIGURATIONS */
@@ -46,6 +47,8 @@ app.use("/auth", authRouter);
 
 /* INTEGRATING SPOONACULAR ROUTES */
 app.use("/recipes", recipeRoutes); // Use the spoonacular routes here
+
+app.use("/ingredients", calorieTrackerRouter);
 
 /* MONGOOSE SETUP */
 // const PORT = process.env.PORT || 5000;

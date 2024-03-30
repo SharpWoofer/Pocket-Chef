@@ -1,5 +1,17 @@
-import { Avatar, Box, Button, FormControl, FormLabel, InputLabel, MenuItem, Select, Stack, TextField, Typography } from "@mui/material"
+import {
+  Avatar,
+  Box,
+  Button,
+  FormLabel,
+  Grid,
+  MenuItem,
+  Select,
+  Stack,
+  TextField,
+  Typography
+} from "@mui/material"
 import { useSelector } from "react-redux"
+import "./profile.css"
 
 const Profile = () => {
   const {user} = useSelector((state) => state.auth)
@@ -17,17 +29,135 @@ const Profile = () => {
   } 
   
   return (
-    <Stack
-      alignItems="center"
-    >
+    <Stack direction="row" alignItem="center" justifyContent="space-around" >
       <Box
-        width="60%"
+      width="45%"
+      >
+            <Grid item direction="row" alignItem="center" xs={2} marginLeft={2} marginTop={3} justifyContent="space-around" sx={{display:"flex"}}>
+              <Box sx={{
+                width: "13rem",
+                height: "16rem",
+                borderRadius: "20px",
+                overflow: "hidden",
+                border: "1px solid #e0e0e0",
+                boxShadow:"-5px 12px 20px rgba(255,255,255,0.45), 5px 5px 9px rgba(94,104,121,0.3)",
+              }}>
+                <Stack direction="row" padding={3} sx={{display:"flex", justifyContent:"space-around"}}>
+                  <FormLabel sx={{width:'40%', textAlign:"start", paddingTop:'5%'}}>STEPS</FormLabel>
+                  <Select
+                      sx={{width: "55%"}}
+                      name="Date Selector"
+                      size="small"
+                      defaultValue= "Daily"
+                  >
+                    <MenuItem value={1}>Daily</MenuItem>
+                    <MenuItem value={2}>Weekly</MenuItem>
+                    <MenuItem value={3}>Monthly</MenuItem>
+                  </Select>
+                </Stack>
+                <Stack>
+                  <Box className="box" sx={{marginLeft:'1.5em'}}>
+                    <div className="percent">
+                      <svg>
+                        <circle cx="70" cy="70" r="70"></circle>
+                        <circle cx="70" cy="70" r="70" style={{strokeDashoffset:"calc(440 - (440 * 57) / 100)", stroke:"#27A468"}}></circle>
+                      </svg>
+                      <div className="num">
+                        <h2>57<span>%</span></h2>
+                      </div>
+                    </div>
+                  </Box>
+                </Stack>
+              </Box>
+              <Box sx={{
+                width: "13rem",
+                height: "16rem",
+                borderRadius: "20px",
+                overflow: "hidden",
+                border: "1px solid #e0e0e0",
+                boxShadow:"-5px 12px 20px rgba(255,255,255,0.45), 5px 5px 9px rgba(94,104,121,0.3)",
+              }}>
+                <Stack direction="row" padding={3} sx={{display:"flex", justifyContent:"space-around"}}>
+                  <FormLabel sx={{width:'40%', textAlign:"start", paddingTop:'5%'}}>SLEEP</FormLabel>
+                  <Select
+                      sx={{width: "55%"}}
+                      name="Date Selector"
+                      size="small"
+                      defaultValue= "Daily"
+                  >
+                    <MenuItem value={1}>Daily</MenuItem>
+                    <MenuItem value={2}>Weekly</MenuItem>
+                    <MenuItem value={3}>Monthly</MenuItem>
+                  </Select>
+                </Stack>
+                <Stack>
+                  <Box className="box" sx={{marginLeft:'1.5em'}}>
+                    <div className="percent">
+                      <svg>
+                        <circle cx="70" cy="70" r="70"></circle>
+                        <circle cx="70" cy="70" r="70" style={{strokeDashoffset:"calc(440 - (440 * 28) / 100)", stroke:"#E53761"}}></circle>
+                      </svg>
+                      <div className="num">
+                        <h2>28<span>%</span></h2>
+                      </div>
+                    </div>
+                  </Box>
+                </Stack>
+              </Box>
+              <Box sx={{
+                width: "13rem",
+                height: "16rem",
+                borderRadius: "20px",
+                overflow: "hidden",
+                border: "1px solid #e0e0e0",
+                boxShadow:"-5px 12px 20px rgba(255,255,255,0.45), 5px 5px 9px rgba(94,104,121,0.3)",
+              }}>
+                <Stack direction="row" padding={3} sx={{display:"flex", justifyContent:"space-around"}}>
+                  <FormLabel sx={{width:'40%', textAlign:"start", paddingTop:'5%'}}>GOALS</FormLabel>
+                  <Select
+                      sx={{width: "55%"}}
+                      name="Date Selector"
+                      size="small"
+                      defaultValue= "Daily"
+                  >
+                    <MenuItem value={1}>Daily</MenuItem>
+                    <MenuItem value={2}>Weekly</MenuItem>
+                    <MenuItem value={3}>Monthly</MenuItem>
+                  </Select>
+                </Stack>
+                <Stack>
+                  <Box className="box" sx={{marginLeft:'1.5em'}}>
+                    <div className="percent">
+                      <svg>
+                        <circle cx="70" cy="70" r="70"></circle>
+                        <circle cx="70" cy="70" r="70"></circle>
+                      </svg>
+                      <div className="num">
+                        <h2>87<span>%</span></h2>
+                      </div>
+                    </div>
+                  </Box>
+                </Stack>
+              </Box>
+
+        </Grid>
+      </Box>
+      <Box
+        width="50%"
         padding="10px"
+        sx={{
+          borderRadius: "20px",
+          overflow: "hidden",
+          border: "1px solid #e0e0e0",
+          boxShadow:"-5px 12px 20px rgba(255,255,255,0.45), 5px 5px 9px rgba(94,104,121,0.3)",
+        }}
       >
         <Typography
           sx={{ display: 'inline-block' }}
           borderBottom="1px solid #e0e0e0"
           marginBottom="50px"
+          paddingLeft="2%"
+          paddingTop="2%"
         >
           User Profile
         </Typography>

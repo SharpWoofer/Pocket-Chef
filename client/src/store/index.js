@@ -11,13 +11,13 @@ import {
 } from "redux-persist";
 import storage from "redux-persist/lib/storage";
 import authReducer from "./authSlice";
-import { authApi, recipeApi } from "./apis";
+import { authApi, recipeApi, ingredientApi } from "./apis";
 
 const persistConfig = {
     key: "root",
     storage,
     version: 1,
-    whitelist: ['auth']
+    whitelist: ['auth', 'ingredients']
 };
 
 const persistedReducer = persistReducer(
@@ -26,6 +26,7 @@ const persistedReducer = persistReducer(
         auth: authReducer,
         [authApi.reducerPath]: authApi.reducer,
         [recipeApi.reducerPath]: recipeApi.reducer,
+        [ingredientApi.reducerPath]: ingredientApi.reducer, // Add ingredientApi reducer
     }));
 
 export const store = configureStore({
@@ -37,7 +38,8 @@ export const store = configureStore({
             },
         })
             .concat(authApi.middleware)
-            .concat(recipeApi.middleware),
+            .concat(recipeApi.middleware)
+            .concat(ingredientApi.middleware) // Add ingredientApi middleware
 });
 
 export const persistor = persistStore(store);
