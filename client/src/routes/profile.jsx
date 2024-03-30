@@ -134,11 +134,11 @@ const Profile = () => {
                   />
                 </Stack>
                 <Stack flex="1">
-                  <FormLabel>width / kg</FormLabel>
+                  <FormLabel>Weight / kg</FormLabel>
                   <TextField
                     size="small"
-                    name="width"
-                    defaultValue={user.width}
+                    name="weight"
+                    defaultValue={user.weight}
                   />
                 </Stack>
               </Stack>
@@ -177,7 +177,7 @@ const Profile = () => {
             spacing={4}
           >
             {/* <Button type="reset" variant="contained" color="secondary">Cancel</Button> */}
-            <Button type="submit" variant="contained" color="warning">Save Change</Button>
+            <Button type="submit" variant="contained" color="warning">Save Changes</Button>
           </Stack>
         </form>
 
