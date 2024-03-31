@@ -3,7 +3,7 @@ import calorieCount from '../Models/calorieCount.js';
 const apiKey = '1c759ff2ee864d2bb3388274a18e92bd';
 
 export const searchIngredient = async (req, res) => {
-    const query  = req.body.query;
+    const { query } = req.body;
     try { 
         const response = await axios.get(`https://api.spoonacular.com/food/ingredients/search?query=${query}&apiKey=${apiKey}`);
         const results = response.data.results.map(ingredient => ({
@@ -58,7 +58,7 @@ export const createCalCount = async (req, res) => {
             dinnerCal
         });
         await newCalCount.save();
-        res.status(201).json({ message: "Calorie count created successfully" });
+        res.status(201).json({ message: "Calorie count created successfully", calorieCount: newCalCount});
     } catch (error) {
         console.error("Error creating calorie count:", error);
         res.status(500).json({ error: "Internal server error" });

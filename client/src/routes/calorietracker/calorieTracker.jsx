@@ -18,7 +18,7 @@ function CalorieTracker() {
     const [calData, setCalData] = useState(null);
     const [selectedIngredient, setSelectedIngredient] = useState(null);
     const [selectedDate, setSelectedDate] = useState(dayjs('2024-03-23'));
-    const [selectedMeal, setSelectedMeal] = useState(""); // State to store the selected goal
+    const [selectedMeal, setSelectedMeal] = useState("");
     const username = useSelector(state => state.auth.user.username);
 
     const [searchIngredient] = useSearchIngredientMutation();
@@ -38,7 +38,7 @@ function CalorieTracker() {
     const handleSubmitSearch = async (event) => {
         event.preventDefault();
         try {
-            const {data: results} = await searchIngredient(query);
+            const {data: results} = await searchIngredient({ query: query });
             setSearchResults(results);
             //console.log(results);
             // for debugging purposes
@@ -113,13 +113,14 @@ function CalorieTracker() {
                 }
             } else if (selectedMeal === "dinner") {
                 try {
-                    const {data: updatedCal} = await updateCalCount({
+                    const response = await updateCalCount({
                         username: username,
                         date: selectedDate.format('YYYY-MM-DD'),
                         breakfastCal : 0,
                         lunchCal: 0,
                         dinnerCal: calCount
                     });
+                    const updatedCal = response.data;
                 } catch (error) {
                     console.error('Error updating dinner calorie count:', error);
                 }
@@ -127,7 +128,7 @@ function CalorieTracker() {
         } else {
             if (selectedMeal === "breakfast") {
                 try {
-                    const {data: updatedCal} = await createCalCount({
+                    const {data: temp} = await createCalCount({
                         username: username,
                         date: selectedDate.format('YYYY-MM-DD'),
                         breakfastCal : calCount
@@ -158,7 +159,7 @@ function CalorieTracker() {
             }
         }
         //setCalData(updatedCal);
-        //console.log(updatedCal); debugging
+        console.log(updatedCal);// debugging
     }
 
     return (
@@ -213,13 +214,16 @@ function CalorieTracker() {
                     onChange={(e) => handleChange(e.target.value)}
                 /><Button type="submit" variant="contained">Search</Button>
             </form>
+            { searchResults ? (
             <List>
                 {searchResults.map(result => (
                     <ListItem key={result.id} button onClick={() => handleClickIngredient(result)}>
                         <ListItemText primary={result.name} />
                     </ListItem>
                 ))}
-            </List>
+            </List> ) : (
+                <Typography> Unable to retreive ingredient</Typography>
+            )}
             <form onSubmit={handleSubmit}>
                 <TextField
                     type="search"
@@ -237,7 +241,7 @@ function CalorieTracker() {
                 />
                 <Button type="submit" variant="contained">Submit</Button>
             </form>
-            <Typography>Total calories: {calCount} {selectedIngredient}</Typography>
+            <Typography>Total calories: {calCount} </Typography>
             <form onSubmit={handleAdd}>
                 <InputLabel size="small">Meal</InputLabel>
                     <Select
