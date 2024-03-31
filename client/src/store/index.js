@@ -11,7 +11,7 @@ import {
 } from "redux-persist";
 import storage from "redux-persist/lib/storage";
 import authReducer from "./authSlice";
-import { authApi, recipeApi, ingredientApi,workoutApi } from "./apis";
+import { authApi, recipeApi, ingredientApi,workoutApi, gymApi } from "./apis";
 
 const persistConfig = {
     key: "root",
@@ -28,6 +28,7 @@ const persistedReducer = persistReducer(
         [recipeApi.reducerPath]: recipeApi.reducer,
         [ingredientApi.reducerPath]: ingredientApi.reducer, // Add ingredientApi reducer
         [workoutApi.reducerPath]: workoutApi.reducer,
+        [gymApi.reducerPath]: gymApi.reducer,
     }));
 
 export const store = configureStore({
@@ -41,7 +42,8 @@ export const store = configureStore({
             .concat(authApi.middleware)
             .concat(recipeApi.middleware)
             .concat(ingredientApi.middleware) // Add ingredientApi middleware
-            .concat(workoutApi.middleware),
+            .concat(workoutApi.middleware)
+            .concat(gymApi.middleware),
 });
 
 export const persistor = persistStore(store);

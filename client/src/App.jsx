@@ -8,6 +8,7 @@ import Register from './routes/profile/register.jsx';
 import Profile from './routes/calculator/profile.jsx';
 import Calculator from './routes/calculator/calculator.jsx'
 import Workout from "./routes/workout/workout.jsx";
+import Gyms from "./routes/gyms/gyms.jsx";
 import { LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 
@@ -26,6 +27,7 @@ function App() {
               <Route path="profile" element={<Profile />} />
               <Route path="calculator" element={<Calculator />} />
               <Route path="fitness" element={<h1><Workout/></h1>} />
+              <Route path="gyms" element={<Gyms />} />
             </Route>
           </Routes>
         </BrowserRouter>

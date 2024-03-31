@@ -1,7 +1,5 @@
 import mongoose from 'mongoose';
 
-const mongoose = require('mongoose');
-
 const Schema = mongoose.Schema;
 
 const gymSchema = new Schema ({
@@ -17,13 +15,11 @@ const gymSchema = new Schema ({
     addressPostalCode: {
         type: String,
         required: true,
-        unique : true
     },
 
     addressStreetName: {
         type: String,
         required: true,
-        unique : true
     },
     
     operatingHours: {
@@ -40,6 +36,8 @@ const gymSchema = new Schema ({
         type: [Number],
         required: true
     }
-}, { timestamps: true});
+});
 
-module.exports = mongoose.model('Gym', gymSchema);
+const Gym = mongoose.model('Gym', gymSchema);
+
+export default Gym;

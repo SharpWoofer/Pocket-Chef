@@ -11,6 +11,7 @@ import { fileURLToPath } from "url";
 import recipeRoutes from "./routes/recipeRoutes.js";
 import authRouter from "./routes/auth.js";
 import calorieTrackerRouter from "./routes/calorieRoutes.js";
+import gymRouter from "./routes/gymRoutes.js";
 import workoutRouter from "./routes/workoutRoutes.js";
 //import userRoutes from "./routes/user.js";
 import favoriteRoutes from "./routes/favoriteRoutes.js";
@@ -56,6 +57,8 @@ app.use("/ingredients", calorieTrackerRouter);
 app.use("/searchWorkout", workoutRouter);
 
 app.use('/recipes/favorites', favoriteRoutes);
+
+app.use('/gyms', gymRouter);
 
 
 /* MONGOOSE SETUP */
