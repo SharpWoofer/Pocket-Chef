@@ -3,15 +3,15 @@ import CuisineSelector from "../../components/Selector";
 import { Search } from "@mui/icons-material";
 import RangeSlider from "../../components/Slider"
 import { useDebounce } from "@uidotdev/usehooks"
-import { useState } from "react";
+import React, { useState, useEffect } from 'react';
 import { Link } from "react-router-dom";
-import { useSearchRecipesQuery } from "../../store/apis/recipe";
 import FavoriteRecipes from "./favoriteRecipes";
 import IconButton from '@mui/material/IconButton';
 import FavoriteBorder from '@mui/icons-material/FavoriteBorder';
 import Snackbar from '@mui/material/Snackbar';
 import CloseIcon from '@mui/icons-material/Close';
-
+import { useSelector } from 'react-redux';
+import { useSearchRecipesQuery, useAddFavoriteRecipeMutation } from "../../store/apis/recipe";
 
 
 function Recipes() {
@@ -29,7 +29,8 @@ function Recipes() {
         maxCalories: debouncedCalories[1],
     });
     const recipes = data?.results ?? [];
-    const userId = 'user-id-placeholder';
+    const username = useSelector(state => state.auth.user.username);
+
 
     const cuisines = [
         'African',
@@ -60,45 +61,29 @@ function Recipes() {
         'Thai',
         'Vietnamese',
     ];
-    const handleAddToFavorites = (event, recipeId, recipeTitle) => {
-        event.stopPropagation(); 
-        console.log(`Adding recipe ${recipeId}: ${recipeTitle} to favorites.`);
-        
-        // Function to be added.
-        setSnackbarMessage(`Added "${recipeTitle}" to favorites.`);
-        setSnackbarOpen(true);
+    const handleAddToFavorites = async (event, recipeId, recipeTitle) => {
+        event.stopPropagation(); // Stop event propagation to prevent navigating to the recipe link
+        console.log('Recipe ID:', recipeId);
+    console.log('Recipe Title:', recipeTitle);
+    console.log('Username:', username);
+        try {
+            await addFavoriteRecipe({ username, recipeId }).unwrap();
+            setSnackbarMessage(`Added "${recipeTitle}" to favorites.`);
+            setFavoriteRecipes((prevFavorites) => [...prevFavorites, { id: recipeId, title: recipeTitle }]);
+            setSnackbarOpen(true);
+        } catch (error) {
+            console.error('Error adding to favorites:', error);
+            setSnackbarMessage(`Failed to add "${recipeTitle}" to favorites.`);
+            setSnackbarOpen(true);
+        }
     };
+    
     
     const [snackbarOpen, setSnackbarOpen] = useState(false);
     const [snackbarMessage, setSnackbarMessage] = useState("");
     const [favoriteRecipes, setFavoriteRecipes] = useState([]);
+    const [addFavoriteRecipe] = useAddFavoriteRecipeMutation();
 
-    const addFavoriteRecipe = async (userId, recipeName) => {
-  try {
-    //user model?
-    //const user = await User.findById(userId);
-    
-    if (user) {
-      // Add the recipe name to the favorites array TBC
-      if (!user.favoriteRecipes.includes(recipeName)) {
-        user.favoriteRecipes.push(recipeName);
-        await user.save();
-        return { status: 'success', message: 'Recipe added to favorites.' };
-      } else {
-        return { status: 'info', message: 'Recipe is already in favorites.' };
-      }
-    } else {
-      return { status: 'error', message: 'User not found.' };
-    }
-  } catch (error) {
-    console.error('Error adding favorite recipe:', error);
-    return { status: 'error', message: 'Error updating favorites.' };
-  }
-};
-
-
-
-    
 
     return (
         <Container maxWidth="lg">
@@ -110,7 +95,9 @@ function Recipes() {
                 </Grid>
 
                 <Grid item xs={12} md={6} lg={4}>
-                    <FavoriteRecipes userId={userId} />
+                    <FavoriteRecipes username={username} favoriteRecipes={favoriteRecipes} setFavoriteRecipes={setFavoriteRecipes} />
+
+
                 </Grid>
 
                 <Grid item xs={12} md={6} lg={8}></Grid>
@@ -197,7 +184,7 @@ function Recipes() {
                                         </Link>
                                         <IconButton
                                             sx={{ position: 'absolute', top: 0, right: 0 }}
-                                            onClick={(event) => handleAddToFavorites(event, id, title)} // Pass title here
+                                            onClick={(event) => handleAddToFavorites(event, id, title)}
                                             aria-label={`add to favorites ${title}`}
                                         >
                                             <FavoriteBorder />
