@@ -11,6 +11,7 @@ import {
   Typography
 } from "@mui/material"
 import { useSelector } from "react-redux"
+import CalorieGraph from "../calorietracker/calorieGraph"
 import "./profile.css"
 
 const Profile = () => {
@@ -141,6 +142,10 @@ const Profile = () => {
               </Box>
 
         </Grid>
+        
+        { <Stack alignItems="center" gap={12} paddingY={10}>
+                <CalorieGraph />
+            </Stack> }
       </Box>
       <Box
         width="50%"
