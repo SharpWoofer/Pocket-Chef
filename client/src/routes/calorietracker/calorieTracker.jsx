@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
 import { Box, List, ListItem, ListItemText, InputAdornment, Stack, TextField, Typography, Button, InputLabel, Select, MenuItem} from "@mui/material";
 import { Search } from "@mui/icons-material";
-import { useDebounce } from "@uidotdev/usehooks"
 import { useSearchIngredientMutation, useGetIngredientByIdMutation, useGetCalCountMutation, useCreateCalCountMutation, useUpdateCalCountMutation } from '../../store/apis/ingredient';
 import dayjs from 'dayjs';
 import { DemoContainer, DemoItem } from '@mui/x-date-pickers/internals/demo';
@@ -96,6 +95,7 @@ function CalorieTracker() {
                         lunchCal: 0,
                         dinnerCal: 0
                     });
+                    setCalData(updatedCal.calorieCount);
                 } catch (error) {
                     console.error('Error updating breakfast calorie count:', error);
                 }
@@ -108,19 +108,20 @@ function CalorieTracker() {
                         lunchCal: calCount,
                         dinnerCal: 0
                     });
+                    setCalData(updatedCal.calorieCount);
                 } catch (error) {
                     console.error('Error updating lunch calorie count:', error);
                 }
             } else if (selectedMeal === "dinner") {
                 try {
-                    const response = await updateCalCount({
+                    const {data: updatedCal} = await updateCalCount({
                         username: username,
                         date: selectedDate.format('YYYY-MM-DD'),
                         breakfastCal : 0,
                         lunchCal: 0,
                         dinnerCal: calCount
                     });
-                    const updatedCal = response.data;
+                    setCalData(updatedCal.calorieCount);
                 } catch (error) {
                     console.error('Error updating dinner calorie count:', error);
                 }
@@ -128,11 +129,12 @@ function CalorieTracker() {
         } else {
             if (selectedMeal === "breakfast") {
                 try {
-                    const {data: temp} = await createCalCount({
+                    const {data: updatedCal} = await createCalCount({
                         username: username,
                         date: selectedDate.format('YYYY-MM-DD'),
                         breakfastCal : calCount
                     });
+                    setCalData(updatedCal.calorieCount);
                 } catch (error) {
                     console.error('Error updating breakfast calorie count:', error);
                 }
@@ -143,6 +145,7 @@ function CalorieTracker() {
                         date: selectedDate.format('YYYY-MM-DD'),
                         lunchCal: calCount
                     });
+                    setCalData(updatedCal.calorieCount);
                 } catch (error) {
                     console.error('Error updating lunch calorie count:', error);
                 }
@@ -153,13 +156,13 @@ function CalorieTracker() {
                         date: selectedDate.format('YYYY-MM-DD'),
                         dinnerCal: calCount
                     });
+                    setCalData(updatedCal.calorieCount);
                 } catch (error) {
                     console.error('Error updating dinner calorie count:', error);
                 }
             }
         }
-        //setCalData(updatedCal);
-        console.log(updatedCal);// debugging
+        //console.log(updatedCal);// debugging
     }
 
     return (
