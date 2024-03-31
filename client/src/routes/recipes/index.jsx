@@ -7,6 +7,12 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import { useSearchRecipesQuery } from "../../store/apis/recipe";
 import FavoriteRecipes from "./favoriteRecipes";
+import IconButton from '@mui/material/IconButton';
+import FavoriteBorder from '@mui/icons-material/FavoriteBorder';
+import Snackbar from '@mui/material/Snackbar';
+import CloseIcon from '@mui/icons-material/Close';
+
+
 
 function Recipes() {
     const numRecipes = 20;
@@ -54,7 +60,45 @@ function Recipes() {
         'Thai',
         'Vietnamese',
     ];
+    const handleAddToFavorites = (event, recipeId, recipeTitle) => {
+        event.stopPropagation(); 
+        console.log(`Adding recipe ${recipeId}: ${recipeTitle} to favorites.`);
+        
+        // Function to be added.
+        setSnackbarMessage(`Added "${recipeTitle}" to favorites.`);
+        setSnackbarOpen(true);
+    };
+    
+    const [snackbarOpen, setSnackbarOpen] = useState(false);
+    const [snackbarMessage, setSnackbarMessage] = useState("");
+    const [favoriteRecipes, setFavoriteRecipes] = useState([]);
 
+    const addFavoriteRecipe = async (userId, recipeName) => {
+  try {
+    //user model?
+    //const user = await User.findById(userId);
+    
+    if (user) {
+      // Add the recipe name to the favorites array TBC
+      if (!user.favoriteRecipes.includes(recipeName)) {
+        user.favoriteRecipes.push(recipeName);
+        await user.save();
+        return { status: 'success', message: 'Recipe added to favorites.' };
+      } else {
+        return { status: 'info', message: 'Recipe is already in favorites.' };
+      }
+    } else {
+      return { status: 'error', message: 'User not found.' };
+    }
+  } catch (error) {
+    console.error('Error adding favorite recipe:', error);
+    return { status: 'error', message: 'Error updating favorites.' };
+  }
+};
+
+
+
+    
 
     return (
         <Container maxWidth="lg">
@@ -133,28 +177,35 @@ function Recipes() {
                         (
                             <Box width={1}>
                                 <ImageList
-                                    variant="masonry"
-                                    cols={4}
-                                    gap={16}
-                                    rowHeight={200}
-                                    sx={{
-                                        paddingY: 2
-                                    }}
-                                >
-                                    {recipes.map(({ id, title, image }) => (
-                                        <Link to={`/recipes/${id}`} key={id}>
-                                            <ImageListItem >
-                                                <img
-                                                    src={image}
-                                                    alt={`${title}`}
-                                                    loading="lazy" />
-                                                <ImageListItemBar
-                                                    title={title}
-                                                />
-                                            </ImageListItem>
+                            variant="masonry"
+                            cols={4}
+                            gap={16}
+                            rowHeight={200}
+                            sx={{
+                                paddingY: 2
+                            }}
+                            >
+                                {recipes.map(({ id, title, image }) => (
+                                    <ImageListItem key={id}>
+                                        <img
+                                            src={image}
+                                            alt={title}
+                                            loading="lazy"
+                                        />
+                                        <Link to={`/recipes/${id}`} style={{ textDecoration: 'none' }}>
+                                            <ImageListItemBar title={title} />
                                         </Link>
-                                    ))}
-                                </ImageList>
+                                        <IconButton
+                                            sx={{ position: 'absolute', top: 0, right: 0 }}
+                                            onClick={(event) => handleAddToFavorites(event, id, title)} // Pass title here
+                                            aria-label={`add to favorites ${title}`}
+                                        >
+                                            <FavoriteBorder />
+                                        </IconButton>
+
+                                    </ImageListItem>
+                                ))}
+                            </ImageList>
                             </Box>
                         ) :
                         <Box width={1}>
@@ -164,7 +215,25 @@ function Recipes() {
                         </Box>
                 }
             </Grid>
+            <Snackbar
+                open={snackbarOpen}
+                autoHideDuration={6000}
+                onClose={() => setSnackbarOpen(false)}
+                message={snackbarMessage}
+                action={
+                    <IconButton
+                        size="small"
+                        aria-label="close"
+                        color="inherit"
+                        onClick={() => setSnackbarOpen(false)}
+                    >
+                        <CloseIcon fontSize="small" />
+                    </IconButton>
+                }
+            />
+
         </Container >
+        
     )
 }
 
