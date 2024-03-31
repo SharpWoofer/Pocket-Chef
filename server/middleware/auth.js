@@ -1,11 +1,12 @@
 import jwt from 'jsonwebtoken';
 export const verifyToken = async (req, res, next) => {
     try{
-        let token = req.headers["Token Authorization"];
+        let token = req.headers["authorization"];
         if (!token) return res.status(403).json("Token is not provided");
         if(token.startsWith("Bearer ")){
             token = token.slice(7, token.length).trimLeft();
         }
+        console.log(token)
         const verified = jwt.verify(token, process.env.SECRET_KEY);
         if(!verified) return res.status(401).json("Token verification failed");
         req.user = verified;

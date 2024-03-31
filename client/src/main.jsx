@@ -8,7 +8,7 @@ import '@fontsource/roboto/500.css';
 import { AuthContextProvider } from './context/AuthContext.jsx'
 
 ReactDOM.createRoot(document.getElementById('root')).render(
-  <React.StrictMode>
+  <>
     <Provider store={store}>
       <PersistGate loading={null} persistor={persistor}>
        <AuthContextProvider>
@@ -16,5 +16,5 @@ ReactDOM.createRoot(document.getElementById('root')).render(
       </AuthContextProvider>
       </PersistGate>
     </Provider>
-  </React.StrictMode>,
+  </>,
 )

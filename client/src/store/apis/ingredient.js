@@ -12,9 +12,7 @@ export const ingredientApi = createApi({
             query: (payload) => ({
                 url: `/`,
                 method: 'POST',
-                body: {
-                    "query" : payload
-                },
+                body: payload
             }),
         }),
         getIngredientById: builder.mutation({

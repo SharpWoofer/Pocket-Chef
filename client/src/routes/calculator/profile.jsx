@@ -11,12 +11,54 @@ import {
   Typography
 } from "@mui/material"
 import { useSelector } from "react-redux"
-import CalorieGraph from "../calorietracker/calorieGraph"
+import * as echatrs from 'echarts'
+//import CalorieGraph from "../calorietracker/calorieGraph"
 import "./profile.css"
+import { useEffect, useRef } from "react"
+import { useAddUserWeightMutation, useGetUserWeightListMutation } from "../../store/apis/auth"
+import { DateTimePicker } from "@mui/x-date-pickers"
 
 const Profile = () => {
-  const {user} = useSelector((state) => state.auth)
-  
+  const { user, token } = useSelector((state) => state.auth)
+  const [addUserWeight] = useAddUserWeightMutation()
+  const [getUserWeightList] = useGetUserWeightListMutation()
+  const mLine = useRef()
+
+  async function init() {
+    const mDom = mLine.current
+    if (mDom) {
+      const { data } = await getUserWeightList({ token })
+      const mCharts = echatrs.init(mDom)
+      mCharts.setOption({
+        title: {
+          text: 'Weight Line Chart'
+        },
+        grid: {
+          left: '4%',
+          right: '6%',
+          bottom: '5%'
+        },
+        xAxis: {
+          type: 'category',
+          data: data.map(item => item.datetime)
+        },
+        yAxis: {
+          type: 'value'
+        },
+        series: [
+          {
+            type: 'line',
+            data: data.map(item => item.weight)
+          }
+        ]
+      })
+    }
+  }
+
+  useEffect(() => {
+    init()
+  }, [])
+
   const onSubmit = (event) => {
     event.preventDefault()
     const mForm = event.target.elements
@@ -27,125 +69,168 @@ const Profile = () => {
       }
     }
     console.log(mBody)
-  } 
-  
+  }
+
+  const onAddWeight = async(event) => {
+    event.preventDefault()
+    
+    const mForm = event.target.elements
+    const mBody = {}
+    for (const item of mForm) {
+      if (item.name) {
+        mBody[item.name] = item.value
+      }
+    }
+    await addUserWeight({ ...mBody, token })
+    await init()
+  }
+
   return (
     <Stack direction="row" alignItem="center" justifyContent="space-around" >
       <Box
-      width="45%"
+        width="45%"
       >
-            <Grid item direction="row" alignItem="center" xs={2} marginLeft={2} marginTop={3} justifyContent="space-around" sx={{display:"flex"}}>
-              <Box sx={{
-                width: "13rem",
-                height: "16rem",
-                borderRadius: "20px",
-                overflow: "hidden",
-                border: "1px solid #e0e0e0",
-                boxShadow:"-5px 12px 20px rgba(255,255,255,0.45), 5px 5px 9px rgba(94,104,121,0.3)",
-              }}>
-                <Stack direction="row" padding={3} sx={{display:"flex", justifyContent:"space-around"}}>
-                  <FormLabel sx={{width:'40%', textAlign:"start", paddingTop:'5%'}}>STEPS</FormLabel>
-                  <Select
-                      sx={{width: "55%"}}
-                      name="Date Selector"
-                      size="small"
-                      defaultValue= "Daily"
-                  >
-                    <MenuItem value={1}>Daily</MenuItem>
-                    <MenuItem value={2}>Weekly</MenuItem>
-                    <MenuItem value={3}>Monthly</MenuItem>
-                  </Select>
-                </Stack>
-                <Stack>
-                  <Box className="box" sx={{marginLeft:'1.5em'}}>
-                    <div className="percent">
-                      <svg>
-                        <circle cx="70" cy="70" r="70"></circle>
-                        <circle cx="70" cy="70" r="70" style={{strokeDashoffset:"calc(440 - (440 * 57) / 100)", stroke:"#27A468"}}></circle>
-                      </svg>
-                      <div className="num">
-                        <h2>57<span>%</span></h2>
-                      </div>
-                    </div>
-                  </Box>
-                </Stack>
+        <Grid item direction="row" alignItem="center" xs={2} marginLeft={2} marginTop={3} justifyContent="space-around" sx={{ display: "flex" }}>
+          <Box sx={{
+            width: "13rem",
+            height: "16rem",
+            borderRadius: "20px",
+            overflow: "hidden",
+            border: "1px solid #e0e0e0",
+            boxShadow: "-5px 12px 20px rgba(255,255,255,0.45), 5px 5px 9px rgba(94,104,121,0.3)",
+          }}>
+            <Stack direction="row" padding={3} sx={{ display: "flex", justifyContent: "space-around" }}>
+              <FormLabel sx={{ width: '40%', textAlign: "start", paddingTop: '5%' }}>STEPS</FormLabel>
+              <Select
+                sx={{ width: "55%" }}
+                name="Date Selector"
+                size="small"
+                defaultValue="Daily"
+              >
+                <MenuItem value={1}>Daily</MenuItem>
+                <MenuItem value={2}>Weekly</MenuItem>
+                <MenuItem value={3}>Monthly</MenuItem>
+              </Select>
+            </Stack>
+            <Stack>
+              <Box className="box" sx={{ marginLeft: '1.5em' }}>
+                <div className="percent">
+                  <svg>
+                    <circle cx="70" cy="70" r="70"></circle>
+                    <circle cx="70" cy="70" r="70" style={{ strokeDashoffset: "calc(440 - (440 * 57) / 100)", stroke: "#27A468" }}></circle>
+                  </svg>
+                  <div className="num">
+                    <h2>57<span>%</span></h2>
+                  </div>
+                </div>
               </Box>
-              <Box sx={{
-                width: "13rem",
-                height: "16rem",
-                borderRadius: "20px",
-                overflow: "hidden",
-                border: "1px solid #e0e0e0",
-                boxShadow:"-5px 12px 20px rgba(255,255,255,0.45), 5px 5px 9px rgba(94,104,121,0.3)",
-              }}>
-                <Stack direction="row" padding={3} sx={{display:"flex", justifyContent:"space-around"}}>
-                  <FormLabel sx={{width:'40%', textAlign:"start", paddingTop:'5%'}}>SLEEP</FormLabel>
-                  <Select
-                      sx={{width: "55%"}}
-                      name="Date Selector"
-                      size="small"
-                      defaultValue= "Daily"
-                  >
-                    <MenuItem value={1}>Daily</MenuItem>
-                    <MenuItem value={2}>Weekly</MenuItem>
-                    <MenuItem value={3}>Monthly</MenuItem>
-                  </Select>
-                </Stack>
-                <Stack>
-                  <Box className="box" sx={{marginLeft:'1.5em'}}>
-                    <div className="percent">
-                      <svg>
-                        <circle cx="70" cy="70" r="70"></circle>
-                        <circle cx="70" cy="70" r="70" style={{strokeDashoffset:"calc(440 - (440 * 28) / 100)", stroke:"#E53761"}}></circle>
-                      </svg>
-                      <div className="num">
-                        <h2>28<span>%</span></h2>
-                      </div>
-                    </div>
-                  </Box>
-                </Stack>
+            </Stack>
+          </Box>
+          <Box sx={{
+            width: "13rem",
+            height: "16rem",
+            borderRadius: "20px",
+            overflow: "hidden",
+            border: "1px solid #e0e0e0",
+            boxShadow: "-5px 12px 20px rgba(255,255,255,0.45), 5px 5px 9px rgba(94,104,121,0.3)",
+          }}>
+            <Stack direction="row" padding={3} sx={{ display: "flex", justifyContent: "space-around" }}>
+              <FormLabel sx={{ width: '40%', textAlign: "start", paddingTop: '5%' }}>SLEEP</FormLabel>
+              <Select
+                sx={{ width: "55%" }}
+                name="Date Selector"
+                size="small"
+                defaultValue="Daily"
+              >
+                <MenuItem value={1}>Daily</MenuItem>
+                <MenuItem value={2}>Weekly</MenuItem>
+                <MenuItem value={3}>Monthly</MenuItem>
+              </Select>
+            </Stack>
+            <Stack>
+              <Box className="box" sx={{ marginLeft: '1.5em' }}>
+                <div className="percent">
+                  <svg>
+                    <circle cx="70" cy="70" r="70"></circle>
+                    <circle cx="70" cy="70" r="70" style={{ strokeDashoffset: "calc(440 - (440 * 28) / 100)", stroke: "#E53761" }}></circle>
+                  </svg>
+                  <div className="num">
+                    <h2>28<span>%</span></h2>
+                  </div>
+                </div>
               </Box>
-              <Box sx={{
-                width: "13rem",
-                height: "16rem",
-                borderRadius: "20px",
-                overflow: "hidden",
-                border: "1px solid #e0e0e0",
-                boxShadow:"-5px 12px 20px rgba(255,255,255,0.45), 5px 5px 9px rgba(94,104,121,0.3)",
-              }}>
-                <Stack direction="row" padding={3} sx={{display:"flex", justifyContent:"space-around"}}>
-                  <FormLabel sx={{width:'40%', textAlign:"start", paddingTop:'5%'}}>GOALS</FormLabel>
-                  <Select
-                      sx={{width: "55%"}}
-                      name="Date Selector"
-                      size="small"
-                      defaultValue= "Daily"
-                  >
-                    <MenuItem value={1}>Daily</MenuItem>
-                    <MenuItem value={2}>Weekly</MenuItem>
-                    <MenuItem value={3}>Monthly</MenuItem>
-                  </Select>
-                </Stack>
-                <Stack>
-                  <Box className="box" sx={{marginLeft:'1.5em'}}>
-                    <div className="percent">
-                      <svg>
-                        <circle cx="70" cy="70" r="70"></circle>
-                        <circle cx="70" cy="70" r="70"></circle>
-                      </svg>
-                      <div className="num">
-                        <h2>87<span>%</span></h2>
-                      </div>
-                    </div>
-                  </Box>
-                </Stack>
+            </Stack>
+          </Box>
+          <Box sx={{
+            width: "13rem",
+            height: "16rem",
+            borderRadius: "20px",
+            overflow: "hidden",
+            border: "1px solid #e0e0e0",
+            boxShadow: "-5px 12px 20px rgba(255,255,255,0.45), 5px 5px 9px rgba(94,104,121,0.3)",
+          }}>
+            <Stack direction="row" padding={3} sx={{ display: "flex", justifyContent: "space-around" }}>
+              <FormLabel sx={{ width: '40%', textAlign: "start", paddingTop: '5%' }}>GOALS</FormLabel>
+              <Select
+                sx={{ width: "55%" }}
+                name="Date Selector"
+                size="small"
+                defaultValue="Daily"
+              >
+                <MenuItem value={1}>Daily</MenuItem>
+                <MenuItem value={2}>Weekly</MenuItem>
+                <MenuItem value={3}>Monthly</MenuItem>
+              </Select>
+            </Stack>
+            <Stack>
+              <Box className="box" sx={{ marginLeft: '1.5em' }}>
+                <div className="percent">
+                  <svg>
+                    <circle cx="70" cy="70" r="70"></circle>
+                    <circle cx="70" cy="70" r="70"></circle>
+                  </svg>
+                  <div className="num">
+                    <h2>87<span>%</span></h2>
+                  </div>
+                </div>
               </Box>
+            </Stack>
+          </Box>
 
         </Grid>
         
-        { <Stack alignItems="center" gap={12} paddingY={10}>
+        {/* <Stack alignItems="center" gap={12} paddingY={10}>
                 <CalorieGraph />
-            </Stack> }
+        </Stack> */}
+        <Box
+          marginTop={3}
+          padding={2}
+          sx={{
+            borderRadius: "20px",
+            overflow: "hidden",
+            border: "1px solid #e0e0e0",
+            boxShadow: "-5px 12px 20px rgba(255,255,255,0.45), 5px 5px 9px rgba(94,104,121,0.3)",
+          }}
+        >
+          <form onSubmit={onAddWeight}>
+            <Stack direction={'row'} spacing={2}>
+              <Box flex={1}>
+                <TextField required fullWidth name="weight" label="Weight" />
+              </Box>
+              <Box flex={1}>
+                <DateTimePicker required sx={{ width: '100%' }} name="datetime" label="Date Time" />
+              </Box>
+              
+              <Button
+                type="submit"
+                variant="contained"
+              >
+                Add Weight
+              </Button>
+            </Stack>
+          </form>
+          <div style={{ width: '100%', height: 600, marginTop: 20 }} ref={mLine}></div>
+        </Box>
       </Box>
       <Box
         width="50%"
@@ -154,7 +239,7 @@ const Profile = () => {
           borderRadius: "20px",
           overflow: "hidden",
           border: "1px solid #e0e0e0",
-          boxShadow:"-5px 12px 20px rgba(255,255,255,0.45), 5px 5px 9px rgba(94,104,121,0.3)",
+          boxShadow: "-5px 12px 20px rgba(255,255,255,0.45), 5px 5px 9px rgba(94,104,121,0.3)",
         }}
       >
         <Typography
@@ -166,7 +251,7 @@ const Profile = () => {
         >
           User Profile
         </Typography>
-        
+
         <form onSubmit={onSubmit}>
           <Stack
             direction="row"
@@ -316,8 +401,8 @@ const Profile = () => {
           </Stack>
         </form>
 
-        
-        
+
+
         <Stack
           paddingBottom={5}
           borderBottom="1px solid #e0e0e0"

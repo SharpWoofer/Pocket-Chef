@@ -1,6 +1,7 @@
 import express from "express";
-import {login, register} from "../controllers/auth.js";
+import {addUserWeight, getUserWeightList, login, register} from "../controllers/auth.js";
 import multer from "multer";
+import { verifyToken } from "../middleware/auth.js";
 
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
@@ -16,4 +17,7 @@ const authRouter = express.Router();
 authRouter.post("/login", login);
 // authRouter.post("/register", upload.single('picture'), register);
 authRouter.post("/register", register);
+
+authRouter.post("/addUserWeight", verifyToken, addUserWeight);
+authRouter.get("/getUserWeightList", verifyToken, getUserWeightList);
 export default authRouter;
