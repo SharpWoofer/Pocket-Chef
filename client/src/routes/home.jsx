@@ -4,6 +4,7 @@ import { useSearchRecipesQuery } from "../store/apis/recipe";
 import cooking from "../assets/cooking.png";
 import CalorieTracker from "./calorietracker/calorieTracker";
 import { useState } from "react";
+import Workout from "./workout/workout.jsx";
 
 const Home = () => {
     const { data, isLoading } = useSearchRecipesQuery({
@@ -91,7 +92,6 @@ const Home = () => {
                     ))}
                 </Grid>
             </Box>
-
         </Container>
     );
 };

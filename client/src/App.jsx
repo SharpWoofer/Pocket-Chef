@@ -1,12 +1,13 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Home from './routes/home';
-import Login from './routes/login';
+import Login from './routes/profile/login.jsx';
 import Root from './routes/root';
 import RecipeBook from './routes/recipes';
 import Recipe from './routes/recipes/recipe';
-import Register from './routes/register';
-import Profile from './routes/profile';
-import Calculator from './routes/calculator'
+import Register from './routes/profile/register.jsx';
+import Profile from './routes/calculator/profile.jsx';
+import Calculator from './routes/calculator/calculator.jsx'
+import Workout from "./routes/workout/workout.jsx";
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
             <Route path="register" element={<Register />} />
             <Route path="profile" element={<Profile />} />
             <Route path="calculator" element={<Calculator />} />
+            <Route path="fitness" element={<h1><Workout/></h1>} />
           </Route>
         </Routes>
       </BrowserRouter>

@@ -1,8 +1,8 @@
 import { Box, Button, FormControl, IconButton, InputLabel, MenuItem, Select, Stack, TextField, Typography, Snackbar } from "@mui/material"
 import { useNavigate } from "react-router-dom"
 import { Apple, Facebook, Google } from "@mui/icons-material"
-import { useRegisterMutation } from "../store/apis/auth"
-import Link from "../components/Link"
+import { useRegisterMutation } from "../../store/apis/auth.js"
+import Link from "../../components/Link.jsx"
 import { useState } from "react"
 
 
