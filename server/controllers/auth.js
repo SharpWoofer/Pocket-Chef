@@ -2,6 +2,7 @@ import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import validator from 'validator';
 import User from '../Models/user.js';
+import UserWeight from '../Models/userWeight.js';
 
 const createToken = (_id) => {
     return jwt.sign({_id}, process.env.SECRET_KEY);
@@ -100,3 +101,42 @@ export const addFavoriteRecipe = async (req, res) => {
         res.status(500).json({ error: error.message });
     }
 };
+
+
+/**
+ * Weight Line Chart
+ * @param {import('express').Request} req 
+ * @param {import('express').Response} res 
+ */
+export const addUserWeight = async(req, res) => {
+    try {
+        const mBody = req.body
+        const mUser = req.user
+
+        const mRes = await UserWeight.insertMany([
+            {
+                ...mBody,
+                user: mUser._id
+            }
+        ])
+        res.send(mRes)
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+}
+
+/**
+ * getUserWeightList
+ * @param {import('express').Request} req 
+ * @param {import('express').Response} res 
+ */
+export const getUserWeightList = async(req, res) => {
+    try {
+        const mUser = req.user
+
+        const mRes = await UserWeight.find({ user: mUser._id })
+        res.send(mRes)
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+}

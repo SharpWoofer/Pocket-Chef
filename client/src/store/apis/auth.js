@@ -5,7 +5,8 @@ const BACKEND_URL = import.meta.env.VITE_BACKEND_URL ?? 'http://localhost:5000';
 export const authApi = createApi({
     reducerPath: "authApi",
     baseQuery: fetchBaseQuery({
-        baseUrl: `${BACKEND_URL}/auth`
+        baseUrl: `${BACKEND_URL}/auth`,
+        // headers: 
     }),
     endpoints: (builder) => ({
         login: builder.mutation({
@@ -22,7 +23,26 @@ export const authApi = createApi({
                 body: payload
             })
         }),
+        addUserWeight: builder.mutation({
+            query: (payload) => ({
+                url: `/addUserWeight`,
+                method: 'POST',
+                headers: new Headers({
+                    'Authorization': 'Bearer ' + payload.token
+                }),
+                body: payload
+            })
+        }),
+        getUserWeightList: builder.mutation({
+            query: (payload) => ({
+                url: `/getUserWeightList`,
+                method: 'GET',
+                headers: new Headers({
+                    'Authorization': 'Bearer ' + payload.token
+                })
+            })
+        }),
     }),
 });
 
-export const { useLoginMutation, useRegisterMutation } = authApi;
+export const { useLoginMutation, useRegisterMutation, useAddUserWeightMutation, useGetUserWeightListMutation } = authApi;
