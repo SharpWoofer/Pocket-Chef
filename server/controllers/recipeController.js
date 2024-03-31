@@ -1,5 +1,5 @@
 import axios from 'axios';
-const apiKey = '9dcc520e32224a79850c022ccaf1632f';
+const apiKey = '55baf24f94d54d61bebf1e215b2bf7a2';
 import Recipe from '../Models/recipeModel.js';
 
 
