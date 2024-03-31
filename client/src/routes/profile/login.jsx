@@ -2,9 +2,9 @@ import { Box, Button, IconButton, Stack, TextField, Typography, Snackbar } from 
 import { useNavigate } from "react-router-dom"
 import { Google, Facebook, Apple } from "@mui/icons-material"
 import { useState } from "react"
-import { useLoginMutation } from "../store/apis/auth"
-import Link from "../components/Link"
-import { setCredentials, authSlice } from "../store/authSlice"
+import { useLoginMutation } from "../../store/apis/auth.js"
+import Link from "../../components/Link.jsx"
+import { setCredentials, authSlice } from "../../store/authSlice.js"
 import { useDispatch } from "react-redux"
 
 const Login = () => {

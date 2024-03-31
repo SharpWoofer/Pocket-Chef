@@ -1,25 +1,26 @@
-const axios = require('axios');
+import axios from 'axios';
 
-const searchByName = async (req, res) => {
-    //Parameter Fields:
-    const { Name } = req.params.nameParam;
-    const { Muscle } = req.params.muscleParam;
-    const { Difficulty } = req.params.difficultyParam;
-    const searchName = {
+export const searchExercises = async (req, res) => {
+    const muscle = req.body.muscle;
+    const options = {
         method: 'GET',
         url: 'https://exercises-by-api-ninjas.p.rapidapi.com/v1/exercises',
-        params: {name: Name, muscle: Muscle, difficulty: Difficulty},
+        params: { muscle: muscle, offset:'50' },
         headers: {
-          'X-RapidAPI-Key': 'e474e5b38dmsh9fcb2cfd3d3e1b6p160518jsnaf6f4cd120f4',
-          'X-RapidAPI-Host': 'exercises-by-api-ninjas.p.rapidapi.com'
+            'X-RapidAPI-Key': '595b8c7923msha97e6a5c944a4bep1d3d15jsnbf74c79a09b3',
+            'X-RapidAPI-Host': 'exercises-by-api-ninjas.p.rapidapi.com'
         }
     };
+
     try {
-        const response = await axios.request(searchName);
-        //console.log(response.data);  Debugging
-        res.status(200).json(response.data);
+        const response = await axios.request(options);
+        res.json(response.data); // Sending the results back to the frontend
     } catch (error) {
-        //console.error(error); Debugging
-        res.status(500).json({ error: error.message });
+        console.log("Failed here");
+        console.error('Error fetching data:', error);
+        res.status(500).json({ error: 'Error fetching data' });
     }
 };
+
+
+export default { searchExercises };

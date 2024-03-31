@@ -10,6 +10,8 @@ import path from "path";
 import { fileURLToPath } from "url";
 import recipeRoutes from "./routes/recipeRoutes.js";
 import authRouter from "./routes/auth.js";
+import calorieTrackerRouter from "./routes/calorieRoutes.js";
+import workoutRouter from "./routes/workoutRoutes.js";
 //import userRoutes from "./routes/user.js";
 
 /* CONFIGURATIONS */
@@ -25,6 +27,7 @@ app.use(bodyParser.json({limit: "30mb", extended: true}));
 app.use(bodyParser.urlencoded({limit: "30mb", extended: true}));
 app.use(cors());
 app.use("/assets",express.static(path.join(__dirname, "public/assets"))); // Serve static files stored locally
+// app.use('/api', userRoutes);
 
 /* FILE STORAGES */
 const storage = multer.diskStorage({
@@ -46,6 +49,10 @@ app.use("/auth", authRouter);
 
 /* INTEGRATING SPOONACULAR ROUTES */
 app.use("/recipes", recipeRoutes); // Use the spoonacular routes here
+
+app.use("/ingredients", calorieTrackerRouter);
+
+app.use("/searchWorkout", workoutRouter);
 
 /* MONGOOSE SETUP */
 // const PORT = process.env.PORT || 5000;

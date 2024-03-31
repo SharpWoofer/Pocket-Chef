@@ -38,12 +38,16 @@ const NavBar = () => {
       path: "/recipes"
     },
     {
-      name: "Community",
-      path: "/community"
+      name: "Fitness",
+      path: "/fitness"
     },
     {
       name: "About Us",
       path: "/aboutus"
+    },
+    {
+      name: "Calculator",
+      path: "/calculator"
     }
   ]
 

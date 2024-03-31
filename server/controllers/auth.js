@@ -79,3 +79,24 @@ export const login = async (req, res) => {
         res.status(500).json({ error: "Internal server error" });
     }
 };
+
+//fav recipes
+export const addFavoriteRecipe = async (req, res) => {
+    const { userId, recipeName } = req.body;
+
+    try {
+        const updatedUser = await User.findByIdAndUpdate(
+            userId, 
+            { $addToSet: { favoriteRecipes: recipeName } }, // Use $addToSet to avoid duplicates
+            { new: true } // Returns the updated user
+        );
+
+        if (updatedUser) {
+            res.status(200).json({ message: 'Favorite recipe added.', user: updatedUser });
+        } else {
+            res.status(404).json({ message: 'User not found.' });
+        }
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+};

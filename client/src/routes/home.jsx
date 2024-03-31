@@ -2,30 +2,41 @@ import { Box, Button, Container, Unstable_Grid2 as Grid, Stack, Typography } fro
 import { Link } from "react-router-dom";
 import { useSearchRecipesQuery } from "../store/apis/recipe";
 import cooking from "../assets/cooking.png";
+import CalorieTracker from "./calorietracker/calorieTracker";
+import { useState } from "react";
+import Workout from "./workout/workout.jsx";
 
 const Home = () => {
     const { data, isLoading } = useSearchRecipesQuery({
-        query: "burger",
-        number: 6
+        query: "chinese",
+        number: 6,
+        cuisine: '',
+        minCalories: 0,
+        maxCalories: 5000,
     });
     const recipes = data?.results ?? [];
-
-    console.log(recipes)
+    const [results, setResults] = useState([])
 
     return (
         //Landing Page
         <Container maxWidth="lg" sx={{
-            paddingY: 6
+            paddingY: 1
         }}>
-            <Stack direction="row" alignItems="center" gap={12} paddingY={10}>
-                <Box width="60%">
+            <Stack direction="row" alignItems="center" justifyContent="space-around" gap={12} paddingY={3}>
+                <Box width="50%" >
                     <Stack gap={2}>
                         <Typography variant="h2" sx={{
-                            fontSize: "3rem",
+                            fontSize: "4rem",
+                            fontWeight: "bold"
                         }}>
                             Cooking Made Fun and Easy: Unleash Your Inner Chef
                         </Typography>
-                        <Typography variant="body1">
+                        <Typography variant="body1" sx={{
+                            fontSize: "1rem",
+                            fontWeight: "400",
+                            color: "#555555",
+
+                        }}>
                             Discover new recipes, learn new cooking techniques, and explore the world of cooking. Join our community of food lovers and start cooking today!
                         </Typography>
                     </Stack>
@@ -41,9 +52,13 @@ const Home = () => {
                 <Box>
                     <img src={cooking} alt="cooking" style={{
                         width: "100%",
-                        height: "auto",
+                        height: "100%",
                     }} />
                 </Box>
+            </Stack>
+            {/* Calorie Tracker*/}
+            <Stack alignItems="center" gap={12} paddingY={10}>
+                <CalorieTracker setResults={setResults} />
             </Stack>
 
             {/* Recipe Deck */}
@@ -65,6 +80,7 @@ const Home = () => {
                                     aspectRatio: "4/3",
                                     objectFit: "cover",
                                     borderRadius: "8px",
+                                    boxShadow: "0 0 10px rgba(0, 0, 0, 0.2)",
                                 }} />
                                 <Typography variant="body1" sx={{
                                     fontWeight: "700",
