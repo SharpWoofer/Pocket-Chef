@@ -1,6 +1,6 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
-const BACKEND_URL = import.meta.env.VITE_BACKEND_URL ?? 'http://localhost:5000';
+const BACKEND_URL = import.meta.env.VITE_BACKEND_URL ?? 'http://localhost:5001';
 
 export const recipeApi = createApi({
     reducerPath: "recipeApi",
@@ -15,16 +15,16 @@ export const recipeApi = createApi({
             query: ({ query, number, cuisine, minCalories, maxCalories }) => `/search?q=${query}&number=${number}&cuisine=${cuisine}&minCalories=${minCalories}&maxCalories=${maxCalories}`,
         }),
         addFavoriteRecipe: builder.mutation({
-            query: ({username, recipeId }) => ({
-              url: `/favorites`,
-              method: 'POST',
-              body: { username, recipeId },
+            query: ({ username, recipeId }) => ({
+                url: `/favorites`,
+                method: 'POST',
+                body: { username, recipeId },
             }),
-          }),
-          getFavoriteRecipes: builder.query({
+        }),
+        getFavoriteRecipes: builder.query({
             query: (username) => `/favorites/${username}`,
         }),
-        
+
     }),
 });
 

@@ -1,6 +1,6 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
-const BACKEND_URL = import.meta.env.VITE_BACKEND_URL ?? 'http://localhost:5000';
+const BACKEND_URL = import.meta.env.VITE_BACKEND_URL ?? 'http://localhost:5001';
 
 export const ingredientApi = createApi({
     reducerPath: "ingredientApi",
@@ -31,14 +31,14 @@ export const ingredientApi = createApi({
         }),
         createCalCount: builder.mutation({
             query: (payload) => ({
-                url:`/createcal`,
+                url: `/createcal`,
                 method: 'POST',
                 body: payload
             }),
         }),
         updateCalCount: builder.mutation({
             query: (payload) => ({
-                url:`/updatecal`,
+                url: `/updatecal`,
                 method: 'POST',
                 body: payload
             }),
