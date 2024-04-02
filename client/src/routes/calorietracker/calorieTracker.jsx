@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Box, List, ListItem, ListItemText, InputAdornment, Stack, TextField, Typography, Button, InputLabel, Select, MenuItem} from "@mui/material";
+import { Box, List, ListItem, ListItemText, InputAdornment, Stack, TextField, Typography, Button, InputLabel, Select, MenuItem, Grid, Paper, FormControl} from "@mui/material";
 import { Search } from "@mui/icons-material";
 import { useSearchIngredientMutation, useGetIngredientByIdMutation, useGetCalCountMutation, useCreateCalCountMutation, useUpdateCalCountMutation } from '../../store/apis/ingredient';
 import dayjs from 'dayjs';
@@ -36,6 +36,7 @@ function CalorieTracker() {
 
     const handleSubmitSearch = async (event) => {
         event.preventDefault();
+        setSelectedIngredient(null);
         try {
             const {data: results} = await searchIngredient({ query: query });
             setSearchResults(results);
@@ -167,100 +168,127 @@ function CalorieTracker() {
 
     return (
         <Stack>
-            <Stack direction = "row">
-                <Box>
-                <LocalizationProvider dateAdapter={AdapterDayjs}>
-                <DemoContainer
-                components={[
-                    'StaticDatePicker',
-                ]}
-                >
-                <StaticDatePicker 
-                value={selectedDate}
-                onChange={handleDateChange}
-                defaultValue={dayjs('2024-03-23')} 
-                />
-                </DemoContainer>
-                </LocalizationProvider>
-                <Typography>Selected Date: {selectedDate.format('YYYY-MM-DD')}</Typography>
-                </Box>
-                <Box>
-                    {calData ? (
+            <Grid container spacing={3}>
+                <Grid item>
+                    <Paper elevation={4}>
+                        <LocalizationProvider dateAdapter={AdapterDayjs}>
+                        <DemoContainer
+                        components={[
+                            'StaticDatePicker',
+                        ]}
+                        >
+                        <StaticDatePicker 
+                        value={selectedDate}
+                        onChange={handleDateChange}
+                        defaultValue={dayjs('2024-03-23')} 
+                        />
+                        </DemoContainer>
+                        </LocalizationProvider>
+                    </Paper>
+                </Grid>
+                <Grid item>
+                    <Paper elevation={4}>
                         <Stack direction = "column">
-                            <Typography>Breakfast Calories: {calData.breakfastCal} </Typography>
-                            <Typography>Lunch Calories: {calData.lunchCal} </Typography>
-                            <Typography>Dinner Calories: {calData.dinnerCal} </Typography>
+                            <Box bgcolor="green" sx={{ px: 1, borderRadius: 1 }}>
+                                <Typography variant="h5" color = "white">Current calorie count</Typography>
+                            </Box>
+                            <Box sx={{ px: 1, borderRadius: 1 }}>
+                                {calData ? (
+                                    <Box sx={{py: 1}}>
+                                        <Stack direction = "column">
+                                            <Typography>Breakfast Calories: {calData.breakfastCal} </Typography>
+                                            <Typography>Lunch Calories: {calData.lunchCal} </Typography>
+                                            <Typography>Dinner Calories: {calData.dinnerCal} </Typography>
+                                        </Stack>
+                                    </Box>
+                                ) : (
+                                    <Box sx={{py: 1}}>
+                                        <Stack direction = "column">
+                                            <Typography>Breakfast Calories: 0 </Typography>
+                                            <Typography>Lunch Calories: 0 </Typography>
+                                            <Typography>Dinner Calories: 0 </Typography>
+                                        </Stack>
+                                    </Box>
+                                )}
+                            </Box>
+                            <Box bgcolor='green' sx={{ px: 1, borderRadius: 1 }}>
+                                <Typography variant='h5' color ='white'> Update calorie count</Typography>
+                            </Box>
+                            <Box sx={{ py: 1 }}>
+                                <form onSubmit={handleSubmitSearch}>
+                                    <TextField
+                                        type="search"
+                                        placeholder="Search for an ingredient..."
+                                        InputProps={{
+                                            startAdornment: (
+                                                <InputAdornment position="start">
+                                                    <Search />
+                                                </InputAdornment>
+                                            ),
+                                        }}
+                                        variant="standard"
+                                        fullWidth
+                                        onChange={(e) => handleChange(e.target.value)}
+                                    /><Button type="submit" variant="contained">Search</Button>
+                                </form>
+                            </Box>
+                            {selectedIngredient ? (
+                                <Typography>Selected: {selectedIngredient.name}</Typography>
+                            ) : (
+                                searchResults ? (
+                                    <List>
+                                        {searchResults.map(result => (
+                                        <ListItem key={result.id} button onClick={() => handleClickIngredient(result)}>
+                                            <ListItemText primary={result.name} />
+                                        </ListItem>
+                                        ))}
+                                    </List>
+                                ) : (
+                                    <Typography>Unable to retrieve ingredients</Typography>
+                                )
+                            )}
+                            <form onSubmit={handleSubmit}>
+                                <TextField
+                                    type="search"
+                                    placeholder="Enter amount..."
+                                    InputProps={{
+                                        startAdornment: (
+                                            <InputAdornment position="start">
+                                                <Search />
+                                            </InputAdornment>
+                                        ),
+                                    }}
+                                    variant="standard"
+                                    fullWidth
+                                    onChange={(e) => handleNum(e.target.value)}
+                                />
+                                <Button type="submit" variant="contained">Submit</Button>
+                            </form>
+                            <Typography>Total calories: {calCount} </Typography>
+                            <Box sx={{ py: 1 }}>
+                                <form onSubmit={handleAdd}>
+                                    <FormControl fullWidth>
+                                    <InputLabel size="small">Meal</InputLabel>
+                                        <Select
+                                            required
+                                            label="Meal"
+                                            name="meal"
+                                            size="small"
+                                            value={selectedMeal}
+                                            onChange={handleMealChange}
+                                        >
+                                            <MenuItem value="breakfast">Breakfast</MenuItem>
+                                            <MenuItem value="lunch">Lunch</MenuItem>
+                                            <MenuItem value="dinner">Dinner</MenuItem>
+                                        </Select>
+                                    </FormControl>
+                                    <Button type="submit" variant="contained">Add</Button>
+                                </form>
+                            </Box>
                         </Stack>
-                    ) : (
-                        <Typography> No entries for today :( </Typography>
-                    )}
-                </Box>
-            </Stack>
-            <Box>
-                <Typography variant="body1" noWrap>
-                    Search ingredient
-                </Typography>
-            </Box>
-            <form onSubmit={handleSubmitSearch}>
-                <TextField
-                    type="search"
-                    placeholder="Search for an ingredient..."
-                    InputProps={{
-                        startAdornment: (
-                            <InputAdornment position="start">
-                                <Search />
-                            </InputAdornment>
-                        ),
-                    }}
-                    variant="standard"
-                    fullWidth
-                    onChange={(e) => handleChange(e.target.value)}
-                /><Button type="submit" variant="contained">Search</Button>
-            </form>
-            { searchResults ? (
-            <List>
-                {searchResults.map(result => (
-                    <ListItem key={result.id} button onClick={() => handleClickIngredient(result)}>
-                        <ListItemText primary={result.name} />
-                    </ListItem>
-                ))}
-            </List> ) : (
-                <Typography> Unable to retreive ingredient</Typography>
-            )}
-            <form onSubmit={handleSubmit}>
-                <TextField
-                    type="search"
-                    placeholder="Enter amount..."
-                    InputProps={{
-                        startAdornment: (
-                            <InputAdornment position="start">
-                                <Search />
-                            </InputAdornment>
-                        ),
-                    }}
-                    variant="standard"
-                    fullWidth
-                    onChange={(e) => handleNum(e.target.value)}
-                />
-                <Button type="submit" variant="contained">Submit</Button>
-            </form>
-            <Typography>Total calories: {calCount} </Typography>
-            <form onSubmit={handleAdd}>
-                <InputLabel size="small">Meal</InputLabel>
-                    <Select
-                        required
-                        label="Meal"
-                        name="meal"
-                        size="small"
-                        value={selectedMeal}
-                        onChange={handleMealChange}
-                    >
-                        <MenuItem value="breakfast">Breakfast</MenuItem>
-                        <MenuItem value="lunch">Lunch</MenuItem>
-                        <MenuItem value="dinner">Dinner</MenuItem>
-                    </Select>
-                <Button type="submit" variant="contained">Add</Button>
-            </form>
+                    </Paper>
+                </Grid>
+            </Grid>
         </Stack>
     )
 }
