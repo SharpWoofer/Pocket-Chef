@@ -1,4 +1,3 @@
-import axios from 'axios';
 import Gym from '../Models/gym.js';
 
 export const searchGym = async (req, res) => {

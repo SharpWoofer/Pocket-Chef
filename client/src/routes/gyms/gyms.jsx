@@ -17,6 +17,7 @@ function Gyms() {
     }
     const handleSubmitSearch = async (event) => {
         event.preventDefault();
+        setSelectedGym(null);
         try {
             const {data: results} = await searchGym({ query: query });
             setSearchResults(results);
@@ -27,7 +28,7 @@ function Gyms() {
         }
     }
     return (
-        <Container maxWidth="md" sx={{
+        <Container maxWidth="sm" sx={{
             paddingY: 2
         }}>
             <Stack>
@@ -50,21 +51,39 @@ function Gyms() {
                         onChange={(e) => handleChange(e.target.value)}
                     /><Button type="submit" variant="contained">Search</Button>
                 </form>
-                { searchResults ? (
-                <List>
-                    {searchResults.map(result => (
-                        <ListItem key={result.id} button onClick={() => handleClickGym(result)}>
-                            <ListItemText primary={result.name} />
-                        </ListItem>
-                    ))}
-                </List> 
-                ) : (
-                    <Typography> Unable to retreive gyms</Typography>
-                )}
                 { selectedGym ? (
-                    <Typography>{selectedGym.name}, {selectedGym.addressPostalCode}</Typography>
+                    <Stack
+                        direction='column'
+                        spacing={2}
+                        py={2}
+                    >
+                        <Typography>Gym name: { selectedGym.name }</Typography>
+                        <Typography>Located in: { selectedGym.addressBuildingName }</Typography>
+                        <Typography>Address: { selectedGym.addressStreetName }, { selectedGym.addressPostalCode }</Typography>
+                        <Typography>Operating Hours:</Typography>
+                        <Box>
+                        {selectedGym.operatingHours.map((days, index) => (
+                            <Box key={index}>
+                                {days}
+                            </Box>))}
+                        </Box>
+                        <Typography>Phone number: { selectedGym.phoneNumber }</Typography>
+                        <Box>
+                            <Typography> Coordinates: { selectedGym.coordinates[0] }, {selectedGym.coordinates[1] }</Typography>
+                        </Box>
+                    </Stack>
                 ) : (
-                    <Typography>:(</Typography>
+                    searchResults.length > 0 ? (
+                        <List>
+                            {searchResults.map(result => (
+                                <ListItem key={result.id} button onClick={() => handleClickGym(result)}>
+                                    <ListItemText primary={result.name} />
+                                </ListItem>
+                            ))}
+                        </List> 
+                        ) : (
+                            <Typography> No gyms found </Typography>
+                        )
                 )}
             </Stack>
         </Container>

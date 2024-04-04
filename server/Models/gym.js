@@ -23,7 +23,7 @@ const gymSchema = new Schema ({
     },
     
     operatingHours: {
-        type: [Object],
+        type: [String],
         required: true
     },
 
