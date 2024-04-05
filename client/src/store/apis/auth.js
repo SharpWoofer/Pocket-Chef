@@ -23,6 +23,16 @@ export const authApi = createApi({
                 body: payload
             })
         }),
+        setUserInfo: builder.mutation({
+            query: (payload) => ({
+                url: `/setUserInfo`,
+                method: 'POST',
+                headers: new Headers({
+                    'Authorization': 'Bearer ' + payload.token
+                }),
+                body: payload
+            })
+        }),
         addUserWeight: builder.mutation({
             query: (payload) => ({
                 url: `/addUserWeight`,
@@ -45,4 +55,4 @@ export const authApi = createApi({
     }),
 });
 
-export const { useLoginMutation, useRegisterMutation, useAddUserWeightMutation, useGetUserWeightListMutation } = authApi;
+export const { useLoginMutation, useRegisterMutation, useAddUserWeightMutation, useGetUserWeightListMutation, useSetUserInfoMutation } = authApi;

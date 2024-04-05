@@ -29,7 +29,7 @@ function Recipes() {
         maxCalories: debouncedCalories[1],
     });
     const recipes = data?.results ?? [];
-    const username = useSelector(state => state.auth.user.username);
+    const username = useSelector(state => state.auth.user?.username);
 
 
     const cuisines = [

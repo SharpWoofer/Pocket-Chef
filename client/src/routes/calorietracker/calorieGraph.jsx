@@ -10,7 +10,7 @@ import { LineChart } from '@mui/x-charts/LineChart';
 
 
 function CalorieGraph() {
-    const currentUser = useSelector(state => state.auth.user.username);
+    const currentUser = useSelector(state => state.auth.user?.username);
     const [getCalCount] = useGetCalCountMutation();
     const [calData, setCalData] = useState([]);
 

@@ -6,22 +6,31 @@ import {
   Grid,
   MenuItem,
   Select,
+  Snackbar,
   Stack,
   TextField,
   Typography
 } from "@mui/material"
-import { useSelector } from "react-redux"
+import { useDispatch, useSelector } from "react-redux"
 import * as echatrs from 'echarts'
 //import CalorieGraph from "../calorietracker/calorieGraph"
 import "./profile.css"
-import { useEffect, useRef } from "react"
-import { useAddUserWeightMutation, useGetUserWeightListMutation } from "../../store/apis/auth"
+import { useEffect, useRef, useState } from "react"
+import { useAddUserWeightMutation, useGetUserWeightListMutation, useSetUserInfoMutation } from "../../store/apis/auth"
 import { DateTimePicker } from "@mui/x-date-pickers"
+import { useUploadFileMutation } from "../../store/apis/common"
+import { clearUserInfo, setLocalUserInfo } from "../../store/authSlice"
+import { useNavigate } from "react-router-dom"
 
 const Profile = () => {
   const { user, token } = useSelector((state) => state.auth)
+  const [message, setMessage] = useState()
+  const [setUserInfo] = useSetUserInfoMutation()
   const [addUserWeight] = useAddUserWeightMutation()
   const [getUserWeightList] = useGetUserWeightListMutation()
+  const [uploadFile] = useUploadFileMutation()
+  const mDispatch = useDispatch()
+  const mNavigate = useNavigate()
   const mLine = useRef()
 
   async function init() {
@@ -59,18 +68,37 @@ const Profile = () => {
     init()
   }, [])
 
-  const onSubmit = (event) => {
+  const onSubmit = async(event) => {
     event.preventDefault()
     const mForm = event.target.elements
-    const mBody = user || {}
+    const mBody = JSON.parse(JSON.stringify(user || {}))
     for (const item of mForm) {
       if (item.name) {
         mBody[item.name] = item.value
       }
     }
-    console.log(mBody)
+    await setUserInfo({
+      ...mBody,
+      token
+    })
+    mDispatch(setLocalUserInfo({
+      user: mBody
+    }))
+    setMessage({ msg: 'update successful!!!' })
   }
 
+  const onLogout = () => {
+    if (!confirm('Rally logout?')) {
+      return
+    }
+    mDispatch(clearUserInfo())
+    mNavigate('/login')
+  }
+
+  /**
+   * add user weight
+   * @param {Event} event 
+   */
   const onAddWeight = async(event) => {
     event.preventDefault()
     
@@ -85,8 +113,41 @@ const Profile = () => {
     await init()
   }
 
+  /**
+   * upload user avatar
+   */
+  const uploadAvatar = () => {
+    const mDom = document.createElement('input')
+    mDom.type = 'file'
+    mDom.click()
+    mDom.onchange = async({ target }) => {
+      const [mFile] = target.files
+      const mFormData = new FormData()
+      mFormData.append('file', mFile)
+      const { data } = await uploadFile(mFormData)
+      const picture = import.meta.env.VITE_BACKEND_URL + data.path
+      await setUserInfo({ picture, token })
+      
+      mDispatch(setLocalUserInfo({
+        user: {
+          ...user,
+          picture
+        }
+      }))
+      setMessage({ msg: 'update successful!!!' })
+    }
+    mDom.remove()
+  }
+
   return (
     <Stack direction="row" alignItem="center" justifyContent="space-around" >
+      <Snackbar
+        anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+        open={message ? true : false}
+        autoHideDuration={1500}
+        message={message?.msg}
+        onClose={() => setMessage(null)}
+      />
       <Box
         width="45%"
       >
@@ -262,13 +323,13 @@ const Profile = () => {
             marginBottom="50px"
           >
             <Stack direction="row" spacing="10px" alignItems="center">
-              <Avatar sx={{ width: 100, height: 100 }} />
+              <Avatar sx={{ width: 100, height: 100 }} src={user.picture} />
               <Stack>
                 <Typography>{user.username}</Typography>
               </Stack>
             </Stack>
             <Stack direction="row" spacing={4}>
-              <Button variant="contained">Upload New Photo</Button>
+              <Button variant="contained" onClick={uploadAvatar}>Upload New Photo</Button>
               <Button variant="contained" color="error">Delete</Button>
             </Stack>
           </Stack>
@@ -286,11 +347,11 @@ const Profile = () => {
               >
                 <Stack flex="1">
                   <FormLabel>First Name</FormLabel>
-                  <TextField defaultValue={user.firstName} size="small"></TextField>
+                  <TextField name="firstName" defaultValue={user.firstName} size="small"></TextField>
                 </Stack>
                 <Stack flex="1">
                   <FormLabel>Last Name</FormLabel>
-                  <TextField defaultValue={user.lastName} size="small"></TextField>
+                  <TextField name="lastName" defaultValue={user.lastName} size="small"></TextField>
                 </Stack>
               </Stack>
               <Stack
@@ -300,11 +361,11 @@ const Profile = () => {
               >
                 <Stack flex="1">
                   <FormLabel>User Name</FormLabel>
-                  <TextField defaultValue={user.username} size="small"></TextField>
+                  <TextField name="username" defaultValue={user.username} size="small"></TextField>
                 </Stack>
                 <Stack flex="1">
                   <FormLabel>Email</FormLabel>
-                  <TextField defaultValue={user.email} size="small"></TextField>
+                  <TextField name="email" defaultValue={user.email} size="small"></TextField>
                 </Stack>
               </Stack>
             </Stack>
@@ -408,7 +469,7 @@ const Profile = () => {
           borderBottom="1px solid #e0e0e0"
           marginBottom="50px"
         >
-          <Button variant="contained" color="error">Logout</Button>
+          <Button variant="contained" color="error" onClick={onLogout}>Logout</Button>
         </Stack>
       </Box>
     </Stack>
