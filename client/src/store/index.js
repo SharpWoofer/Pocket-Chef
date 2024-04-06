@@ -11,7 +11,7 @@ import {
 } from "redux-persist";
 import storage from "redux-persist/lib/storage";
 import authReducer from "./authSlice";
-import { authApi, recipeApi, ingredientApi,workoutApi, gymApi, commonApi } from "./apis";
+import { authApi, recipeApi, ingredientApi,workoutApi, gymApi } from "./apis";
 
 const persistConfig = {
     key: "root",
@@ -39,7 +39,6 @@ export const store = configureStore({
                 ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
             },
         })
-            .concat(commonApi.middleware)
             .concat(authApi.middleware)
             .concat(recipeApi.middleware)
             .concat(ingredientApi.middleware) // Add ingredientApi middleware

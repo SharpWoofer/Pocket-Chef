@@ -27,7 +27,7 @@ const userSchema = mongoose.Schema({
     type: String,
     default: "",
   },
-  weight: {
+  width: {
     type: String,
     default: "",
   },
