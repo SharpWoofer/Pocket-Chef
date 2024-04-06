@@ -1,0 +1,92 @@
+
+/* Custom Styles for the Recipes Page */
+.recipe-card {
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease-in-out;
+}
+
+.recipe-card:hover {
+    transform: scale(1.05);
+}
+
+.custom-searchbar {
+    border-radius: 20px;
+    background-color: white;
+}
+
+.custom-slider {
+    color: #6f4e37; /* Example color, adjust as needed */
+}
+
+
+.search-and-filter {
+    background-color: #121212;
+    color: white;
+    border-radius: 4px;
+    padding: 16px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.search-bar {
+    background-color: #1e1e1e;
+    border: 2px solid #39a847;
+    border-radius: 50px;
+    color: white;
+}
+
+.cuisine-selector {
+    background-color: #1e1e1e;
+    border: 2px solid #39a847;
+    border-radius: 50px;
+    color: white;
+}
+
+.range-slider {
+    color: #39a847; /* This is the green accent color */
+}
+
+/* Custom styles for the recipe search feature */
+.search-bar-container {
+    background-color: #fff;
+    border-radius: 22px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.search-input {
+    border-radius: 22px;
+    height: 40px;
+}
+
+/* Custom slider thumb style */
+.slider-thumb {
+    height: 24px;
+    width: 24px;
+    background-color: #2e7d32;
+}
+
+/* Custom slider track style */
+.slider-track {
+    background-color: #2e7d32;
+}
+
+/* Custom slider rail style */
+.slider-rail {
+    background-color: #ccc;
+}
+
+/* ... existing styles ... */
+
+.selector-container {
+    background-color: #fff; /* Assuming a white background */
+    border-radius: 22px; /* Fully rounded edges */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.selector-input {
+    border-radius: 22px;
+    padding: 10px 14px;
+    color: #121212; /* Dark text color for the input */
+    font-weight: bold;
+}

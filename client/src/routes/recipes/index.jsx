@@ -162,37 +162,59 @@ function Recipes() {
                 ) :
                     recipes.length ?
                         (
-                            <Box width={1}>
-                                <ImageList
-                            variant="masonry"
-                            cols={4}
-                            gap={16}
-                            rowHeight={200}
-                            sx={{
-                                paddingY: 2
-                            }}
-                            >
-                                {recipes.map(({ id, title, image }) => (
-                                    <ImageListItem key={id}>
-                                        <img
-                                            src={image}
-                                            alt={title}
-                                            loading="lazy"
-                                        />
+                            <Box width={1} sx={{ overflow: 'hidden', py: 2 }}>
+                                <ImageList variant="masonry" cols={4} gap={16}>
+                                    {recipes.map(({ id, title, image }) => (
                                         <Link to={`/recipes/${id}`} style={{ textDecoration: 'none' }}>
-                                            <ImageListItemBar title={title} />
+                                            <ImageListItem key={id} sx={{
+                                                borderRadius: 2,
+                                                overflow: 'hidden',
+                                                position: 'relative',
+                                                boxShadow: 1,
+                                                transition: 'transform 0.3s ease',
+                                                '&:hover': {
+                                                    transform: 'scale(1.05)',
+                                                    "& .image-title-overlay": {
+                                                        backgroundColor: 'rgba(0, 0, 0, 0.5)'
+                                                    }
+                                                }
+                                            }}>
+                                                <img
+                                                    src={`${image}?w=248&fit=crop&auto=format`}
+                                                    srcSet={`${image}?w=248&fit=crop&auto=format&dpr=2 2x`}
+                                                    alt={title}
+                                                    loading="lazy"
+                                                    style={{ width: '100%', height: '100%', display: 'block' }}
+                                                />
+                                                <Box className="image-title-overlay" sx={{
+                                                    position: 'absolute',
+                                                    bottom: 0,
+                                                    left: 0,
+                                                    width: '100%',
+                                                    backgroundColor: 'rgba(0, 0, 0, 0.3)',
+                                                    color: 'white',
+                                                    textAlign: 'center',
+                                                    p: 1
+                                                }}>
+                                                    {title}
+                                                </Box>
+                                                <IconButton
+                                                    sx={{
+                                                        position: 'absolute',
+                                                        top: 8,
+                                                        right: 8,
+                                                        backgroundColor: 'white',
+                                                        '&:hover': { backgroundColor: '#f4f4f4' }
+                                                    }}
+                                                    onClick={(event) => handleAddToFavorites(event, id, title)}
+                                                    aria-label={`add to favorites ${title}`}
+                                                >
+                                                    <FavoriteBorder />
+                                                </IconButton>
+                                            </ImageListItem>
                                         </Link>
-                                        <IconButton
-                                            sx={{ position: 'absolute', top: 0, right: 0 }}
-                                            onClick={(event) => handleAddToFavorites(event, id, title)}
-                                            aria-label={`add to favorites ${title}`}
-                                        >
-                                            <FavoriteBorder />
-                                        </IconButton>
-
-                                    </ImageListItem>
-                                ))}
-                            </ImageList>
+                                    ))}
+                                </ImageList>
                             </Box>
                         ) :
                         <Box width={1}>
