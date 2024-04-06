@@ -1,7 +1,7 @@
 import { Container, Typography } from "@mui/material";
 import { useParams } from "react-router-dom";
 import { useGetRecipeByIdQuery } from '../../store/apis/recipe';
-import './recipeStyles.css';
+//import './recipeStyles.css';
 
 
 export default function Recipe() {

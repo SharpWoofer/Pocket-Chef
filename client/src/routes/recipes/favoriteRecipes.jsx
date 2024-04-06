@@ -17,7 +17,7 @@ function FavoriteRecipes({ username, addFavoriteRecipe }) {
     const fetchRecipeDetails = async (favoriteRecipes) => {
         try {
             const detailsPromises = favoriteRecipes.map(recipeId =>
-                axios.get(`http://localhost:5000/recipes/${recipeId}`)
+                axios.get(`http://localhost:5001/recipes/${recipeId}`)
             );
             const detailsResponses = await Promise.all(detailsPromises);
             const details = detailsResponses.map(response => response.data);
