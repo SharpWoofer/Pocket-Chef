@@ -5,8 +5,8 @@ import {useGetRecipeByIdQuery} from '../../store/apis/recipe';
 
 
 export default function Recipe() {
-    const { id } = useParams();
-    const { data: recipe, isLoading } = useGetRecipeByIdQuery(id);
+    const {id} = useParams();
+    const {data: recipe, isLoading} = useGetRecipeByIdQuery(id);
 
     return (
         <Container maxWidth="md" className="recipe-container">
@@ -17,7 +17,7 @@ export default function Recipe() {
                     </Typography>
                     : recipe && (
                     <div>
-                        <img src={recipe.image} alt={recipe.title} className="recipe-image" />
+                        <img src={recipe.image} alt={recipe.title} className="recipe-image"/>
                         <Typography variant="h2" className="recipe-title">
                             {recipe.title}
                         </Typography>
@@ -38,8 +38,9 @@ export default function Recipe() {
                         <Typography variant="h4" className="recipe-section-title">
                             Instructions:
                         </Typography>
-                        <Typography variant="body1" className="recipe-instructions" dangerouslySetInnerHTML={{ __html: recipe.instructions }} />
-                    </div >
+                        <Typography variant="body1" className="recipe-instructions"
+                                    dangerouslySetInnerHTML={{__html: recipe.instructions}}/>
+                    </div>
                 )
             }
         </Container>

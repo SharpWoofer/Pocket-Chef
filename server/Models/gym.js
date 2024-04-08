@@ -2,16 +2,16 @@ import mongoose from 'mongoose';
 
 const Schema = mongoose.Schema;
 
-const gymSchema = new Schema ({
+const gymSchema = new Schema({
     name: {
-        type : String,
-        required : true
+        type: String,
+        required: true
     },
 
     addressBuildingName: {
         type: String // only put if its located in a building e.g mall
     },
-    
+
     addressPostalCode: {
         type: String,
         required: true,
@@ -21,7 +21,7 @@ const gymSchema = new Schema ({
         type: String,
         required: true,
     },
-    
+
     operatingHours: {
         type: [String],
         required: true

@@ -14,7 +14,7 @@ router.post('/login', login);
 router.get('/protected', verifyToken, (req, res) => {
     // Access user ID from req.user
     const userId = req.user._id;
-    res.json({ message: 'Protected route accessed', userId });
+    res.json({message: 'Protected route accessed', userId});
 });
 
 export default router;

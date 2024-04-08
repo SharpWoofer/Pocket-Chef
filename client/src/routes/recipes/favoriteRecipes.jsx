@@ -3,7 +3,7 @@ import {Container, ImageList, ImageListItem, ImageListItemBar} from "@mui/materi
 import React, {useEffect, useState} from 'react';
 import axios from 'axios';
 
-function FavoriteRecipes({ favoriteRecipes }) {
+function FavoriteRecipes({favoriteRecipes}) {
     const [favoriteRecipesDetails, setFavoriteRecipesDetails] = useState([]);
 
     const fetchRecipeDetails = async (favoriteRecipes) => {
@@ -22,17 +22,17 @@ function FavoriteRecipes({ favoriteRecipes }) {
 
     return (
         <Container maxWidth="lg">
-            <ImageList variant="masonry" gap={16} rowHeight={200} sx={{ paddingY: 2 }}>
+            <ImageList variant="masonry" gap={16} rowHeight={200} sx={{paddingY: 2}}>
                 {favoriteRecipesDetails.map((recipe) => (
-                    <ImageListItem key={recipe.id} sx={{ height: 'auto' }}> {/* Ensure consistent height */}
-                        <Link to={`/recipes/${recipe.id}`} style={{ textDecoration: 'none', position: 'relative' }}>
+                    <ImageListItem key={recipe.id} sx={{height: 'auto'}}> {/* Ensure consistent height */}
+                        <Link to={`/recipes/${recipe.id}`} style={{textDecoration: 'none', position: 'relative'}}>
                             <img
                                 src={recipe.image}
                                 alt={recipe.title}
                                 loading="lazy"
-                                style={{ width: '100%', height: 'auto', display: 'block' }}
+                                style={{width: '100%', height: 'auto', display: 'block'}}
                             />
-                            <ImageListItemBar title={recipe.title} position="below" />
+                            <ImageListItemBar title={recipe.title} position="below"/>
                         </Link>
                     </ImageListItem>
                 ))}

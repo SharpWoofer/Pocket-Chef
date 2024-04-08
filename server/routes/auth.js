@@ -4,14 +4,14 @@ import multer from "multer";
 import {verifyToken} from "../middleware/auth.js";
 
 const storage = multer.diskStorage({
-  destination: (req, file, cb) => {
-      cb(null, "public/assets");
-  },
-  filename: (req, file, cb) => {
-      cb(null, `${file.originalname}`);
-  }
+    destination: (req, file, cb) => {
+        cb(null, "public/assets");
+    },
+    filename: (req, file, cb) => {
+        cb(null, `${file.originalname}`);
+    }
 });
-const upload = multer({storage: storage}); 
+const upload = multer({storage: storage});
 
 const authRouter = express.Router();
 authRouter.post("/login", login);
