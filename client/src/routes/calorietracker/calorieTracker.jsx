@@ -8,6 +8,7 @@ import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { StaticDatePicker } from '@mui/x-date-pickers/StaticDatePicker';
 import { useSelector } from 'react-redux';
+import CalorieGraph from "./calorieGraph.jsx";
 
 function CalorieTracker() {
     const [query, setQuery] = useState("");
@@ -168,7 +169,46 @@ function CalorieTracker() {
 
     return (
         <Stack>
-            <Grid container spacing={3}>
+            <Grid container spacing={4} style={{
+                display:"flex",
+                justifyContent:"center",
+                alignItems:"center",
+            }}>
+                <Grid item style={{
+                    width: "54%",
+
+                }}>
+                    <Box
+                        sx={{
+                            borderBottom: 2,
+                            borderColor: '#12365F',
+                            height: "12vh",
+                            width: "100%",
+                        }}
+                    >
+                        <Typography
+                            variant="h1" // Changed from 'header1' to 'h1' for correct variant usage
+                            sx={{
+                                color: '#12365F',
+                                textAlign: 'start',
+                                fontSize: "9vh",
+                                paddingLeft: "0.2em",
+                                fontWeight: "bolder",
+                                letterSpacing: "2px",
+                                paddingBottom: "0.25em", // Adjust this value as needed for proper underline spacing
+                            }}
+                        >
+                            Calories Tracking
+                        </Typography>
+                    </Box>
+
+                    <Typography style={{ color: '#1236F', textAlign: 'start', fontSize:"1.8vh", paddingLeft:"0.2em", letterSpacing:"2px", marginLeft:"1em", marginTop:"1em", marginBottom:"2em"}}>
+                        Master your weight management journey — consistency is key! Effortlessly monitor your daily caloric consumption with our intuitive calorie tracker, and stay on the path to your wellness goals.
+                    </Typography>
+                    <Paper elevation={4}>
+                        <CalorieGraph/>
+                    </Paper>
+                </Grid>
                 <Grid item>
                     <Paper elevation={4}>
                         <LocalizationProvider dateAdapter={AdapterDayjs}>
@@ -187,7 +227,11 @@ function CalorieTracker() {
                     </Paper>
                 </Grid>
                 <Grid item>
-                    <Paper elevation={4}>
+                    <Paper elevation={4} sx={{
+                        width: "100%",
+                        padding: "1em",
+                        height:"120%"
+                    }}>
                         <Stack direction="column">
                             <Box bgcolor="green" padding={1} sx={{ px: 1, borderRadius: 1 }}>
                                 <Typography color="white" sx={{ fontWeight: 600, fontSize: '1.1rem', letterSpacing: '0.075rem' }}>CALORIE COUNT</Typography>

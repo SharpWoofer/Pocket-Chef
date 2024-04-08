@@ -57,8 +57,8 @@ function CalorieGraph() {
     <LineChart
       xAxis={[{ data: calData.map((entry) => entry.date) }]}
       series={[{ data: calData.map((entry) => entry.calories) }]}
-      width={500}
-      height={300}
+      width={800}
+      height={490}
     />
   );
 
