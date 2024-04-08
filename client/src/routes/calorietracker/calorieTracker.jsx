@@ -219,8 +219,7 @@ function CalorieTracker() {
                             </Typography>
 
                             <Typography style={{ color: '#1236F', textAlign: 'start', fontSize:"1.8vh", paddingLeft:"0.2em", letterSpacing:"2px", marginLeft:"1em", marginTop:"1em", marginBottom:"2em"}}>
-                                Master your weight management journey — consistency is key! Effortlessly monitor your daily caloric consumption with our intuitive calorie tracker, and stay on the path to your wellness goals.
-                            </Typography>
+                                Fuel your fitness journey with precision! Our calorie tracking tool is designed to be your daily companion in managing your dietary goals. From the avid gym-goer to the health-conscious foodie, effortlessly log every bite and monitor your caloric intake to ensure you're on track for success. With our user-friendly interface, maintaining your nutrition has never been more straightforward or more motivating. Track, adjust, and conquer—your path to a healthier you starts here!                            </Typography>
                             <Paper elevation={4}>
                                 <CalorieGraph/>
                             </Paper>

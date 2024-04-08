@@ -65,7 +65,7 @@ function Gyms() {
                     <Typography style={{ color: '#1236F', textAlign: 'start', fontSize:"1.8vh", paddingLeft:"0.2em", letterSpacing:"2px", marginLeft:"1em", marginTop:"1em", marginBottom:"2em"}}>
                         Discover your perfect fitness space with ease! Our website is your ultimate gym locator, guiding you to your next workout haven. Whether you're seeking a local spot for a quick session or a fully equipped center for a rigorous routine, we connect you to a variety of gyms in your vicinity. Say goodbye to endless searches and hello to more time lifting, running, and achieving your fitness goals!
                     </Typography>
-                    <Box component="form" onSubmit={handleSubmitSearch} sx={{ display: 'flex', gap: 2 }}>
+                    <Box component="form" onSubmit={handleSubmitSearch} sx={{ display: 'flex', gap: 2, mt:12, ml:4}}>
                         <TextField
                             type="search"
                             placeholder="Input name of town or name of gym..."
@@ -84,7 +84,7 @@ function Gyms() {
                             Search
                         </Button>
                     </Box>
-                    <Stack style={{width:"50em"}}>
+                    <Stack style={{width:"50em", marginLeft:40}}>
                         {searchResults.length > 0 ? (
                         <List sx={{ bgcolor: 'background.paper', overflow: 'auto', maxHeight: 300, borderRadius: 1, boxShadow: 1 }}>
                             {searchResults.map(result => (
