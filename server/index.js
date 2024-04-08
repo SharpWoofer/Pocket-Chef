@@ -54,7 +54,7 @@ app.use("/recipes", recipeRoutes); // Use the spoonacular routes here
 
 app.use("/ingredients", calorieTrackerRouter);
 
-app.use("/searchWorkout", workoutRouter);
+app.use("/workout", workoutRouter);
 
 app.use('/recipes/favorites', favoriteRoutes);
 
