@@ -55,7 +55,7 @@ function Gyms() {
                             letterSpacing: "2px",
                             paddingBottom: "0.25em", // Adjust this value as needed for proper underline spacing
                         }}>
-                        Calculate Your Measurements
+                        Find a Neighbourhood Gym Near You
                     </Typography>
 
                     <Typography style={{ color: '#1236F', textAlign: 'start', fontSize:"1.8vh", paddingLeft:"0.2em", letterSpacing:"2px", marginLeft:"1em", marginTop:"1em", marginBottom:"2em"}}>
