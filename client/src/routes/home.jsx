@@ -15,24 +15,22 @@ const Home = () => {
         maxCalories: 5000,
     });
     const recipes = data?.results ?? [];
-    const [results, setResults] = useState([])
-
     return (
         //Landing Page
-        <Container maxWidth="lg" sx={{
+        <Container maxWidth="1900px" sx={{
             paddingY: 1
         }}>
             <Stack direction="row" alignItems="center" justifyContent="space-around" gap={12} paddingY={3}>
-                <Box width="50%" >
+                <Box width="60%" >
                     <Stack gap={2}>
                         <Typography variant="h2" sx={{
-                            fontSize: "4rem",
+                            fontSize: "4.3rem",
                             fontWeight: "bold"
                         }}>
                             Cooking Made Fun and Easy: Unleash Your Inner Chef
                         </Typography>
                         <Typography variant="body1" sx={{
-                            fontSize: "1rem",
+                            fontSize: "1.2rem",
                             fontWeight: "400",
                             color: "#555555",
 
@@ -49,16 +47,12 @@ const Home = () => {
                         </Button>
                     </Link>
                 </Box>
-                <Box>
+                <Box width="40%">
                     <img src={cooking} alt="cooking" style={{
                         width: "100%",
                         height: "100%",
                     }} />
                 </Box>
-            </Stack>
-            {/* Calorie Tracker*/}
-            <Stack alignItems="center" gap={12} paddingY={10}>
-                <CalorieTracker setResults={setResults} />
             </Stack>
 
             {/* Recipe Deck */}

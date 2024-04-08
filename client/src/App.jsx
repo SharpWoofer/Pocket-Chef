@@ -11,8 +11,12 @@ import Workout from "./routes/workout/workout.jsx";
 import Gyms from "./routes/gyms/gyms.jsx";
 import { LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import './App.css';
+import {useState} from "react";
+import CalorieTracker from "./routes/calorietracker/calorieTracker.jsx";
 
 function App() {
+  const [results, setResults] = useState([])
   return (
     <div className="app">
       <LocalizationProvider dateAdapter={AdapterDayjs}>
@@ -28,6 +32,7 @@ function App() {
               <Route path="calculator" element={<Calculator />} />
               <Route path="fitness" element={<h1><Workout/></h1>} />
               <Route path="gyms" element={<Gyms />} />
+              <Route path="calorietracker" element={<CalorieTracker setResults={setResults} />} />
             </Route>
           </Routes>
         </BrowserRouter>

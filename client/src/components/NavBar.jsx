@@ -46,8 +46,8 @@ const NavBar = () => {
       path: "/gyms"
     },
     {
-      name: "About Us",
-      path: "/aboutus"
+      name: "Calories Tracker",
+      path: "/calorietracker"
     },
     {
       name: "Calculator",

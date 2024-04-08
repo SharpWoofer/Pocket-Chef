@@ -30,14 +30,12 @@ function Gyms() {
         }
     }
     return (
-        <Container maxWidth="sm" sx={{
-            paddingY: 2
-        }}>
-            <Stack>
-                <Box>
-                    <Typography variant="body1" noWrap>Search for a gym</Typography>
-                </Box>
-                <form onSubmit={handleSubmitSearch}>
+        <Container maxWidth="2000px" sx={{ py: 4 }}>
+            <Stack spacing={3}>
+                <Typography variant="h6" noWrap>
+                    Search for a gym
+                </Typography>
+                <Box component="form" onSubmit={handleSubmitSearch} sx={{ display: 'flex', gap: 2 }}>
                     <TextField
                         type="search"
                         placeholder="Input name of town or name of gym..."
@@ -48,64 +46,123 @@ function Gyms() {
                                 </InputAdornment>
                             ),
                         }}
-                        variant="standard"
+                        variant="outlined"
                         fullWidth
                         onChange={(e) => handleChange(e.target.value)}
-                    /><Button type="submit" variant="contained">Search</Button>
-                </form>
-                { selectedGym ? (
-                    <Stack
-                        direction='column'
-                        spacing={2}
-                        py={2}
-                    >
-                        <Typography>Gym name: { selectedGym.name }</Typography>
-                        <Typography>Located in: { selectedGym.addressBuildingName }</Typography>
-                        <Typography>Address: { selectedGym.addressStreetName }, { selectedGym.addressPostalCode }</Typography>
-                        <Typography>Operating Hours:</Typography>
-                        <Box>
-                        {selectedGym.operatingHours.map((days, index) => (
-                            <Box key={index}>
-                                {days}
-                            </Box>))}
+                    />
+                    <Button type="submit" variant="contained" color="primary">
+                        Search
+                    </Button>
+                </Box>
+                {selectedGym ? (
+                    <Stack style={{ position: 'relative', height: '30vh' }}>
+                        <img src="./gym1.png" style={{ width: '100%', height: '100%', objectFit: 'cover' }} alt="Gym banner" />
+                        <Box
+                            style={{
+                                position: 'absolute',
+                                top: 0,
+                                left: 0,
+                                width: '100%',
+                                height: '100%',
+                                backgroundColor: 'rgba(0, 0, 0, 0.5)', // This gives the translucent effect
+                                display: 'flex',
+                                justifyContent: 'center',
+                                alignItems: 'center',
+                            }}
+                        >
+                            <Typography variant="header1" style={{ color: '#fff', textAlign: 'start', fontSize:"9vh", paddingLeft:"0.2em", fontWeight:"bolder", letterSpacing:"2px" }}>
+                                {selectedGym.name}
+                            </Typography>
                         </Box>
-                        <Typography>Phone number: { selectedGym.phoneNumber }</Typography>
-                        <Box style={{height:"400px", width:"100%"}}>
-                            <GoogleMapReact
-                            bootstrapURLKeys={{key: "AIzaSyCK1FFoRojFpDYrLA28EWLZLbYmvnGs7ok"}}
-                            defaultCenter={{lat: selectedGym.coordinates[0], lng: selectedGym.coordinates[1]}}
-                            defaultZoom={15}
+                        <Stack direction="row" >
+                            <Box sx={{ height: "55vh", width: '60%', mt: 2 , border:1, borderColor:"divider", borderRadius:2}}>
+                                <GoogleMapReact
+                                    bootstrapURLKeys={{key: "AIzaSyCK1FFoRojFpDYrLA28EWLZLbYmvnGs7ok"}}
+                                    defaultCenter={{lat: selectedGym.coordinates[0], lng: selectedGym.coordinates[1]}}
+                                    defaultZoom={15}
+                                >
+                                    <div style={{
+                                        color: 'white',
+                                        background: 'red',
+                                        padding: '10px',
+                                        display: 'inline-flex',
+                                        textAlign: 'center',
+                                        alignItems: 'center',
+                                        justifyContent: 'center',
+                                        borderRadius: '100%',
+                                        transform: 'translate(-50%, -50%)'
+                                    }}>
+                                    </div>
+                                </GoogleMapReact>
+                            </Box>
+                            <Box
+                                sx={{
+                                    mt:2,
+                                    width:"40%",
+                                    ml: "2em",  // This is the same as marginLeft but using the shorthand property
+                                    border: 1,
+                                    borderColor: 'divider',
+                                    borderRadius: 2,
+                                    p: 2,
+                                    bgcolor: 'background.paper',
+                                    boxShadow: 1,
+                                    '&:hover': {
+                                        boxShadow: 3,
+                                    },
+                                }}
                             >
-                                <div style={{
-                                    color: 'white',
-                                    background: 'red',
-                                    padding: '10px',
-                                    display: 'inline-flex',
-                                    textAlign: 'center',
-                                    alignItems: 'center',
-                                    justifyContent: 'center',
-                                    borderRadius: '100%',
-                                    transform: 'translate(-50%, -50%)'
-                                }}>
-                                </div>
-                            </GoogleMapReact>
-                        </Box>
-                    </Stack>
-                ) : (
+                                <Typography variant="body1" color="primary" sx={{ mb: 1, fontWeight: 'bold', fontSize: '1.1rem' }}>
+                                    Located in:
+                                </Typography>
+                                <Typography variant="body1" color="text.primary" sx={{ mb: 1, fontSize: '1.1rem' }}>
+                                    {selectedGym.addressBuildingName}
+                                </Typography>
+
+                                <Typography variant="body1" color="primary" sx={{ mb: 1, fontWeight: 'bold', fontSize: '1.1rem' }}>
+                                    Address:
+                                </Typography>
+                                <Typography variant="body1" color="text.primary" sx={{ mb: 1, fontSize: '1.1rem' }}>
+                                    {selectedGym.addressStreetName}, {selectedGym.addressPostalCode}
+                                </Typography>
+
+                                <Typography variant="body1" color="primary" sx={{ mb: 1, fontWeight: 'bold', fontSize: '1.1rem' }}>
+                                    Operating Hours:
+                                </Typography>
+                                <Box sx={{ pl: 2, mb: 1 }}>
+                                    {selectedGym.operatingHours.map((day, index) => (
+                                        <Typography key={index} variant="body2" color="text.primary" sx={{ mb: 0.5, fontSize: '1.05rem' }}>
+                                            {day}
+                                        </Typography>
+                                    ))}
+                                </Box>
+
+                                <Typography variant="body1" color="primary" sx={{ fontWeight: 'bold', fontSize: '1.1rem' }}>
+                                    Phone number:
+                                </Typography>
+                                <Typography variant="body1" color="text.primary" sx={{ fontSize: '1.1rem' }}>
+                                    {selectedGym.phoneNumber}
+                                </Typography>
+                            </Box>
+
+
+                        </Stack>
+
+                    </Stack>) : (
                     searchResults.length > 0 ? (
-                        <List>
+                        <List sx={{ bgcolor: 'background.paper', overflow: 'auto', maxHeight: 300, borderRadius: 1, boxShadow: 1 }}>
                             {searchResults.map(result => (
-                                <ListItem key={result.id} button onClick={() => handleClickGym(result)}>
+                                <ListItem key={result.id} button onClick={() => handleClickGym(result)} sx={{ '&:hover': { bgcolor: 'action.hover' }}}>
                                     <ListItemText primary={result.name} />
                                 </ListItem>
                             ))}
-                        </List> 
-                        ) : (
-                            <Typography> No gyms found </Typography>
-                        )
+                        </List>
+                    ) : (
+                        <Typography variant="subtitle1">No gyms found</Typography>
+                    )
                 )}
             </Stack>
         </Container>
+
     )
 }
 
