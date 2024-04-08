@@ -1,22 +1,11 @@
-import {
-  Avatar,
-  Box,
-  Button,
-  FormLabel,
-  Grid,
-  MenuItem,
-  Select,
-  Stack,
-  TextField,
-  Typography
-} from "@mui/material"
-import { useSelector } from "react-redux"
+import {Avatar, Box, Button, FormLabel, Grid, MenuItem, Select, Stack, TextField, Typography} from "@mui/material"
+import {useSelector} from "react-redux"
 import * as echatrs from 'echarts'
 //import CalorieGraph from "../calorietracker/calorieGraph"
 import "./profile.css"
-import { useEffect, useRef } from "react"
-import { useAddUserWeightMutation, useGetUserWeightListMutation } from "../../store/apis/auth.js"
-import { DateTimePicker } from "@mui/x-date-pickers"
+import {useEffect, useRef} from "react"
+import {useAddUserWeightMutation, useGetUserWeightListMutation} from "../../store/apis/auth.js"
+import {DateTimePicker} from "@mui/x-date-pickers"
 
 const Profile = () => {
   const { user, token } = useSelector((state) => state.auth)

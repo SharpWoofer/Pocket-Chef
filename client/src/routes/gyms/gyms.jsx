@@ -1,22 +1,18 @@
-import React, { useState, useEffect } from "react";
+import React, {useState} from "react";
 import {
     Box,
+    Button,
+    Grid,
+    InputAdornment,
     List,
     ListItem,
     ListItemText,
-    InputAdornment,
     Stack,
     TextField,
-    Typography,
-    Button,
-    InputLabel,
-    Select,
-    MenuItem,
-    Container,
-    Grid
+    Typography
 } from "@mui/material";
-import { useSearchGymMutation } from "../../store/apis/gymLocator";
-import { Search } from "@mui/icons-material";
+import {useSearchGymMutation} from "../../store/apis/gymLocator";
+import {Search} from "@mui/icons-material";
 import GoogleMapReact from 'google-map-react';
 
 

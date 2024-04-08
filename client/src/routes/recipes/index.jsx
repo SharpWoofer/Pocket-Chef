@@ -1,17 +1,27 @@
-import { Box, Container, ImageList, ImageListItem, ImageListItemBar, InputAdornment, Stack, TextField, Typography, Grid } from "@mui/material";
+import {
+    Box,
+    Container,
+    Grid,
+    ImageList,
+    ImageListItem,
+    InputAdornment,
+    Stack,
+    TextField,
+    Typography
+} from "@mui/material";
 import CuisineSelector from "../../components/Selector";
-import { Search } from "@mui/icons-material";
+import {Search} from "@mui/icons-material";
 import RangeSlider from "../../components/Slider"
-import { useDebounce } from "@uidotdev/usehooks"
-import React, { useState, useEffect } from 'react';
-import { Link } from "react-router-dom";
+import {useDebounce} from "@uidotdev/usehooks"
+import React, {useState} from 'react';
+import {Link} from "react-router-dom";
 import FavoriteRecipes from "./favoriteRecipes";
 import IconButton from '@mui/material/IconButton';
 import FavoriteBorder from '@mui/icons-material/FavoriteBorder';
 import Snackbar from '@mui/material/Snackbar';
 import CloseIcon from '@mui/icons-material/Close';
-import { useSelector } from 'react-redux';
-import { useAddFavoriteRecipeMutation, useGetFavoriteRecipesQuery, useSearchRecipesQuery } from "../../store/apis/recipe";
+import {useSelector} from 'react-redux';
+import {useAddFavoriteRecipeMutation, useGetFavoriteRecipesQuery, useSearchRecipesQuery} from "../../store/apis/recipe";
 
 
 function Recipes() {

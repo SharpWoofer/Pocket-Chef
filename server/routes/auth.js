@@ -1,7 +1,7 @@
 import express from "express";
 import {addUserWeight, getUserWeightList, login, register} from "../controllers/auth.js";
 import multer from "multer";
-import { verifyToken } from "../middleware/auth.js";
+import {verifyToken} from "../middleware/auth.js";
 
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {

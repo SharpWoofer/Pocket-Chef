@@ -1,7 +1,7 @@
 import express from 'express';
-const router = express.Router();
+import {addFavoriteRecipe, getFavoriteRecipes, removeFavoriteRecipe} from '../controllers/recipeFavoriteController.js';
 
-import { addFavoriteRecipe, removeFavoriteRecipe, getFavoriteRecipes } from '../controllers/recipeFavoriteController.js';
+const router = express.Router();
 
 // Add a favorite recipe
 router.post('/', addFavoriteRecipe);

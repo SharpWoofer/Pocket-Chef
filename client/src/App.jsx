@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import {BrowserRouter, Route, Routes} from 'react-router-dom';
 import Home from './routes/home';
 import Login from './routes/profile/login.jsx';
 import Root from './routes/root';
@@ -9,8 +9,8 @@ import Profile from './routes/profile/profile.jsx';
 import Calculator from './routes/calculator/calculator.jsx'
 import Workout from "./routes/workout/workout.jsx";
 import Gyms from "./routes/gyms/gyms.jsx";
-import { LocalizationProvider } from '@mui/x-date-pickers';
-import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import {LocalizationProvider} from '@mui/x-date-pickers';
+import {AdapterDayjs} from '@mui/x-date-pickers/AdapterDayjs';
 import './App.css';
 import {useState} from "react";
 import CalorieTracker from "./routes/calorietracker/calorieTracker.jsx";

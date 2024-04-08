@@ -1,10 +1,7 @@
-import { Box, Button, Container, Unstable_Grid2 as Grid, Stack, Typography } from "@mui/material";
-import { Link } from "react-router-dom";
-import { useSearchRecipesQuery } from "../store/apis/recipe";
+import {Box, Button, Container, Stack, Typography, Unstable_Grid2 as Grid} from "@mui/material";
+import {Link} from "react-router-dom";
+import {useSearchRecipesQuery} from "../store/apis/recipe";
 import cooking from "../assets/cooking.png";
-import CalorieTracker from "./calorietracker/calorieTracker";
-import { useState } from "react";
-import Workout from "./workout/workout.jsx";
 
 const Home = () => {
     const { data, isLoading } = useSearchRecipesQuery({

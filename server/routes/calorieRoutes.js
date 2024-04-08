@@ -1,6 +1,11 @@
 import express from "express";
-import ingredientController from "../controllers/calorieTrackerController.js";
-import { searchIngredient, getIngredientById, getCalCount, createCalCount, updateCalCount } from "../controllers/calorieTrackerController.js";
+import {
+    createCalCount,
+    getCalCount,
+    getIngredientById,
+    searchIngredient,
+    updateCalCount
+} from "../controllers/calorieTrackerController.js";
 
 const calorieTrackerRouter = express.Router();
 

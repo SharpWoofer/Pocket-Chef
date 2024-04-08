@@ -1,4 +1,4 @@
-import mongoose, { SchemaTypes } from "mongoose";
+import mongoose, {SchemaTypes} from "mongoose";
 
 const UserWeightSchema = mongoose.Schema({
   user: {

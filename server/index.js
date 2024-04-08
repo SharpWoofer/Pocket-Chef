@@ -7,7 +7,7 @@ import multer from "multer";
 import helmet from "helmet";
 import morgan from "morgan";
 import path from "path";
-import { fileURLToPath } from "url";
+import {fileURLToPath} from "url";
 import recipeRoutes from "./routes/recipeRoutes.js";
 import authRouter from "./routes/auth.js";
 import calorieTrackerRouter from "./routes/calorieRoutes.js";

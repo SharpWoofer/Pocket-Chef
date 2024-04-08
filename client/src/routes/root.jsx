@@ -1,5 +1,5 @@
-import { createTheme, Box, CssBaseline, Stack, ThemeProvider } from "@mui/material";
-import { Outlet } from "react-router-dom";
+import {Box, createTheme, CssBaseline, Stack, ThemeProvider} from "@mui/material";
+import {Outlet} from "react-router-dom";
 import NavBar from "../components/NavBar";
 
 const theme = createTheme({

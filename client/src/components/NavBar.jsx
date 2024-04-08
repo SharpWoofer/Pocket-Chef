@@ -1,9 +1,9 @@
-import { Box, Container, Stack, Typography } from '@mui/material';
-import { styled } from '@mui/material/styles';
-import { NavLink } from 'react-router-dom';
+import {Box, Container, Stack, Typography} from '@mui/material';
+import {styled} from '@mui/material/styles';
+import {NavLink} from 'react-router-dom';
 import logo from '../assets/logo.png';
 import AccountIcon from '@mui/icons-material/AccountCircleOutlined';
-import { useSelector } from 'react-redux';
+import {useSelector} from 'react-redux';
 
 const LinkWrapper = styled(Box)(({ theme }) => ({
   position: "relative",

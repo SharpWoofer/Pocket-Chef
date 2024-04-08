@@ -1,7 +1,6 @@
-import React, { useState } from 'react';
+import React, {useState} from 'react';
 import './CalculatorPage.css';
-import {Box, Grid, Paper, Stack, Typography} from "@mui/material";
-import CalorieGraph from "../calorietracker/calorieGraph.jsx";
+import {Box, Grid, Stack, Typography} from "@mui/material";
 
 const CalculatorPage = () => {
   const [weight, setWeight] = useState('');

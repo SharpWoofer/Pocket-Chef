@@ -1,31 +1,35 @@
-import React from 'react';
-import { useState, useEffect } from "react";
+import React, {useEffect, useState} from 'react';
 import {
     Box,
+    Button,
+    FormControl,
+    Grid,
+    InputAdornment,
+    InputLabel,
     List,
     ListItem,
     ListItemText,
-    InputAdornment,
+    MenuItem,
+    Paper,
+    Select,
     Stack,
     TextField,
-    Typography,
-    Button,
-    InputLabel,
-    Select,
-    MenuItem,
-    Grid,
-    Paper,
-    FormControl,
-    Divider
+    Typography
 } from "@mui/material";
-import { Search } from "@mui/icons-material";
-import { useSearchIngredientMutation, useGetIngredientByIdMutation, useGetCalCountMutation, useCreateCalCountMutation, useUpdateCalCountMutation } from '../../store/apis/ingredient';
+import {Search} from "@mui/icons-material";
+import {
+    useCreateCalCountMutation,
+    useGetCalCountMutation,
+    useGetIngredientByIdMutation,
+    useSearchIngredientMutation,
+    useUpdateCalCountMutation
+} from '../../store/apis/ingredient';
 import dayjs from 'dayjs';
-import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
-import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
-import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-import { StaticDatePicker } from '@mui/x-date-pickers/StaticDatePicker';
-import { useSelector } from 'react-redux';
+import {DemoContainer} from '@mui/x-date-pickers/internals/demo';
+import {AdapterDayjs} from '@mui/x-date-pickers/AdapterDayjs';
+import {LocalizationProvider} from '@mui/x-date-pickers/LocalizationProvider';
+import {StaticDatePicker} from '@mui/x-date-pickers/StaticDatePicker';
+import {useSelector} from 'react-redux';
 import CalorieGraph from "./calorieGraph.jsx";
 
 function CalorieTracker() {

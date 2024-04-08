@@ -1,5 +1,6 @@
 import axios from 'axios';
 import calorieCount from '../Models/calorieCount.js';
+
 const apiKey = '1c759ff2ee864d2bb3388274a18e92bd';
 
 export const searchIngredient = async (req, res) => {

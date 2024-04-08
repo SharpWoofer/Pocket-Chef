@@ -1,6 +1,6 @@
 import {Container, Typography, Unstable_Grid2 as Grid} from "@mui/material";
-import {Link, useParams} from "react-router-dom";
-import { useSearchWorkoutQuery } from '../../store/apis/workout';
+import {useParams} from "react-router-dom";
+import {useSearchWorkoutQuery} from '../../store/apis/workout';
 import Box from "@mui/material/Box";
 
 export default function Workout() {
