@@ -2,6 +2,8 @@ import { useState, useEffect } from "react";
 import { Box, List, ListItem, ListItemText, InputAdornment, Stack, TextField, Typography, Button, InputLabel, Select, MenuItem, Container} from "@mui/material";
 import { useSearchGymMutation } from "../../store/apis/gymLocator";
 import { Search } from "@mui/icons-material";
+import GoogleMapReact from 'google-map-react';
+
 
 function Gyms() {
 
@@ -68,8 +70,25 @@ function Gyms() {
                             </Box>))}
                         </Box>
                         <Typography>Phone number: { selectedGym.phoneNumber }</Typography>
-                        <Box>
-                            <Typography> Coordinates: { selectedGym.coordinates[0] }, {selectedGym.coordinates[1] }</Typography>
+                        <Box style={{height:"400px", width:"100%"}}>
+                            <GoogleMapReact
+                            bootstrapURLKeys={{key: "AIzaSyCK1FFoRojFpDYrLA28EWLZLbYmvnGs7ok"}}
+                            defaultCenter={{lat: selectedGym.coordinates[0], lng: selectedGym.coordinates[1]}}
+                            defaultZoom={15}
+                            >
+                                <div style={{
+                                    color: 'white',
+                                    background: 'red',
+                                    padding: '10px',
+                                    display: 'inline-flex',
+                                    textAlign: 'center',
+                                    alignItems: 'center',
+                                    justifyContent: 'center',
+                                    borderRadius: '100%',
+                                    transform: 'translate(-50%, -50%)'
+                                }}>
+                                </div>
+                            </GoogleMapReact>
                         </Box>
                     </Stack>
                 ) : (
