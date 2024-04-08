@@ -1,6 +1,6 @@
-# YourAppName
+# PocketChef
 
-Welcome to **YourAppName**, the one-stop digital platform that enhances your wellness and culinary journey. Our robust application, built on the powerful MERN stack, offers a suite of interactive tools, from gym location services and calorie tracking to measurement conversion and a comprehensive recipe book.
+Welcome to **PocketChef**, the one-stop digital platform that enhances your wellness and culinary journey. Our robust application, built on the powerful MERN stack, offers a suite of interactive tools, from gym location services and calorie tracking to measurement conversion and a comprehensive recipe book.
 
 ## Features
 
