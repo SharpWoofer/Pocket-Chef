@@ -186,188 +186,214 @@ function CalorieTracker() {
     }
 
     return (
-        <Stack>
-            <Grid container spacing={4} style={{
-                display:"flex",
-                justifyContent:"center",
-                alignItems:"center",
-            }}>
-                <Grid item style={{
-                    width: "54%",
+            <Stack>
+                <Stack direction="row" sx={{
+                    display: "flex",
+                    justifyContent: "space-around",
+                    padding: "2em",
 
                 }}>
-                    <Box
+                    <Grid
                         sx={{
-                            borderBottom: 2,
-                            borderColor: '#12365F',
-                            height: "12vh",
-                            width: "100%",
-                        }}
-                    >
-                        <Typography
-                            variant="h1" // Changed from 'header1' to 'h1' for correct variant usage
+                            width:"50%"
+                        }}>
+                        <Box
                             sx={{
-                                color: '#12365F',
-                                textAlign: 'start',
-                                fontSize: "9vh",
-                                paddingLeft: "0.2em",
-                                fontWeight: "bolder",
-                                letterSpacing: "2px",
-                                paddingBottom: "0.25em", // Adjust this value as needed for proper underline spacing
-                            }}
-                        >
-                            Calories Tracking
-                        </Typography>
-                    </Box>
+                                borderBottom: 2,
+                                borderColor: '#12365F',
+                                height: "12vh",
+                                width: "100%",
+                            }}>
+                            <Typography
+                                variant="h1" // Changed from 'header1' to 'h1' for correct variant usage
+                                sx={{
+                                    color: '#12365F',
+                                    textAlign: 'start',
+                                    fontSize: "9vh",
+                                    paddingLeft: "0.2em",
+                                    fontWeight: "bolder",
+                                    letterSpacing: "2px",
+                                    paddingBottom: "0.25em", // Adjust this value as needed for proper underline spacing
+                                }}>
+                                Calories Tracking
+                            </Typography>
 
-                    <Typography style={{ color: '#1236F', textAlign: 'start', fontSize:"1.8vh", paddingLeft:"0.2em", letterSpacing:"2px", marginLeft:"1em", marginTop:"1em", marginBottom:"2em"}}>
-                        Master your weight management journey — consistency is key! Effortlessly monitor your daily caloric consumption with our intuitive calorie tracker, and stay on the path to your wellness goals.
-                    </Typography>
-                    <Paper elevation={4}>
-                        <CalorieGraph/>
-                    </Paper>
-                </Grid>
-                <Grid item>
-                    <Paper elevation={4}>
-                        <LocalizationProvider dateAdapter={AdapterDayjs}>
-                            <DemoContainer
-                                components={[
-                                    'StaticDatePicker',
-                                ]}
-                            >
-                                <StaticDatePicker
-                                    value={selectedDate}
-                                    onChange={handleDateChange}
-                                    defaultValue={dayjs('2024-03-23')}
-                                />
-                            </DemoContainer>
-                        </LocalizationProvider>
-                    </Paper>
-                </Grid>
-                <Grid item>
-                    <Paper elevation={4} sx={{
-                        width: "100%",
-                        padding: "1em",
-                        height:"120%"
+                            <Typography style={{ color: '#1236F', textAlign: 'start', fontSize:"1.8vh", paddingLeft:"0.2em", letterSpacing:"2px", marginLeft:"1em", marginTop:"1em", marginBottom:"2em"}}>
+                                Master your weight management journey — consistency is key! Effortlessly monitor your daily caloric consumption with our intuitive calorie tracker, and stay on the path to your wellness goals.
+                            </Typography>
+                            <Paper elevation={4}>
+                                <CalorieGraph/>
+                            </Paper>
+                        </Box>
+                    </Grid>
+                    <Grid sx={{
+                        width:"40%"
                     }}>
-                        <Stack direction="column">
-                            <Box bgcolor="green" padding={1} sx={{ px: 1, borderRadius: 1 }}>
-                                <Typography color="white" sx={{ fontWeight: 600, fontSize: '1.1rem', letterSpacing: '0.075rem' }}>CALORIE COUNT</Typography>
-                            </Box>
-                            <Box sx={{ px: 1, borderRadius: 1, }}>
-                                {calData ? (
-                                    <Stack direction="column">
-                                        <Typography paddingY={.25}>Breakfast Calories: {calData.breakfastCal} </Typography>
-                                        <Typography paddingY={.25}>Lunch Calories: {calData.lunchCal} </Typography>
-                                        <Typography paddingY={.25}>Dinner Calories: {calData.dinnerCal} </Typography>
-                                    </Stack>
-                                ) : (
-                                    <Box sx={{ py: 1 }}>
-                                        <Stack direction="column">
-                                            <Typography paddingY={.25}>Breakfast Calories: 0 </Typography>
-                                            <Typography paddingY={.25}>Lunch Calories: 0 </Typography>
-                                            <Typography paddingY={.25}>Dinner Calories: 0 </Typography>
-                                        </Stack>
-                                    </Box>
-                                )}
-                            </Box>
-                            <Box bgcolor='green' padding={1} sx={{ px: 1, borderRadius: 1 }}>
-                                <Typography color='white' sx={{ fontWeight: 600, fontSize: '1.1rem', letterSpacing: '0.075rem' }}> CALORIE TRACKER</Typography>
-                            </Box>
-
-                            <form onSubmit={handleSubmitSearch}>
-                                <Stack direction="row" paddingTop={1.5} paddingX={1.5}>
-                                    <Box paddingRight={2}>
-                                        <TextField
-                                            type="search"
-                                            placeholder="Search ingredients.."
-                                            InputProps={{
-                                                startAdornment: (
-                                                    <InputAdornment position="start">
-                                                        <Search />
-                                                    </InputAdornment>
-                                                ),
-                                            }}
-                                            variant="standard"
-                                            fullWidth
-                                            onChange={(e) => handleChange(e.target.value)}
-                                        />
-                                    </Box>
-                                    <Box>
-                                        <Button size="small" type="submit" variant="contained">Search</Button>
-                                    </Box>
-                                </Stack>
-                            </form>
-
-                            {selectedIngredient ? (
-                                <Typography>Selected: {selectedIngredient}</Typography>
-                            ) : (
-                                searchResults ? (
-                                    <List>
-                                        {searchResults.map(result => (
-                                            <ListItem key={result.id} button onClick={() => handleClickIngredient(result)}>
-                                                <ListItemText primary={result.name} />
-                                            </ListItem>
-                                        ))}
-                                    </List>
-                                ) : (
-                                    <Typography paddingX={1.5} paddingTop={1.5}>Unable to retrieve ingredients :(</Typography>
-                                )
-                            )}
-
-                            <form onSubmit={handleSubmit}>
-                                <Stack direction="row" paddingY={1.5} paddingX={1.5}>
-                                    <Box paddingRight={2}>
-                                        <TextField
-                                            type="search"
-                                            placeholder="Enter amount..."
-                                            InputProps={{
-                                                startAdornment: (
-                                                    <InputAdornment position="start">
-                                                        <Search />
-                                                    </InputAdornment>
-                                                ),
-                                            }}
-                                            variant="standard"
-                                            fullWidth
-                                            onChange={(e) => handleNum(e.target.value)}
-                                        />
-                                    </Box>
-                                    <Box>
-                                        <Button size="small" type="submit" variant="contained">Submit</Button>
-                                    </Box>
-                                </Stack>
-                            </form>
-
-                            <Typography padding={1}>Total calories: {calCount} </Typography>
-                            <form onSubmit={handleAdd}>
-                                <Stack direction="row" paddingBottom={1.5} paddingX={1.5}>
-                                    <Box flexGrow={1} paddingRight={2}>
-                                        <FormControl fullWidth>
-                                            <InputLabel size="small">Meal</InputLabel>
-                                            <Select
-                                                required
-                                                label="Meal"
-                                                name="meal"
-                                                size="small"
-                                                value={selectedMeal}
-                                                onChange={handleMealChange}
-                                            >
-                                                <MenuItem value="breakfast">Breakfast</MenuItem>
-                                                <MenuItem value="lunch">Lunch</MenuItem>
-                                                <MenuItem value="dinner">Dinner</MenuItem>
-                                            </Select>
-                                        </FormControl>
-                                    </Box>
-                                    <Box>
-                                        <Button size="small" type="submit" variant="contained">Add</Button>
-                                    </Box>
-                                </Stack>
-                            </form>
+                        <Stack>
+                            <img src="./eating.png" alt="eating" style={{
+                                width: "40%",
+                                height: "100%",
+                                objectFit: "cover",
+                            }} />
                         </Stack>
-                    </Paper>
-                </Grid>
-            </Grid>
+                        <Stack>
+                            <Grid container spacing={4} style={{
+                                display:"flex",
+                                justifyContent:"center",
+                                alignItems:"center",
+                            }}>
+                                <Stack sx={{ml:2}}>
+
+                                    <Grid item style={{
+                                        display:"flex",
+                                    }}>
+                                        <Paper elevation={4} style={{
+                                            marginRight:"2em"
+                                        }}>
+                                            <LocalizationProvider dateAdapter={AdapterDayjs}>
+                                                <DemoContainer
+                                                    components={[
+                                                        'StaticDatePicker',
+                                                    ]}
+                                                >
+                                                    <StaticDatePicker
+                                                        value={selectedDate}
+                                                        onChange={handleDateChange}
+                                                        defaultValue={dayjs('2024-03-23')}
+                                                    />
+                                                </DemoContainer>
+                                            </LocalizationProvider>
+                                        </Paper>
+
+                                        <Paper elevation={4} sx={{
+                                            width: "100%",
+                                            padding: "1em",
+                                            height:"120%"
+                                        }}>
+                                            <Stack direction="column">
+                                                <Box bgcolor="green" padding={1} sx={{ px: 1, borderRadius: 1 }}>
+                                                    <Typography color="white" sx={{ fontWeight: 600, fontSize: '1.1rem', letterSpacing: '0.075rem' }}>CALORIE COUNT</Typography>
+                                                </Box>
+                                                <Box sx={{ px: 1, borderRadius: 1, }}>
+                                                    {calData ? (
+                                                        <Stack direction="column">
+                                                            <Typography paddingY={.25}>Breakfast Calories: {calData.breakfastCal} </Typography>
+                                                            <Typography paddingY={.25}>Lunch Calories: {calData.lunchCal} </Typography>
+                                                            <Typography paddingY={.25}>Dinner Calories: {calData.dinnerCal} </Typography>
+                                                        </Stack>
+                                                    ) : (
+                                                        <Box sx={{ py: 1 }}>
+                                                            <Stack direction="column">
+                                                                <Typography paddingY={.25}>Breakfast Calories: 0 </Typography>
+                                                                <Typography paddingY={.25}>Lunch Calories: 0 </Typography>
+                                                                <Typography paddingY={.25}>Dinner Calories: 0 </Typography>
+                                                            </Stack>
+                                                        </Box>
+                                                    )}
+                                                </Box>
+                                                <Box bgcolor='green' padding={1} sx={{ px: 1, borderRadius: 1 }}>
+                                                    <Typography color='white' sx={{ fontWeight: 600, fontSize: '1.1rem', letterSpacing: '0.075rem' }}> CALORIE TRACKER</Typography>
+                                                </Box>
+
+                                                <form onSubmit={handleSubmitSearch}>
+                                                    <Stack direction="row" paddingTop={1.5} paddingX={1.5}>
+                                                        <Box paddingRight={2}>
+                                                            <TextField
+                                                                type="search"
+                                                                placeholder="Search ingredients.."
+                                                                InputProps={{
+                                                                    startAdornment: (
+                                                                        <InputAdornment position="start">
+                                                                            <Search />
+                                                                        </InputAdornment>
+                                                                    ),
+                                                                }}
+                                                                variant="standard"
+                                                                fullWidth
+                                                                onChange={(e) => handleChange(e.target.value)}
+                                                            />
+                                                        </Box>
+                                                        <Box>
+                                                            <Button size="small" type="submit" variant="contained">Search</Button>
+                                                        </Box>
+                                                    </Stack>
+                                                </form>
+
+                                                {selectedIngredient ? (
+                                                    <Typography>Selected: {selectedIngredient}</Typography>
+                                                ) : (
+                                                    searchResults ? (
+                                                        <List>
+                                                            {searchResults.map(result => (
+                                                                <ListItem key={result.id} button onClick={() => handleClickIngredient(result)}>
+                                                                    <ListItemText primary={result.name} />
+                                                                </ListItem>
+                                                            ))}
+                                                        </List>
+                                                    ) : (
+                                                        <Typography paddingX={1.5} paddingTop={1.5}>Unable to retrieve ingredients :(</Typography>
+                                                    )
+                                                )}
+
+                                                <form onSubmit={handleSubmit}>
+                                                    <Stack direction="row" paddingY={1.5} paddingX={1.5}>
+                                                        <Box paddingRight={2}>
+                                                            <TextField
+                                                                type="search"
+                                                                placeholder="Enter amount..."
+                                                                InputProps={{
+                                                                    startAdornment: (
+                                                                        <InputAdornment position="start">
+                                                                            <Search />
+                                                                        </InputAdornment>
+                                                                    ),
+                                                                }}
+                                                                variant="standard"
+                                                                fullWidth
+                                                                onChange={(e) => handleNum(e.target.value)}
+                                                            />
+                                                        </Box>
+                                                        <Box>
+                                                            <Button size="small" type="submit" variant="contained">Submit</Button>
+                                                        </Box>
+                                                    </Stack>
+                                                </form>
+
+                                                <Typography padding={1}>Total calories: {calCount} </Typography>
+                                                <form onSubmit={handleAdd}>
+                                                    <Stack direction="row" paddingBottom={1.5} paddingX={1.5}>
+                                                        <Box flexGrow={1} paddingRight={2}>
+                                                            <FormControl fullWidth>
+                                                                <InputLabel size="small">Meal</InputLabel>
+                                                                <Select
+                                                                    required
+                                                                    label="Meal"
+                                                                    name="meal"
+                                                                    size="small"
+                                                                    value={selectedMeal}
+                                                                    onChange={handleMealChange}
+                                                                >
+                                                                    <MenuItem value="breakfast">Breakfast</MenuItem>
+                                                                    <MenuItem value="lunch">Lunch</MenuItem>
+                                                                    <MenuItem value="dinner">Dinner</MenuItem>
+                                                                </Select>
+                                                            </FormControl>
+                                                        </Box>
+                                                        <Box>
+                                                            <Button size="small" type="submit" variant="contained">Add</Button>
+                                                        </Box>
+                                                    </Stack>
+                                                </form>
+                                            </Stack>
+                                        </Paper>
+                                    </Grid>
+                                </Stack>
+                            </Grid>
+                        </Stack>
+                    </Grid>
+                </Stack>
+
+
         </Stack >
     )
 }
