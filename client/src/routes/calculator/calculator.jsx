@@ -71,7 +71,8 @@ const CalculatorPage = () => {
                  </Typography>
 
                  <Typography style={{ color: '#1236F', textAlign: 'start', fontSize:"1.8vh", paddingLeft:"0.2em", letterSpacing:"2px", marginLeft:"1em", marginTop:"1em", marginBottom:"2em"}}>
-                     Embark on a seamless journey of health and precision with our all-in-one measurement converter and BMI calculator! Whether you're fine-tuning your recipes by converting pounds to kilograms or teaspoons, or keeping a vigilant eye on your well-being by tracking your BMI, our intuitive tools are designed to empower your lifestyle choices. Embrace accuracy and wellness, all with just a few clicks - it's never been easier to stay on top of your health and culinary game!                 </Typography>
+                     Embark on a seamless journey of health and precision with our all-in-one measurement converter and BMI calculator! Whether you're fine-tuning your recipes by converting pounds to kilograms or teaspoons, or keeping a vigilant eye on your well-being by tracking your BMI, our intuitive tools are designed to empower your lifestyle choices. Embrace accuracy and wellness, all with just a few clicks - it's never been easier to stay on top of your health and culinary game!
+                 </Typography>
              </Box>
              <Box style={{display:"flex", justifyContent:"space-around"}}>
                  <div className="calculator-container">

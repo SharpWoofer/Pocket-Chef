@@ -1,5 +1,20 @@
-import { useState, useEffect } from "react";
-import { Box, List, ListItem, ListItemText, InputAdornment, Stack, TextField, Typography, Button, InputLabel, Select, MenuItem, Container} from "@mui/material";
+import React, { useState, useEffect } from "react";
+import {
+    Box,
+    List,
+    ListItem,
+    ListItemText,
+    InputAdornment,
+    Stack,
+    TextField,
+    Typography,
+    Button,
+    InputLabel,
+    Select,
+    MenuItem,
+    Container,
+    Grid
+} from "@mui/material";
 import { useSearchGymMutation } from "../../store/apis/gymLocator";
 import { Search } from "@mui/icons-material";
 import GoogleMapReact from 'google-map-react';
@@ -30,30 +45,67 @@ function Gyms() {
         }
     }
     return (
-        <Container maxWidth="2000px" sx={{ py: 4 }}>
+        <Stack>
+            <Stack direction="row">
+                <Grid sx={{width:"55%"}}>
+                    <Typography
+                        variant="h1" // Changed from 'header1' to 'h1' for correct variant usage
+                        sx={{
+                            color: '#12365F',
+                            textAlign: 'start',
+                            fontSize: "9vh",
+                            paddingLeft: "0.2em",
+                            fontWeight: "bolder",
+                            letterSpacing: "2px",
+                            paddingBottom: "0.25em", // Adjust this value as needed for proper underline spacing
+                        }}>
+                        Calculate Your Measurements
+                    </Typography>
+
+                    <Typography style={{ color: '#1236F', textAlign: 'start', fontSize:"1.8vh", paddingLeft:"0.2em", letterSpacing:"2px", marginLeft:"1em", marginTop:"1em", marginBottom:"2em"}}>
+                        Discover your perfect fitness space with ease! Our website is your ultimate gym locator, guiding you to your next workout haven. Whether you're seeking a local spot for a quick session or a fully equipped center for a rigorous routine, we connect you to a variety of gyms in your vicinity. Say goodbye to endless searches and hello to more time lifting, running, and achieving your fitness goals!
+                    </Typography>
+                    <Box component="form" onSubmit={handleSubmitSearch} sx={{ display: 'flex', gap: 2 }}>
+                        <TextField
+                            type="search"
+                            placeholder="Input name of town or name of gym..."
+                            InputProps={{
+                                startAdornment: (
+                                    <InputAdornment position="start">
+                                        <Search />
+                                    </InputAdornment>
+                                ),
+                            }}
+                            variant="outlined"
+                            fullWidth
+                            onChange={(e) => handleChange(e.target.value)}
+                        />
+                        <Button type="submit" variant="contained" color="primary">
+                            Search
+                        </Button>
+                    </Box>
+                    <Stack style={{width:"50em"}}>
+                        {searchResults.length > 0 ? (
+                        <List sx={{ bgcolor: 'background.paper', overflow: 'auto', maxHeight: 300, borderRadius: 1, boxShadow: 1 }}>
+                            {searchResults.map(result => (
+                                <ListItem key={result.id} button onClick={() => handleClickGym(result)} sx={{ '&:hover': { bgcolor: 'action.hover' }}}>
+                                    <ListItemText primary={result.name} />
+                                </ListItem>
+                            ))}
+                        </List>
+                        ) : (
+                        <Typography variant="subtitle1">No gyms found</Typography>
+                        )}
+                    </Stack>
+                </Grid>
+                <Grid sx={{width:"40%"}}>
+                    <img src="./work-out.png" alt="eating" style={{
+                        width: "100%",
+                        height: "95%",
+                    }} />
+                </Grid>
+            </Stack>
             <Stack spacing={3}>
-                <Typography variant="h6" noWrap>
-                    Search for a gym
-                </Typography>
-                <Box component="form" onSubmit={handleSubmitSearch} sx={{ display: 'flex', gap: 2 }}>
-                    <TextField
-                        type="search"
-                        placeholder="Input name of town or name of gym..."
-                        InputProps={{
-                            startAdornment: (
-                                <InputAdornment position="start">
-                                    <Search />
-                                </InputAdornment>
-                            ),
-                        }}
-                        variant="outlined"
-                        fullWidth
-                        onChange={(e) => handleChange(e.target.value)}
-                    />
-                    <Button type="submit" variant="contained" color="primary">
-                        Search
-                    </Button>
-                </Box>
                 {selectedGym ? (
                     <Stack style={{ position: 'relative', height: '30vh' }}>
                         <img src="./gym1.png" style={{ width: '100%', height: '100%', objectFit: 'cover' }} alt="Gym banner" />
@@ -148,20 +200,11 @@ function Gyms() {
                         </Stack>
 
                     </Stack>) : (
-                    searchResults.length > 0 ? (
-                        <List sx={{ bgcolor: 'background.paper', overflow: 'auto', maxHeight: 300, borderRadius: 1, boxShadow: 1 }}>
-                            {searchResults.map(result => (
-                                <ListItem key={result.id} button onClick={() => handleClickGym(result)} sx={{ '&:hover': { bgcolor: 'action.hover' }}}>
-                                    <ListItemText primary={result.name} />
-                                </ListItem>
-                            ))}
-                        </List>
-                    ) : (
-                        <Typography variant="subtitle1">No gyms found</Typography>
-                    )
+                        <Box></Box>
+
                 )}
             </Stack>
-        </Container>
+        </Stack>
 
     )
 }
