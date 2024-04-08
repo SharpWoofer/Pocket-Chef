@@ -15,7 +15,7 @@ import * as echatrs from 'echarts'
 //import CalorieGraph from "../calorietracker/calorieGraph"
 import "./profile.css"
 import { useEffect, useRef } from "react"
-import { useAddUserWeightMutation, useGetUserWeightListMutation } from "../../store/apis/auth"
+import { useAddUserWeightMutation, useGetUserWeightListMutation } from "../../store/apis/auth.js"
 import { DateTimePicker } from "@mui/x-date-pickers"
 
 const Profile = () => {

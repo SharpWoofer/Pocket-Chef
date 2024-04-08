@@ -5,7 +5,7 @@ import Root from './routes/root';
 import RecipeBook from './routes/recipes';
 import Recipe from './routes/recipes/recipe';
 import Register from './routes/profile/register.jsx';
-import Profile from './routes/calculator/profile.jsx';
+import Profile from './routes/profile/profile.jsx';
 import Calculator from './routes/calculator/calculator.jsx'
 import Workout from "./routes/workout/workout.jsx";
 import Gyms from "./routes/gyms/gyms.jsx";
