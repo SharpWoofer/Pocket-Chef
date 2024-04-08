@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Box, List, ListItem, ListItemText, InputAdornment, Stack, TextField, Typography, Button, InputLabel, Select, MenuItem, Grid, Paper, FormControl} from "@mui/material";
+import { Box, List, ListItem, ListItemText, InputAdornment, Stack, TextField, Typography, Button, InputLabel, Select, MenuItem, Grid, Paper, FormControl } from "@mui/material";
 import { Search } from "@mui/icons-material";
 import { useSearchIngredientMutation, useGetIngredientByIdMutation, useGetCalCountMutation, useCreateCalCountMutation, useUpdateCalCountMutation } from '../../store/apis/ingredient';
 import dayjs from 'dayjs';
@@ -38,7 +38,7 @@ function CalorieTracker() {
         event.preventDefault();
         setSelectedIngredient(null);
         try {
-            const {data: results} = await searchIngredient({ query: query });
+            const { data: results } = await searchIngredient({ query: query });
             setSearchResults(results);
             //console.log(results);
             // for debugging purposes
@@ -53,9 +53,9 @@ function CalorieTracker() {
     const handleSubmit = async (event) => {
         event.preventDefault();
         try {
-            const {data : cal} = await getIngredientById({
+            const { data: cal } = await getIngredientById({
                 id: selectedIngredient,
-                number : amount
+                number: amount
             });
             setCalCount(cal);
         } catch (error) {
@@ -89,10 +89,10 @@ function CalorieTracker() {
         if (calData) {
             if (selectedMeal === "breakfast") {
                 try {
-                    const {data: updatedCal} = await updateCalCount({
+                    const { data: updatedCal } = await updateCalCount({
                         username: username,
                         date: selectedDate.format('YYYY-MM-DD'),
-                        breakfastCal : calCount,
+                        breakfastCal: calCount,
                         lunchCal: 0,
                         dinnerCal: 0
                     });
@@ -102,10 +102,10 @@ function CalorieTracker() {
                 }
             } else if (selectedMeal === "lunch") {
                 try {
-                    const {data: updatedCal} = await updateCalCount({
+                    const { data: updatedCal } = await updateCalCount({
                         username: username,
                         date: selectedDate.format('YYYY-MM-DD'),
-                        breakfastCal : 0,
+                        breakfastCal: 0,
                         lunchCal: calCount,
                         dinnerCal: 0
                     });
@@ -115,10 +115,10 @@ function CalorieTracker() {
                 }
             } else if (selectedMeal === "dinner") {
                 try {
-                    const {data: updatedCal} = await updateCalCount({
+                    const { data: updatedCal } = await updateCalCount({
                         username: username,
                         date: selectedDate.format('YYYY-MM-DD'),
-                        breakfastCal : 0,
+                        breakfastCal: 0,
                         lunchCal: 0,
                         dinnerCal: calCount
                     });
@@ -130,10 +130,10 @@ function CalorieTracker() {
         } else {
             if (selectedMeal === "breakfast") {
                 try {
-                    const {data: updatedCal} = await createCalCount({
+                    const { data: updatedCal } = await createCalCount({
                         username: username,
                         date: selectedDate.format('YYYY-MM-DD'),
-                        breakfastCal : calCount
+                        breakfastCal: calCount
                     });
                     setCalData(updatedCal.calorieCount);
                 } catch (error) {
@@ -141,7 +141,7 @@ function CalorieTracker() {
                 }
             } else if (selectedMeal === "lunch") {
                 try {
-                    const {data: updatedCal} = await createCalCount({
+                    const { data: updatedCal } = await createCalCount({
                         username: username,
                         date: selectedDate.format('YYYY-MM-DD'),
                         lunchCal: calCount
@@ -152,7 +152,7 @@ function CalorieTracker() {
                 }
             } else if (selectedMeal === "dinner") {
                 try {
-                    const {data: updatedCal} = await createCalCount({
+                    const { data: updatedCal } = await createCalCount({
                         username: username,
                         date: selectedDate.format('YYYY-MM-DD'),
                         dinnerCal: calCount
@@ -172,124 +172,141 @@ function CalorieTracker() {
                 <Grid item>
                     <Paper elevation={4}>
                         <LocalizationProvider dateAdapter={AdapterDayjs}>
-                        <DemoContainer
-                        components={[
-                            'StaticDatePicker',
-                        ]}
-                        >
-                        <StaticDatePicker 
-                        value={selectedDate}
-                        onChange={handleDateChange}
-                        defaultValue={dayjs('2024-03-23')} 
-                        />
-                        </DemoContainer>
+                            <DemoContainer
+                                components={[
+                                    'StaticDatePicker',
+                                ]}
+                            >
+                                <StaticDatePicker
+                                    value={selectedDate}
+                                    onChange={handleDateChange}
+                                    defaultValue={dayjs('2024-03-23')}
+                                />
+                            </DemoContainer>
                         </LocalizationProvider>
                     </Paper>
                 </Grid>
                 <Grid item>
                     <Paper elevation={4}>
-                        <Stack direction = "column">
-                            <Box bgcolor="green" sx={{ px: 1, borderRadius: 1 }}>
-                                <Typography variant="h5" color = "white">Current calorie count</Typography>
+                        <Stack direction="column">
+                            <Box bgcolor="green" padding={1} sx={{ px: 1, borderRadius: 1 }}>
+                                <Typography color="white" sx={{ fontWeight: 600, fontSize: '1.1rem', letterSpacing: '0.075rem' }}>CALORIE COUNT</Typography>
                             </Box>
-                            <Box sx={{ px: 1, borderRadius: 1 }}>
+                            <Box sx={{ px: 1, borderRadius: 1, }}>
                                 {calData ? (
-                                    <Box sx={{py: 1}}>
-                                        <Stack direction = "column">
-                                            <Typography>Breakfast Calories: {calData.breakfastCal} </Typography>
-                                            <Typography>Lunch Calories: {calData.lunchCal} </Typography>
-                                            <Typography>Dinner Calories: {calData.dinnerCal} </Typography>
-                                        </Stack>
-                                    </Box>
+                                    <Stack direction="column">
+                                        <Typography paddingY={.25}>Breakfast Calories: {calData.breakfastCal} </Typography>
+                                        <Typography paddingY={.25}>Lunch Calories: {calData.lunchCal} </Typography>
+                                        <Typography paddingY={.25}>Dinner Calories: {calData.dinnerCal} </Typography>
+                                    </Stack>
                                 ) : (
-                                    <Box sx={{py: 1}}>
-                                        <Stack direction = "column">
-                                            <Typography>Breakfast Calories: 0 </Typography>
-                                            <Typography>Lunch Calories: 0 </Typography>
-                                            <Typography>Dinner Calories: 0 </Typography>
+                                    <Box sx={{ py: 1 }}>
+                                        <Stack direction="column">
+                                            <Typography paddingY={.25}>Breakfast Calories: 0 </Typography>
+                                            <Typography paddingY={.25}>Lunch Calories: 0 </Typography>
+                                            <Typography paddingY={.25}>Dinner Calories: 0 </Typography>
                                         </Stack>
                                     </Box>
                                 )}
                             </Box>
-                            <Box bgcolor='green' sx={{ px: 1, borderRadius: 1 }}>
-                                <Typography variant='h5' color ='white'> Update calorie count</Typography>
+                            <Box bgcolor='green' padding={1} sx={{ px: 1, borderRadius: 1 }}>
+                                <Typography color='white' sx={{ fontWeight: 600, fontSize: '1.1rem', letterSpacing: '0.075rem' }}> CALORIE TRACKER</Typography>
                             </Box>
-                            <Box sx={{ py: 1 }}>
-                                <form onSubmit={handleSubmitSearch}>
-                                    <TextField
-                                        type="search"
-                                        placeholder="Search for an ingredient..."
-                                        InputProps={{
-                                            startAdornment: (
-                                                <InputAdornment position="start">
-                                                    <Search />
-                                                </InputAdornment>
-                                            ),
-                                        }}
-                                        variant="standard"
-                                        fullWidth
-                                        onChange={(e) => handleChange(e.target.value)}
-                                    /><Button type="submit" variant="contained">Search</Button>
-                                </form>
-                            </Box>
+
+                            <form onSubmit={handleSubmitSearch}>
+                                <Stack direction="row" paddingTop={1.5} paddingX={1.5}>
+                                    <Box paddingRight={2}>
+                                        <TextField
+                                            type="search"
+                                            placeholder="Search ingredients.."
+                                            InputProps={{
+                                                startAdornment: (
+                                                    <InputAdornment position="start">
+                                                        <Search />
+                                                    </InputAdornment>
+                                                ),
+                                            }}
+                                            variant="standard"
+                                            fullWidth
+                                            onChange={(e) => handleChange(e.target.value)}
+                                        />
+                                    </Box>
+                                    <Box>
+                                        <Button size="small" type="submit" variant="contained">Search</Button>
+                                    </Box>
+                                </Stack>
+                            </form>
+
                             {selectedIngredient ? (
                                 <Typography>Selected: {selectedIngredient}</Typography>
                             ) : (
                                 searchResults ? (
                                     <List>
                                         {searchResults.map(result => (
-                                        <ListItem key={result.id} button onClick={() => handleClickIngredient(result)}>
-                                            <ListItemText primary={result.name} />
-                                        </ListItem>
+                                            <ListItem key={result.id} button onClick={() => handleClickIngredient(result)}>
+                                                <ListItemText primary={result.name} />
+                                            </ListItem>
                                         ))}
                                     </List>
                                 ) : (
-                                    <Typography>Unable to retrieve ingredients</Typography>
+                                    <Typography paddingX={1.5} paddingTop={1.5}>Unable to retrieve ingredients :(</Typography>
                                 )
                             )}
+
                             <form onSubmit={handleSubmit}>
-                                <TextField
-                                    type="search"
-                                    placeholder="Enter amount..."
-                                    InputProps={{
-                                        startAdornment: (
-                                            <InputAdornment position="start">
-                                                <Search />
-                                            </InputAdornment>
-                                        ),
-                                    }}
-                                    variant="standard"
-                                    fullWidth
-                                    onChange={(e) => handleNum(e.target.value)}
-                                />
-                                <Button type="submit" variant="contained">Submit</Button>
+                                <Stack direction="row" paddingY={1.5} paddingX={1.5}>
+                                    <Box paddingRight={2}>
+                                        <TextField
+                                            type="search"
+                                            placeholder="Enter amount..."
+                                            InputProps={{
+                                                startAdornment: (
+                                                    <InputAdornment position="start">
+                                                        <Search />
+                                                    </InputAdornment>
+                                                ),
+                                            }}
+                                            variant="standard"
+                                            fullWidth
+                                            onChange={(e) => handleNum(e.target.value)}
+                                        />
+                                    </Box>
+                                    <Box>
+                                        <Button size="small" type="submit" variant="contained">Submit</Button>
+                                    </Box>
+                                </Stack>
                             </form>
-                            <Typography>Total calories: {calCount} </Typography>
-                            <Box sx={{ py: 1 }}>
-                                <form onSubmit={handleAdd}>
-                                    <FormControl fullWidth>
-                                    <InputLabel size="small">Meal</InputLabel>
-                                        <Select
-                                            required
-                                            label="Meal"
-                                            name="meal"
-                                            size="small"
-                                            value={selectedMeal}
-                                            onChange={handleMealChange}
-                                        >
-                                            <MenuItem value="breakfast">Breakfast</MenuItem>
-                                            <MenuItem value="lunch">Lunch</MenuItem>
-                                            <MenuItem value="dinner">Dinner</MenuItem>
-                                        </Select>
-                                    </FormControl>
-                                    <Button type="submit" variant="contained">Add</Button>
-                                </form>
-                            </Box>
+
+                            <Typography padding={1}>Total calories: {calCount} </Typography>
+                            <form onSubmit={handleAdd}>
+                                <Stack direction="row" paddingY={1.5} paddingX={1.5}>
+                                    <Box flexGrow={1} paddingRight={2}>
+                                        <FormControl fullWidth>
+                                            <InputLabel size="small">Meal</InputLabel>
+                                            <Select
+                                                required
+                                                label="Meal"
+                                                name="meal"
+                                                size="small"
+                                                value={selectedMeal}
+                                                onChange={handleMealChange}
+                                            >
+                                                <MenuItem value="breakfast">Breakfast</MenuItem>
+                                                <MenuItem value="lunch">Lunch</MenuItem>
+                                                <MenuItem value="dinner">Dinner</MenuItem>
+                                            </Select>
+                                        </FormControl>
+                                    </Box>
+                                    <Box>
+                                        <Button size="small" type="submit" variant="contained">Add</Button>
+                                    </Box>
+                                </Stack>
+                            </form>
                         </Stack>
                     </Paper>
                 </Grid>
             </Grid>
-        </Stack>
+        </Stack >
     )
 }
 
