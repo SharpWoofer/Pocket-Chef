@@ -5,11 +5,19 @@ const BACKEND_URL = import.meta.env.VITE_BACKEND_URL ?? 'http://localhost:5001';
 export const workoutApi = createApi({
     reducerPath: "workoutApi",
     baseQuery: fetchBaseQuery({
-        baseUrl: `${BACKEND_URL}/searchWorkout/searchWorkout`
+        baseUrl: `${BACKEND_URL}/workout`
     }),
     endpoints: (builder) => ({
         searchWorkout: builder.query({
-            query: ({ type, muscle, difficulty }) => ``,
+            query: ({ name, type, muscle, difficulty }) => ({
+                url: '/search',
+                params: {
+                    name,
+                    type,
+                    muscle,
+                    difficulty
+                },
+            }),
         }),
     }),
 });
