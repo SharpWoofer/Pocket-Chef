@@ -58,7 +58,7 @@ function CalorieGraph() {
       xAxis={[{ data: calData.map((entry) => entry.date) }]}
       series={[{ data: calData.map((entry) => entry.calories) }]}
       width={800}
-      height={490}
+      height={400}
     />
   );
 
