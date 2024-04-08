@@ -279,7 +279,7 @@ function CalorieTracker() {
 
                             <Typography padding={1}>Total calories: {calCount} </Typography>
                             <form onSubmit={handleAdd}>
-                                <Stack direction="row" paddingY={1.5} paddingX={1.5}>
+                                <Stack direction="row" paddingBottom={1.5} paddingX={1.5}>
                                     <Box flexGrow={1} paddingRight={2}>
                                         <FormControl fullWidth>
                                             <InputLabel size="small">Meal</InputLabel>
