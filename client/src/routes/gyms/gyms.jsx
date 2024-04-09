@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useRef, useState} from "react";
 import {
     Box,
     Button,
@@ -25,8 +25,12 @@ function Gyms() {
     const handleChange = (query) => {
         setQuery(query);
     }
+    const selectedGymRef = useRef(null);
     const handleClickGym = (gym) => {
         setSelectedGym(gym);
+        setTimeout(() => {
+            selectedGymRef.current?.scrollIntoView({ behavior: 'smooth' });
+        }, 100);
     }
     const handleSubmitSearch = async (event) => {
         event.preventDefault();
@@ -40,6 +44,8 @@ function Gyms() {
             console.error('Error fetching search results:', error);
         }
     }
+
+
     return (
         <Stack>
             <Stack direction="row">
@@ -121,7 +127,7 @@ function Gyms() {
                     }}/>
                 </Grid>
             </Stack>
-            <Stack spacing={3}>
+            <Stack spacing={3} ref={selectedGymRef}>
                 {selectedGym ? (
                     <Stack style={{position: 'relative', height: '30vh'}}>
                         <img src="./gym1.png" style={{width: '100%', height: '100%', objectFit: 'cover'}}
