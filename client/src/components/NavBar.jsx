@@ -1,7 +1,6 @@
 import {Box, Container, Stack, Typography} from '@mui/material';
 import {styled} from '@mui/material/styles';
 import {NavLink} from 'react-router-dom';
-import logo from '../assets/logo.png';
 import AccountIcon from '@mui/icons-material/AccountCircleOutlined';
 import {useSelector} from 'react-redux';
 
@@ -56,26 +55,28 @@ const NavBar = () => {
     ]
 
     return (
-        <Box sx={{backgroundColor: 'white'}}>
-            <Container maxWidth="lg">
-                <Stack padding={2} direction="row" justifyContent="space-between" alignItems="center">
-                    <Stack direction="row" spacing={2} alignItems="center">
-                        <img src={logo} alt="Logo" style={{width: '48px', height: '48px'}}/>
-                        <Typography variant="h1" color="primary" sx={{
-                            fontSize: '1.5rem',
-                            letterSpacing: '-0.025rem',
-                            fontWeight: 'bold',
-                        }}>
-                            Pocket Chef
-                        </Typography>
+        <Box sx={{
+            backgroundColor: 'white',
+            boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)' // Add a subtle shadow for depth
+        }}>
+            <Stack style={{height:"13vh"}}>
+                <Stack padding={2} direction="row" justifyContent="space-between" alignItems="center" style={{ height:"100%"}}>
+                    <Stack direction="row" spacing={2} alignItems="center" style={{ height:"100%", width:"14em"}}>
+                        <img src="logo.png" alt="Logo" style={{ width: '100%', height: '180%' }}/>
                     </Stack>
-                    <Stack direction="row" spacing={5}>
+                    <Stack direction="row" spacing={2} alignItems="center" style={{width:"70em", justifyContent:"space-around"}}>
                         {links.map(({name, path}) => (
                             <NavLink key={name} to={path} style={{
+                                fontSize: "1.1em",
                                 textDecoration: "none",
-                                color: "black"
+                                color: "black",
+                                transition: "color 0.2s ease-in-out", // Smooth transition for color change
                             }}>
-                                <LinkWrapper paddingX={1} paddingY={2}>
+                                <LinkWrapper paddingX={1} paddingY={2} style={{
+                                    ":hover": {
+                                        color: "#1c7b00", // Enhanced hover effect
+                                    }
+                                }}>
                                     {name}
                                 </LinkWrapper>
                             </NavLink>
@@ -92,8 +93,14 @@ const NavBar = () => {
                                     transition: "color 0.25s ease-in-out",
                                 },
                                 ":hover::after": {
-                                    width: "100%",
-                                    transition: "width 0.25s ease-in-out",
+                                    content: '""',
+                                    position: 'absolute',
+                                    bottom: 0,
+                                    left: '50%',
+                                    transform: 'translateX(-50%)',
+                                    width: 0,
+                                    height: '2px',
+                                    backgroundColor: '#1c7b00', // Underline effect on hover
                                 }
                             }}>
                                 <AccountIcon fontSize="large"/>
@@ -101,8 +108,9 @@ const NavBar = () => {
                         </NavLink>
                     </Stack>
                 </Stack>
-            </Container>
+            </Stack>
         </Box>
+
     );
 }
 
