@@ -32,8 +32,8 @@ const Home = () => {
                             color: "#555555",
 
                         }}>
-                            Discover new recipes, learn new cooking techniques, and explore the world of cooking. Join
-                            our community of food lovers and start cooking today!
+
+                            Unlock a universe of flavors, perfect your culinary skills, and dive into the joy of cooking with our app. Connect with fellow gourmets and embrace the art of home cooking. Get started now and transform the way you cook, one delightful dish at a time!
                         </Typography>
                     </Stack>
 
