@@ -1,8 +1,10 @@
-import { Container, FormControl, Stack, MenuItem, InputLabel, Select, Typography, Unstable_Grid2 as Grid, TextField } from "@mui/material";
+import { Container, Dialog, DialogTitle, DialogContent, FormControl, Stack, MenuItem, InputLabel, Select, Typography, Grid, TextField } from "@mui/material";
+import FitnessCenterIcon from '@mui/icons-material/FitnessCenter';
 import { useSearchWorkoutQuery } from '../../store/apis/workout';
 import Box from "@mui/material/Box";
 import { useDebounce } from "@uidotdev/usehooks"
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
+import IconButton from '@mui/material/IconButton';
 
 export default function Workout() {
     const [name, setName] = useState("");
@@ -10,6 +12,8 @@ export default function Workout() {
     const [muscle, setMuscle] = useState('');
     const [difficulty, setDifficulty] = useState('');
     const debouncedName = useDebounce(name, 1000);
+    const [openDialog, setOpenDialog] = useState(false);
+    const [showInstructions, setShowInstructions] = useState(null);
 
     const { data: workout, isLoading } = useSearchWorkoutQuery({
         name: debouncedName,
@@ -65,7 +69,7 @@ export default function Workout() {
                     onChange={(e) => setName(e.target.value)}
                     sx={{ flexGrow: 1, marginBottom: 2 }} // Add some margin at the bottom
                 />
-                <FormControl sx={{ m: 1, width: 150 }} >
+                <FormControl sx={{ width: 150 }} >
                     <InputLabel id="exercise-type-label">Exercise Type</InputLabel>
                     <Select
                         labelId="exercise-type-label"
@@ -85,7 +89,7 @@ export default function Workout() {
                     </Select>
                 </FormControl>
 
-                <FormControl sx={{ m: 1, width: 150 }}>
+                <FormControl sx={{ width: 150 }}>
                     <InputLabel id="muscle-group-label">Muscle Group</InputLabel>
                     <Select
                         labelId="muscle-group-label"
@@ -106,7 +110,7 @@ export default function Workout() {
                     </Select>
                 </FormControl>
 
-                <FormControl sx={{ m: 1, width: 200 }} >
+                <FormControl sx={{ width: 200 }} >
                     <InputLabel id="exercise-difficulty-label">Exercise Difficulty</InputLabel>
                     <Select
                         labelId="exercise-difficulty-label"
@@ -135,60 +139,64 @@ export default function Workout() {
                 ) :
                     workout.length ?
                         (
-                            <Box marginTop={3} spacing={20} justifyContent="space-around">
-                                {workout.map(({ name, type, muscle, difficulty }) => (
-
-                                    <Box key={name} sx={{
-                                        height: "15vh",
-                                        width: "9em",
-                                        boxShadow: "inset -5px -5px 9px rgba(255,255,255,0.45), inset 5px 5px 9px rgba(94,104,121,0.3);",
-                                        background: "#dde1e7",
-                                        borderRadius: "20px",
-                                    }}>
-                                        <Typography variant="body1" sx={{
-                                            fontWeight: "700",
-                                            letterSpacing: "1px",
-                                            padding: '15px',
+                            <Grid container spacing={2}>
+                                {workout.map(({ name, type, muscle, difficulty, instructions }, index) => (
+                                    <Grid item xs={12} sm={6} md={4} key={index}>
+                                        <Box marginTop={2} sx={{
+                                            height: "10rem",
+                                            width: "15rem",
+                                            boxShadow: "0 0 10px rgba(0, 0, 0, 0.15)",
+                                            background: "#d3d3d3",
+                                            borderRadius: "10px",
+                                            position: 'relative',
                                         }}>
-                                            {name}
-                                        </Typography>
-                                        <Box sx={{
-                                            marginLeft: "0.2em",
-                                            height: "4vh",
-                                            width: "3.5em",
-                                            borderRadius: "20px",
-                                            boxShadow: "inset -5px -5px 9px rgba(255,255,255,0.45), inset 5px 5px 9px rgba(94,104,121,0.3);",
-                                            background: (() => {
-                                                switch (difficulty) {
-                                                    case "beginner":
-                                                        return "green";
-                                                    case "intermediate":
-                                                        return "yellow";
-                                                    case "hard":
-                                                        return "expert";
-                                                    default:
-                                                        return "red"; // Default background color
-                                                }
-                                            })()
-                                        }}>
+                                            <IconButton
+                                                onClick={() => setShowInstructions(showInstructions === index ? null : index)}
+                                                sx={{
+                                                    position: 'absolute',
+                                                    top: 0,
+                                                    right: 0,
+                                                }}
+                                            >
+                                                <FitnessCenterIcon />
+                                            </IconButton>
 
                                             <Typography variant="body1" sx={{
-                                                paddingTop: "5px",
-                                                alignText: "center",
+                                                borderRadius: "5px",
                                                 fontWeight: "700",
-                                                fontSize: "11px",
                                                 letterSpacing: "1px",
-                                                paddingLeft: "15px",
+                                                padding: '0.5rem',
+                                                background: (() => {
+                                                    switch (difficulty) {
+                                                        case "beginner":
+                                                            return "#00c04b";
+                                                        case "intermediate":
+                                                            return "#ffa500";
+                                                        case "expert":
+                                                            return "#cf3229";
+                                                        default:
+                                                            return "white";
+                                                    }
+                                                })()
                                             }}>
-                                                {difficulty}
+                                                {name}
                                             </Typography>
 
+                                            {showInstructions === index && (
+                                                <Typography component="div">
+                                                    Muscle Group: {muscle.charAt(0).toUpperCase() + muscle.slice(1)}
+                                                    <Typography component="div">
+                                                        Difficulty: {difficulty.charAt(0).toUpperCase() + difficulty.slice(1)}
+                                                        <Typography component="div">
+                                                            {instructions}
+                                                        </Typography>
+                                                    </Typography>
+                                                </Typography>
+                                            )}
                                         </Box>
-
-                                    </Box>
-
+                                    </Grid>
                                 ))}
-                            </Box>
+                            </Grid>
                         )
                         : <Box width={1}>
                             <Typography variant="h6" align="center">
