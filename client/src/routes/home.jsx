@@ -2,6 +2,8 @@ import {Box, Button, Container, Stack, Typography, Unstable_Grid2 as Grid} from 
 import {Link} from "react-router-dom";
 import {useSearchRecipesQuery} from "../store/apis/recipe";
 import cooking from "../assets/cooking.png";
+import 'swiper/css';
+import { Swiper, SwiperSlide } from 'swiper/react';
 
 const Home = () => {
     const {data, isLoading} = useSearchRecipesQuery({
@@ -55,17 +57,22 @@ const Home = () => {
 
             {/* Recipe Deck */}
             <Box>
-                <Typography variant="h2" sx={{
-                    fontSize: "2rem",
-                }}>
+                <Typography variant="h2" sx={{ fontSize: "2rem" }}>
                     Popular Recipes
                 </Typography>
-                <Grid container marginTop={3} spacing={3} justifyContent="center">
+                <Swiper
+                    spaceBetween={30}
+                    slidesPerView={'auto'}
+                    freeMode={true}
+                    grabCursor={true}
+                    style={{ marginTop: '24px' }}
+                >
                     {recipes.map((recipe) => (
-                        <Grid xs={4} key={recipe.id}>
+                        <SwiperSlide key={recipe.id} style={{ width: 'auto' }}>
                             <Link to={`/recipes/${recipe.id}`} style={{
                                 textDecoration: "none",
                                 color: "inherit",
+                                display: "block",
                             }}>
                                 <img src={recipe.image} alt={recipe.title} style={{
                                     width: "100%",
@@ -74,16 +81,15 @@ const Home = () => {
                                     borderRadius: "8px",
                                     boxShadow: "0 0 10px rgba(0, 0, 0, 0.2)",
                                 }}/>
-                                <Typography variant="body1" sx={{
-                                    fontWeight: "700",
-                                }}>
+                                <Typography variant="body1" sx={{ fontWeight: "700" }}>
                                     {recipe.title}
                                 </Typography>
                             </Link>
-                        </Grid>
+                        </SwiperSlide>
                     ))}
-                </Grid>
+                </Swiper>
             </Box>
+
         </Container>
     );
 };
