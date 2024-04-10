@@ -1,4 +1,16 @@
-import { Container, Collapse, FormControl, Stack, MenuItem, InputLabel, Select, Typography, Grid, TextField } from "@mui/material";
+import {
+    Container,
+    Collapse,
+    FormControl,
+    Stack,
+    MenuItem,
+    InputLabel,
+    Select,
+    Typography,
+    Grid,
+    TextField,
+    Button, darken
+} from "@mui/material";
 import { useSearchWorkoutQuery } from '../../store/apis/workout';
 import Box from "@mui/material/Box";
 import { useDebounce } from "@uidotdev/usehooks"
@@ -54,6 +66,19 @@ export default function Workout() {
         'Intermediate',
         'Expert',
     ];
+
+    const getDifficultyColor = (difficulty) => {
+        switch (difficulty) {
+            case "beginner":
+                return "#00c04b";
+            case "intermediate":
+                return "#ffa500";
+            case "expert":
+                return "#cf3229";
+            default:
+                return "white";
+        }
+    };
 
     return (
 
@@ -140,55 +165,50 @@ export default function Workout() {
                         (
                             <Grid container spacing={2}>
                                 {workout.map(({ name, muscle, difficulty, instructions }, index) => (
-                                    <Grid item xs={12} key={index}>
-                                        <Box marginTop={2} sx={{
-                                            display: "flex",
-                                            justifyContent: "center",
-                                            alignContent: "flex-start",
+                                    <Grid item xs={12} sm={6} md={4} key={index} style={{ display: 'flex', justifyContent: 'center' }}>
+                                        <Box sx={{
+                                            width: '100%',
+                                            marginY: 2,
+                                            display: 'flex',
+                                            flexDirection: 'column',
+                                            alignItems: 'center'
                                         }}>
                                             <IconButton
-                                                onClick={() => setShowInstructions(showInstructions === index ? null : index)} sx={{
-                                                    width: "22.5%",
-                                                    borderRadius: "10px",
-                                                    background: (() => {
-                                                        switch (difficulty) {
-                                                            case "beginner":
-                                                                return "#00c04b";
-                                                            case "intermediate":
-                                                                return "#ffa500";
-                                                            case "expert":
-                                                                return "#cf3229";
-                                                            default:
-                                                                return "white";
-                                                        }
-                                                    })(),
+                                                onClick={() => setShowInstructions(showInstructions === index ? null : index)}
+                                                sx={{
+                                                    width: '100%',
+                                                    borderRadius: 2, // softened the border radius for a more modern look
+                                                    backgroundColor: getDifficultyColor(difficulty),
+                                                    padding: '10px',
+                                                    display: 'flex',
+                                                    justifyContent: 'center',
+                                                    boxShadow: 4, // added shadow for depth
+                                                    ':hover': { // interactive hover effect
+                                                        boxShadow: 6,
+                                                        transform: 'translateY(-2px)', // slight lift effect on hover
+                                                        backgroundColor: darken(getDifficultyColor(difficulty), 0.1) // Material-UI utility to darken the color
+                                                    },
+                                                    transition: 'all 0.3s ease' // smooth transition for the hover effects
                                                 }}
                                             >
-                                                <Typography variant="body1" sx={{
-                                                    fontSize: "1.5rem",
-                                                    fontWeight: "700",
-                                                    letterSpacing: "0.75px",
-                                                    padding: '0.5rem',
-                                                    color: "black",
-                                                }}>
+                                                <Typography variant="h6" sx={{ fontWeight: 700, color: 'white', textTransform: 'uppercase' }}>
                                                     {name}
                                                 </Typography>
                                             </IconButton>
 
-                                            <Collapse in={showInstructions === index}>
-                                                <Container sx={{
-                                                    fontSize: "2rem",
-                                                }}>
-                                                    <Typography component="div" sx={{ fontSize: instructionsTextSize }}>
+
+                                            <Collapse in={showInstructions === index} style={{ width: '100%' }}>
+                                                <Box padding={2} bgcolor="background.paper" boxShadow={1}>
+                                                    <Typography variant="subtitle1" gutterBottom>
                                                         Muscle: {muscle.toUpperCase()}
-                                                        <Typography component="div" sx={{ fontSize: instructionsTextSize }}>
-                                                            Mode: {difficulty.toUpperCase()}
-                                                            <Typography component="div" sx={{ fontSize: instructionsTextSize }}>
-                                                                Instructions: {instructions}
-                                                            </Typography>
-                                                        </Typography>
                                                     </Typography>
-                                                </Container>
+                                                    <Typography variant="subtitle1" gutterBottom>
+                                                        Mode: {difficulty.toUpperCase()}
+                                                    </Typography>
+                                                    <Typography variant="subtitle1">
+                                                        Instructions: {instructions}
+                                                    </Typography>
+                                                </Box>
                                             </Collapse>
                                         </Box>
                                     </Grid>
