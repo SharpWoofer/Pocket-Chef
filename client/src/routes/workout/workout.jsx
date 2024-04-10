@@ -1,5 +1,4 @@
-import { Container, Dialog, DialogTitle, DialogContent, FormControl, Stack, MenuItem, InputLabel, Select, Typography, Grid, TextField } from "@mui/material";
-import FitnessCenterIcon from '@mui/icons-material/FitnessCenter';
+import { Container, Collapse, FormControl, Stack, MenuItem, InputLabel, Select, Typography, Grid, TextField } from "@mui/material";
 import { useSearchWorkoutQuery } from '../../store/apis/workout';
 import Box from "@mui/material/Box";
 import { useDebounce } from "@uidotdev/usehooks"
@@ -12,8 +11,8 @@ export default function Workout() {
     const [muscle, setMuscle] = useState('');
     const [difficulty, setDifficulty] = useState('');
     const debouncedName = useDebounce(name, 1000);
-    const [openDialog, setOpenDialog] = useState(false);
     const [showInstructions, setShowInstructions] = useState(null);
+    const instructionsTextSize = '1.25rem';
 
     const { data: workout, isLoading } = useSearchWorkoutQuery({
         name: debouncedName,
@@ -140,59 +139,57 @@ export default function Workout() {
                     workout.length ?
                         (
                             <Grid container spacing={2}>
-                                {workout.map(({ name, type, muscle, difficulty, instructions }, index) => (
-                                    <Grid item xs={12} sm={6} md={4} key={index}>
+                                {workout.map(({ name, muscle, difficulty, instructions }, index) => (
+                                    <Grid item xs={12} key={index}>
                                         <Box marginTop={2} sx={{
-                                            height: "10rem",
-                                            width: "15rem",
-                                            boxShadow: "0 0 10px rgba(0, 0, 0, 0.15)",
-                                            background: "#d3d3d3",
-                                            borderRadius: "10px",
-                                            position: 'relative',
+                                            display: "flex",
+                                            justifyContent: "center",
+                                            alignContent: "flex-start",
                                         }}>
                                             <IconButton
-                                                onClick={() => setShowInstructions(showInstructions === index ? null : index)}
-                                                sx={{
-                                                    position: 'absolute',
-                                                    top: 0,
-                                                    right: 0,
+                                                onClick={() => setShowInstructions(showInstructions === index ? null : index)} sx={{
+                                                    width: "22.5%",
+                                                    borderRadius: "10px",
+                                                    background: (() => {
+                                                        switch (difficulty) {
+                                                            case "beginner":
+                                                                return "#00c04b";
+                                                            case "intermediate":
+                                                                return "#ffa500";
+                                                            case "expert":
+                                                                return "#cf3229";
+                                                            default:
+                                                                return "white";
+                                                        }
+                                                    })(),
                                                 }}
                                             >
-                                                <FitnessCenterIcon />
+                                                <Typography variant="body1" sx={{
+                                                    fontSize: "1.5rem",
+                                                    fontWeight: "700",
+                                                    letterSpacing: "0.75px",
+                                                    padding: '0.5rem',
+                                                    color: "black",
+                                                }}>
+                                                    {name}
+                                                </Typography>
                                             </IconButton>
 
-                                            <Typography variant="body1" sx={{
-                                                borderRadius: "5px",
-                                                fontWeight: "700",
-                                                letterSpacing: "1px",
-                                                padding: '0.5rem',
-                                                background: (() => {
-                                                    switch (difficulty) {
-                                                        case "beginner":
-                                                            return "#00c04b";
-                                                        case "intermediate":
-                                                            return "#ffa500";
-                                                        case "expert":
-                                                            return "#cf3229";
-                                                        default:
-                                                            return "white";
-                                                    }
-                                                })()
-                                            }}>
-                                                {name}
-                                            </Typography>
-
-                                            {showInstructions === index && (
-                                                <Typography component="div">
-                                                    Muscle Group: {muscle.charAt(0).toUpperCase() + muscle.slice(1)}
-                                                    <Typography component="div">
-                                                        Difficulty: {difficulty.charAt(0).toUpperCase() + difficulty.slice(1)}
-                                                        <Typography component="div">
-                                                            {instructions}
+                                            <Collapse in={showInstructions === index}>
+                                                <Container sx={{
+                                                    fontSize: "2rem",
+                                                }}>
+                                                    <Typography component="div" sx={{ fontSize: instructionsTextSize }}>
+                                                        Muscle: {muscle.toUpperCase()}
+                                                        <Typography component="div" sx={{ fontSize: instructionsTextSize }}>
+                                                            Mode: {difficulty.toUpperCase()}
+                                                            <Typography component="div" sx={{ fontSize: instructionsTextSize }}>
+                                                                Instructions: {instructions}
+                                                            </Typography>
                                                         </Typography>
                                                     </Typography>
-                                                </Typography>
-                                            )}
+                                                </Container>
+                                            </Collapse>
                                         </Box>
                                     </Grid>
                                 ))}
