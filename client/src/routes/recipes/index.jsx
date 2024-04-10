@@ -32,15 +32,15 @@ function Recipes() {
     const debouncedQuery = useDebounce(query, 500);
     const debouncedCalories = useDebounce(calories, 1000);
     const username = useSelector(state => state.auth.user.username);
-    const { data, isLoading } = useSearchRecipesQuery({
+    const {data, isLoading} = useSearchRecipesQuery({
         query: debouncedQuery,
         number: numRecipes,
         cuisine: selectedCuisines.join(','),
         minCalories: debouncedCalories[0],
         maxCalories: debouncedCalories[1],
     });
-    const { data: favoriteRecipesData } = useGetFavoriteRecipesQuery(username, { skip: !username });
-    const [addFavoriteRecipe, { isError, isSuccess }] = useAddFavoriteRecipeMutation();
+    const {data: favoriteRecipesData} = useGetFavoriteRecipesQuery(username, {skip: !username});
+    const [addFavoriteRecipe, {isError, isSuccess}] = useAddFavoriteRecipeMutation();
     const recipes = data?.results ?? [];
     const [favoriteRecipes, setFavoriteRecipes] = useState(favoriteRecipesData?.favoriteRecipes ?? []);
 
@@ -75,7 +75,7 @@ function Recipes() {
     ];
     const handleAddToFavorites = async (event, recipeId, recipeTitle) => {
         try {
-            const { user } = await addFavoriteRecipe({ username, recipeId }).unwrap();
+            const {user} = await addFavoriteRecipe({username, recipeId}).unwrap();
             setSnackbarMessage(`Added "${recipeTitle}" to favorites.`);
             setFavoriteRecipes(user.favoriteRecipes ?? []);
         } catch (error) {
@@ -95,13 +95,13 @@ function Recipes() {
         <Container maxWidth="lg">
             <Grid container spacing={2}>
                 <Grid item xs={12}>
-                    <Typography variant="overline" sx={{ fontSize: '1.5rem', letterSpacing: 0.75, fontWeight: 550 }}>
+                    <Typography variant="overline" sx={{fontSize: '1.5rem', letterSpacing: 0.75, fontWeight: 550}}>
                         Welcome
                     </Typography>
                 </Grid>
 
                 <Grid item xs={12} md={6} lg={4}>
-                    <FavoriteRecipes favoriteRecipes={favoriteRecipes} />
+                    <FavoriteRecipes favoriteRecipes={favoriteRecipes}/>
 
 
                 </Grid>
@@ -114,7 +114,7 @@ function Recipes() {
                             paddingX={4}
                             paddingY={2}
                             borderRadius={2}
-                            sx={{ backgroundColor: "white", flexGrow: 1 }}
+                            sx={{backgroundColor: "white", flexGrow: 1}}
                         >
                             <Typography variant="body1" noWrap>
                                 Start a Healthy Diet!
@@ -125,7 +125,7 @@ function Recipes() {
                                 InputProps={{
                                     startAdornment: (
                                         <InputAdornment position="start">
-                                            <Search />
+                                            <Search/>
                                         </InputAdornment>
                                     ),
                                 }}
@@ -139,42 +139,43 @@ function Recipes() {
                             paddingX={4}
                             paddingY={2}
                             borderRadius={2}
-                            sx={{ backgroundColor: "white" }}
+                            sx={{backgroundColor: "white"}}
                         >
-                            <CuisineSelector selectedCuisines={selectedCuisines} cuisines={cuisines} onChange={setSelectedCuisines} />
+                            <CuisineSelector selectedCuisines={selectedCuisines} cuisines={cuisines}
+                                             onChange={setSelectedCuisines}/>
                         </Box>
 
                         <Box
                             paddingX={4}
                             paddingY={2}
                             borderRadius={2}
-                            sx={{ backgroundColor: "white" }}
+                            sx={{backgroundColor: "white"}}
                         >
                             <Typography variant="body1" noWrap>
                                 Calorie Range:
                             </Typography>
-                            < RangeSlider calories={calories} onChange={setCalories} />
+                            < RangeSlider calories={calories} onChange={setCalories}/>
                         </Box>
                     </Stack>
                 </Grid>
 
 
                 {isLoading ? (
-                    <Box width={1} >
-                        <Typography variant="h6" align="center">
-                            Loading recipes...
-                        </Typography>
-                    </Box>
-                ) :
+                        <Box width={1}>
+                            <Typography variant="h6" align="center">
+                                Loading recipes...
+                            </Typography>
+                        </Box>
+                    ) :
                     recipes.length ?
                         (
-                            <Box width={1} sx={{ py: 2 }}>
+                            <Box width={1} sx={{py: 2}}>
                                 <ImageList variant="masonry" cols={4} gap={16} sx={{
                                     overflow: "visible"
                                 }}>
-                                    {recipes.map(({ id, title, image }) => (
+                                    {recipes.map(({id, title, image}) => (
                                         <Box key={id} position="relative">
-                                            <Link to={`/recipes/${id}`} style={{ textDecoration: 'none' }}>
+                                            <Link to={`/recipes/${id}`} style={{textDecoration: 'none'}}>
                                                 <ImageListItem sx={{
                                                     borderRadius: 2,
                                                     overflow: 'hidden',
@@ -193,7 +194,7 @@ function Recipes() {
                                                         srcSet={`${image}?w=248&fit=crop&auto=format&dpr=2 2x`}
                                                         alt={title}
                                                         loading="lazy"
-                                                        style={{ width: '100%', height: '100%', display: 'block' }}
+                                                        style={{width: '100%', height: '100%', display: 'block'}}
                                                     />
                                                     <Box className="image-title-overlay" sx={{
                                                         position: 'absolute',
@@ -216,12 +217,12 @@ function Recipes() {
                                                     top: 8,
                                                     right: 8,
                                                     backgroundColor: 'white',
-                                                    '&:hover': { backgroundColor: '#f4f4f4' }
+                                                    '&:hover': {backgroundColor: '#f4f4f4'}
                                                 }}
                                                 onClick={(event) => handleAddToFavorites(event, id, title)}
                                                 aria-label={`add to favorites ${title}`}
                                             >
-                                                <FavoriteBorder />
+                                                <FavoriteBorder/>
                                             </IconButton>
                                         </Box>
                                     ))}
@@ -247,12 +248,12 @@ function Recipes() {
                         color="inherit"
                         onClick={() => setSnackbarOpen(false)}
                     >
-                        <CloseIcon fontSize="small" />
+                        <CloseIcon fontSize="small"/>
                     </IconButton>
                 }
             />
 
-        </Container >
+        </Container>
 
     )
 }

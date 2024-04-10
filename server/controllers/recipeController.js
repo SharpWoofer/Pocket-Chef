@@ -5,7 +5,7 @@ const apiKey = '1c759ff2ee864d2bb3388274a18e92bd';
 
 
 const searchRecipe = async (req, res) => {
-    const { query } = req
+    const {query} = req
     const q = query.q;
     const number = query.number ?? 10;
     const cuisine = query.cuisine ?? '';
@@ -14,7 +14,7 @@ const searchRecipe = async (req, res) => {
 
     try {
         const localRecipes = await Recipe.find({
-            title: { $regex: q, $options: 'i' }
+            title: {$regex: q, $options: 'i'}
         });
         if (localRecipes.length) {
             res.status(200).json(localRecipes.slice(0, number));
@@ -24,41 +24,39 @@ const searchRecipe = async (req, res) => {
             res.status(200).json(response.data);
         }
     } catch (error) {
-        res.status(500).json({ error: error.message });
+        res.status(500).json({error: error.message});
     }
 };
 
 const getRecipeDetails = async (req, res) => {
-    const { id } = req.params;
+    const {id} = req.params;
     try {
         const response = await axios.get(`https://api.spoonacular.com/recipes/715538/information?apiKey=${apiKey}`);
         res.json(response.data);
     } catch (error) {
-        res.status(500).json({ error: 'Internal server error' });
+        res.status(500).json({error: 'Internal server error'});
     }
 }
 
 const getRandomRecipes = async (req, res) => {
-    const { number } = req.query;
+    const {number} = req.query;
     try {
         const response = await axios.get(`https://api.spoonacular.com/recipes/random?number=${number}&apiKey=${apiKey}`);
         res.json(response.data);
     } catch (error) {
-        res.status(500).json({ error: 'Internal server error' });
+        res.status(500).json({error: 'Internal server error'});
     }
 }
 
 const getRecipeById = async (req, res) => {
-    const { id } = req.params;
+    const {id} = req.params;
     try {
         const response = await axios.get(`https://api.spoonacular.com/recipes/${id}/information?apiKey=${apiKey}`);
         res.json(response.data);
     } catch (error) {
-        res.status(500).json({ error: 'Internal server error' });
+        res.status(500).json({error: 'Internal server error'});
     }
 }
 
 
-
-
-export default { searchRecipe, getRecipeDetails, getRandomRecipes, getRecipeById };
+export default {searchRecipe, getRecipeDetails, getRandomRecipes, getRecipeById};

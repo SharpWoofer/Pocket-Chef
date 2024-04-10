@@ -1,7 +1,7 @@
 import mongoose from 'mongoose';
 
 const calorieSchema = new mongoose.Schema({
-    
+
     date: {
         type: Date,
         default: Date.now,
@@ -26,10 +26,10 @@ const calorieSchema = new mongoose.Schema({
         type: Number,
         default: 0,
     }
-  
-  });
-  
-  const Calorie = mongoose.model('Calorie', calorieSchema);
-  
-  export default Calorie;
+
+});
+
+const Calorie = mongoose.model('Calorie', calorieSchema);
+
+export default Calorie;
   

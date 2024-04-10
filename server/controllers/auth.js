@@ -11,22 +11,34 @@ const createToken = (_id) => {
 /* REGISTER USER */
 export const register = async (req, res) => {
     try {
-        const {username, email, password, goals, activities, height, width, firstName, lastName, age, gender} = req.body;
+        const {
+            username,
+            email,
+            password,
+            goals,
+            activities,
+            height,
+            width,
+            firstName,
+            lastName,
+            age,
+            gender
+        } = req.body;
 
-        if (!email || !username || !password){
-            return res.status(400).json({ error: 'All fields must be filled' })
+        if (!email || !username || !password) {
+            return res.status(400).json({error: 'All fields must be filled'})
         }
-        if (!validator.isEmail(email)){
-            return res.status(400).json({ error: 'Invalid email' })
+        if (!validator.isEmail(email)) {
+            return res.status(400).json({error: 'Invalid email'})
         }
 
         if (await User.findOne({
             $or: [
-                { username },
-                { email }
+                {username},
+                {email}
             ]
         })) {
-            return res.status(400).json({ error: 'The email address or user name has been registered' })
+            return res.status(400).json({error: 'The email address or user name has been registered'})
         }
 
         const salt = await bcrypt.genSalt(10);
@@ -58,57 +70,57 @@ export const login = async (req, res) => {
     try {
         const {username, password} = req.body;
         if (!username || !password) {
-            return res.status(400).json({ error: "username and password are required" });
+            return res.status(400).json({error: "username and password are required"});
         }
         const user = await User.findOne({
-            $or: [{ username }, { email: username }]
+            $or: [{username}, {email: username}]
         });
         if (!user) {
-            return res.status(404).json({ error: "User does not exist" });
+            return res.status(404).json({error: "User does not exist"});
         }
         const validPassword = await bcrypt.compare(password, user.password);
-        
+
         if (!validPassword) {
-            return res.status(400).json({ error: "Wrong password" })
+            return res.status(400).json({error: "Wrong password"})
         }
 
         const accessToken = createToken(user._id);
         delete user.password;
-        res.status(200).json({ token: accessToken, user });
+        res.status(200).json({token: accessToken, user});
     } catch (error) {
         console.error("Error during login:", error);
-        res.status(500).json({ error: "Internal server error" });
+        res.status(500).json({error: "Internal server error"});
     }
 };
 
 //fav recipes
 export const addFavoriteRecipe = async (req, res) => {
-    const { userId, recipeName } = req.body;
+    const {userId, recipeName} = req.body;
 
     try {
         const updatedUser = await User.findByIdAndUpdate(
-            userId, 
-            { $addToSet: { favoriteRecipes: recipeName } }, // Use $addToSet to avoid duplicates
-            { new: true } // Returns the updated user
+            userId,
+            {$addToSet: {favoriteRecipes: recipeName}}, // Use $addToSet to avoid duplicates
+            {new: true} // Returns the updated user
         );
 
         if (updatedUser) {
-            res.status(200).json({ message: 'Favorite recipe added.', user: updatedUser });
+            res.status(200).json({message: 'Favorite recipe added.', user: updatedUser});
         } else {
-            res.status(404).json({ message: 'User not found.' });
+            res.status(404).json({message: 'User not found.'});
         }
     } catch (error) {
-        res.status(500).json({ error: error.message });
+        res.status(500).json({error: error.message});
     }
 };
 
 
 /**
  * Weight Line Chart
- * @param {import('express').Request} req 
- * @param {import('express').Response} res 
+ * @param {import('express').Request} req
+ * @param {import('express').Response} res
  */
-export const addUserWeight = async(req, res) => {
+export const addUserWeight = async (req, res) => {
     try {
         const mBody = req.body
         const mUser = req.user
@@ -121,22 +133,22 @@ export const addUserWeight = async(req, res) => {
         ])
         res.send(mRes)
     } catch (error) {
-        res.status(500).json({ error: error.message });
+        res.status(500).json({error: error.message});
     }
 }
 
 /**
  * getUserWeightList
- * @param {import('express').Request} req 
- * @param {import('express').Response} res 
+ * @param {import('express').Request} req
+ * @param {import('express').Response} res
  */
-export const getUserWeightList = async(req, res) => {
+export const getUserWeightList = async (req, res) => {
     try {
         const mUser = req.user
 
-        const mRes = await UserWeight.find({ user: mUser._id })
+        const mRes = await UserWeight.find({user: mUser._id})
         res.send(mRes)
     } catch (error) {
-        res.status(500).json({ error: error.message });
+        res.status(500).json({error: error.message});
     }
 }

@@ -12,13 +12,19 @@ export const recipeApi = createApi({
             query: (id) => `/${id}`,
         }),
         searchRecipes: builder.query({
-            query: ({ query, number, cuisine, minCalories, maxCalories }) => `/search?q=${query}&number=${number}&cuisine=${cuisine}&minCalories=${minCalories}&maxCalories=${maxCalories}`,
+            query: ({
+                        query,
+                        number,
+                        cuisine,
+                        minCalories,
+                        maxCalories
+                    }) => `/search?q=${query}&number=${number}&cuisine=${cuisine}&minCalories=${minCalories}&maxCalories=${maxCalories}`,
         }),
         addFavoriteRecipe: builder.mutation({
-            query: ({ username, recipeId }) => ({
+            query: ({username, recipeId}) => ({
                 url: `/favorites`,
                 method: 'POST',
-                body: { username, recipeId },
+                body: {username, recipeId},
             }),
         }),
         getFavoriteRecipes: builder.query({
@@ -28,4 +34,9 @@ export const recipeApi = createApi({
     }),
 });
 
-export const { useGetRecipeByIdQuery, useSearchRecipesQuery, useAddFavoriteRecipeMutation, useGetFavoriteRecipesQuery } = recipeApi;
+export const {
+    useGetRecipeByIdQuery,
+    useSearchRecipesQuery,
+    useAddFavoriteRecipeMutation,
+    useGetFavoriteRecipesQuery
+} = recipeApi;

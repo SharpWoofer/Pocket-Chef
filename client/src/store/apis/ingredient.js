@@ -46,4 +46,10 @@ export const ingredientApi = createApi({
     }),
 });
 
-export const { useSearchIngredientMutation, useGetIngredientByIdMutation, useGetCalCountMutation, useCreateCalCountMutation, useUpdateCalCountMutation } = ingredientApi;
+export const {
+    useSearchIngredientMutation,
+    useGetIngredientByIdMutation,
+    useGetCalCountMutation,
+    useCreateCalCountMutation,
+    useUpdateCalCountMutation
+} = ingredientApi;

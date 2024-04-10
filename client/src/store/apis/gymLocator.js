@@ -18,4 +18,4 @@ export const gymApi = createApi({
     }),
 });
 
-export const { useSearchGymMutation } = gymApi;
+export const {useSearchGymMutation} = gymApi;

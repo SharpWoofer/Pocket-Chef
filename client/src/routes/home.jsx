@@ -4,7 +4,7 @@ import {useSearchRecipesQuery} from "../store/apis/recipe";
 import cooking from "../assets/cooking.png";
 
 const Home = () => {
-    const { data, isLoading } = useSearchRecipesQuery({
+    const {data, isLoading} = useSearchRecipesQuery({
         query: "chinese",
         number: 6,
         cuisine: '',
@@ -18,7 +18,7 @@ const Home = () => {
             paddingY: 1
         }}>
             <Stack direction="row" alignItems="center" justifyContent="space-around" gap={12} paddingY={3}>
-                <Box width="60%" >
+                <Box width="60%">
                     <Stack gap={2}>
                         <Typography variant="h2" sx={{
                             fontSize: "4.3rem",
@@ -32,7 +32,8 @@ const Home = () => {
                             color: "#555555",
 
                         }}>
-                            Discover new recipes, learn new cooking techniques, and explore the world of cooking. Join our community of food lovers and start cooking today!
+
+                            Unlock a universe of flavors, perfect your culinary skills, and dive into the joy of cooking with our app. Connect with fellow gourmets and embrace the art of home cooking. Get started now and transform the way you cook, one delightful dish at a time!
                         </Typography>
                     </Stack>
 
@@ -48,7 +49,7 @@ const Home = () => {
                     <img src={cooking} alt="cooking" style={{
                         width: "100%",
                         height: "100%",
-                    }} />
+                    }}/>
                 </Box>
             </Stack>
 
@@ -72,7 +73,7 @@ const Home = () => {
                                     objectFit: "cover",
                                     borderRadius: "8px",
                                     boxShadow: "0 0 10px rgba(0, 0, 0, 0.2)",
-                                }} />
+                                }}/>
                                 <Typography variant="body1" sx={{
                                     fontWeight: "700",
                                 }}>

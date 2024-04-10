@@ -45,4 +45,4 @@ export const authApi = createApi({
     }),
 });
 
-export const { useLoginMutation, useRegisterMutation, useAddUserWeightMutation, useGetUserWeightListMutation } = authApi;
+export const {useLoginMutation, useRegisterMutation, useAddUserWeightMutation, useGetUserWeightListMutation} = authApi;
