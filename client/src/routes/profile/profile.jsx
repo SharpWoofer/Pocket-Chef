@@ -6,12 +6,22 @@ import "./profile.css"
 import {useEffect, useRef} from "react"
 import {useAddUserWeightMutation, useGetUserWeightListMutation} from "../../store/apis/auth.js"
 import {DateTimePicker} from "@mui/x-date-pickers"
+import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { clearUserInfo, setLocalUserInfo } from "../../store/authSlice";
+import { useSetUserInfoMutation } from "../../store/apis/auth";
+
 
 const Profile = () => {
     const {user, token} = useSelector((state) => state.auth)
     const [addUserWeight] = useAddUserWeightMutation()
     const [getUserWeightList] = useGetUserWeightListMutation()
     const mLine = useRef()
+    const mDispatch = useDispatch();
+    const mNavigate = useNavigate();
+    const [setUserInfo] = useSetUserInfoMutation();
+
+
 
     async function init() {
         const mDom = mLine.current
@@ -48,17 +58,35 @@ const Profile = () => {
         init()
     }, [])
 
-    const onSubmit = (event) => {
-        event.preventDefault()
-        const mForm = event.target.elements
-        const mBody = user || {}
+    const onSubmit = async (event) => {
+        event.preventDefault();
+        const mForm = event.target.elements;
+        const mBody = user || {}; // In your previous version you did JSON parsing here. Adjust as needed.
         for (const item of mForm) {
             if (item.name) {
-                mBody[item.name] = item.value
+                mBody[item.name] = item.value;
             }
         }
-        console.log(mBody)
-    }
+        await setUserInfo({
+            ...mBody,
+            token
+        });
+        mDispatch(setLocalUserInfo({
+            user: mBody
+        }));
+        // Handle success message or error here as needed
+    };
+
+    const onLogout = () => {
+        // Replace the confirm with a material-ui dialog or another method if needed
+        if (!window.confirm('Really logout?')) {
+            return;
+        }
+        mDispatch(clearUserInfo());
+        mNavigate('/login');
+    };
+    
+    
 
     const onAddWeight = async (event) => {
         event.preventDefault()
@@ -403,7 +431,7 @@ const Profile = () => {
                     borderBottom="1px solid #e0e0e0"
                     marginBottom="50px"
                 >
-                    <Button variant="contained" color="error">Logout</Button>
+                    <Button variant="contained" color="error" onClick={onLogout}>Logout</Button>
                 </Stack>
             </Box>
         </Stack>

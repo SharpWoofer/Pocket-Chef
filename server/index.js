@@ -15,6 +15,7 @@ import gymRouter from "./routes/gymRoutes.js";
 import workoutRouter from "./routes/workoutRoutes.js";
 //import userRoutes from "./routes/user.js";
 import favoriteRoutes from "./routes/favoriteRoutes.js";
+import CommonRouter from "./routes/common.js";
 
 /* CONFIGURATIONS */
 const __filename = fileURLToPath(import.meta.url);
@@ -32,15 +33,15 @@ app.use("/assets", express.static(path.join(__dirname, "public/assets"))); // Se
 // app.use('/api', userRoutes);
 
 /* FILE STORAGES */
-const storage = multer.diskStorage({
-    destination: (req, file, cb) => {
-        cb(null, "public/assets");
-    },
-    filename: (req, file, cb) => {
-        cb(null, `${file.originalname}`);
-    }
-});
-const upload = multer({storage: storage}); //when using upload.single("file") in the route, the file will be stored in the public/assets folder
+// const storage = multer.diskStorage({
+//     destination: (req, file, cb) => {
+//         cb(null, "public/assets");
+//     },
+//     filename: (req, file, cb) => {
+//         cb(null, `${file.originalname}`);
+//     }
+// });
+// const upload = multer({storage: storage}); //when using upload.single("file") in the route, the file will be stored in the public/assets folder
 
 /* ROUTES  WITH FILES */
 //app.post("/auth/register", upload.single("picture"),register);
@@ -59,6 +60,7 @@ app.use("/workout", workoutRouter);
 app.use('/recipes/favorites', favoriteRoutes);
 
 app.use('/gyms', gymRouter);
+app.use("/common", CommonRouter);
 
 
 /* MONGOOSE SETUP */
