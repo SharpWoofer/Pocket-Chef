@@ -21,8 +21,7 @@ import FavoriteBorder from '@mui/icons-material/FavoriteBorder';
 import Snackbar from '@mui/material/Snackbar';
 import CloseIcon from '@mui/icons-material/Close';
 import {useSelector} from 'react-redux';
-import {useAddFavoriteRecipeMutation, useGetFavoriteRecipesQuery, useSearchRecipesQuery} from "../../store/apis/recipe";
-
+import {useAddFavoriteRecipeMutation, useRemoveFavoriteRecipeMutation, useGetFavoriteRecipesQuery, useSearchRecipesQuery} from "../../store/apis/recipe";
 
 function Recipes() {
     const numRecipes = 20;
@@ -40,7 +39,8 @@ function Recipes() {
         maxCalories: debouncedCalories[1],
     });
     const {data: favoriteRecipesData} = useGetFavoriteRecipesQuery(username, {skip: !username});
-    const [addFavoriteRecipe, {isError, isSuccess}] = useAddFavoriteRecipeMutation();
+    const [addFavoriteRecipe] = useAddFavoriteRecipeMutation();
+    const [removeFavoriteRecipe] = useRemoveFavoriteRecipeMutation();
     const recipes = data?.results ?? [];
     const [favoriteRecipes, setFavoriteRecipes] = useState(favoriteRecipesData?.favoriteRecipes ?? []);
 
@@ -73,14 +73,38 @@ function Recipes() {
         'Thai',
         'Vietnamese',
     ];
-    const handleAddToFavorites = async (event, recipeId, recipeTitle) => {
+    //handleToggleFavorite function
+
+    const handleToggleFavorite = async (event, recipeId, recipeTitle) => {
+        console.log('Current favoriteRecipes:', favoriteRecipes);
+console.log('Type of favorite recipe ID:', typeof favoriteRecipes[0]);
+console.log('Recipe ID to check:', recipeId, 'Type:', typeof recipeId);
+
+// If recipeId is not a string, convert it to a string for the comparison
+const isFavorite = favoriteRecipes.some(fav => fav === recipeId.toString());
+
+console.log('Is favorite:', isFavorite);
+
+
+        
         try {
-            const {user} = await addFavoriteRecipe({username, recipeId}).unwrap();
-            setSnackbarMessage(`Added "${recipeTitle}" to favorites.`);
+            let user;
+            if (isFavorite) {
+                // Remove from favorites
+                const result = await removeFavoriteRecipe({username, recipeId}).unwrap();
+                user = result.user;
+                setSnackbarMessage(`Removed "${recipeTitle}" from favorites.`);
+            } else {
+                // Add to favorites
+                const result = await addFavoriteRecipe({username, recipeId}).unwrap();
+                user = result.user;
+                setSnackbarMessage(`Added "${recipeTitle}" to favorites.`);
+            }
+
             setFavoriteRecipes(user.favoriteRecipes ?? []);
         } catch (error) {
-            console.error('Error adding to favorites:', error);
-            setSnackbarMessage(`Failed to add "${recipeTitle}" to favorites.`);
+            console.error('Error toggling favorite:', error);
+            setSnackbarMessage(`Failed to toggle favorite for "${recipeTitle}".`);
         } finally {
             setSnackbarOpen(true);
         }
@@ -219,7 +243,7 @@ function Recipes() {
                                                     backgroundColor: 'white',
                                                     '&:hover': {backgroundColor: '#f4f4f4'}
                                                 }}
-                                                onClick={(event) => handleAddToFavorites(event, id, title)}
+                                                onClick={(event) => handleToggleFavorite(event, id, title)}
                                                 aria-label={`add to favorites ${title}`}
                                             >
                                                 <FavoriteBorder/>
