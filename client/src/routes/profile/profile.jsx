@@ -1,25 +1,27 @@
-import {Avatar, Box, Button, FormLabel, Grid, MenuItem, Select, Stack, TextField, Typography} from "@mui/material"
-import {useSelector} from "react-redux"
+import {Avatar, Box, Button, FormLabel, Grid, MenuItem, Snackbar, Select, Stack, TextField, Typography} from "@mui/material"
+import { useDispatch, useSelector } from "react-redux"
 import * as echatrs from 'echarts'
 //import CalorieGraph from "../calorietracker/calorieGraph"
 import "./profile.css"
-import {useEffect, useRef} from "react"
-import {useAddUserWeightMutation, useGetUserWeightListMutation} from "../../store/apis/auth.js"
+import { useEffect, useRef, useState } from "react"
+import { useAddUserWeightMutation, useGetUserWeightListMutation, useSetUserInfoMutation } from "../../store/apis/auth"
 import {DateTimePicker} from "@mui/x-date-pickers"
-import { useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
-import { clearUserInfo, setLocalUserInfo } from "../../store/authSlice";
-import { useSetUserInfoMutation } from "../../store/apis/auth";
+import { useUploadFileMutation } from "../../store/apis/common"
+import { clearUserInfo, setLocalUserInfo } from "../../store/authSlice"
+import { useNavigate } from "react-router-dom"
 
 
 const Profile = () => {
     const {user, token} = useSelector((state) => state.auth)
+    const [message, setMessage] = useState()
+    const [setUserInfo] = useSetUserInfoMutation()
     const [addUserWeight] = useAddUserWeightMutation()
     const [getUserWeightList] = useGetUserWeightListMutation()
-    const mLine = useRef()
-    const mDispatch = useDispatch();
-    const mNavigate = useNavigate();
-    const [setUserInfo] = useSetUserInfoMutation();
+    const [uploadFile] = useUploadFileMutation()
+  const mDispatch = useDispatch()
+  const mNavigate = useNavigate()
+  const mLine = useRef()
+
 
 
 
@@ -61,7 +63,7 @@ const Profile = () => {
     const onSubmit = async (event) => {
         event.preventDefault();
         const mForm = event.target.elements;
-        const mBody = user || {}; // In your previous version you did JSON parsing here. Adjust as needed.
+        const mBody = JSON.parse(JSON.stringify(user || {}))
         for (const item of mForm) {
             if (item.name) {
                 mBody[item.name] = item.value;
@@ -70,15 +72,14 @@ const Profile = () => {
         await setUserInfo({
             ...mBody,
             token
-        });
-        mDispatch(setLocalUserInfo({
+          })
+          mDispatch(setLocalUserInfo({
             user: mBody
-        }));
-        // Handle success message or error here as needed
+          }))
+          setMessage({ msg: 'update successful!!!' })
     };
 
     const onLogout = () => {
-        // Replace the confirm with a material-ui dialog or another method if needed
         if (!window.confirm('Really logout?')) {
             return;
         }
@@ -102,8 +103,41 @@ const Profile = () => {
         await init()
     }
 
+      /**
+   * upload user avatar
+   */
+  const uploadAvatar = () => {
+    const mDom = document.createElement('input')
+    mDom.type = 'file'
+    mDom.click()
+    mDom.onchange = async({ target }) => {
+      const [mFile] = target.files
+      const mFormData = new FormData()
+      mFormData.append('file', mFile)
+      const { data } = await uploadFile(mFormData)
+      const picture = import.meta.env.VITE_BACKEND_URL + data.path
+      await setUserInfo({ picture, token })
+      
+      mDispatch(setLocalUserInfo({
+        user: {
+          ...user,
+          picture
+        }
+      }))
+      setMessage({ msg: 'update successful!!!' })
+    }
+    mDom.remove()
+  }
+
     return (
         <Stack direction="row" alignItem="center" justifyContent="space-around">
+            <Snackbar
+        anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+        open={message ? true : false}
+        autoHideDuration={1500}
+        message={message?.msg}
+        onClose={() => setMessage(null)}
+      />
             <Box
                 width="45%"
             >
