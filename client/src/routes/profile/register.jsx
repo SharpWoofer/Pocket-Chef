@@ -182,7 +182,13 @@ const Register = () => {
                                 required
                                 label='Password'
                                 type='password'
+                                inputProps={{
+                                    pattern: '^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&\\.])[A-Za-z\\d@$!%*?&\\.]{8,}$',
+                                    title: "Password must contain at least 8 characters, including 1 uppercase, 1 lowercase, 1 number, and 1 special character such as @, $, !, %, *, ?, &, or ."
+                                }}
                             />
+
+
                             {/* <Stack direction={'row'} spacing={1}>
                 <FormLabel>Avatar</FormLabel>
                 <input name="picture" required type="file" />
