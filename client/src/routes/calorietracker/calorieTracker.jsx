@@ -48,6 +48,8 @@ function CalorieTracker() {
     const [getCalCount] = useGetCalCountMutation();
     const [createCalCount] = useCreateCalCountMutation();
     const [updateCalCount] = useUpdateCalCountMutation();
+    const [currentDate, setCurrentDate] = useState(dayjs());
+    const [currentMonthText, setCurrentMonthText] = useState(dayjs().format('MMMM YYYY'));
 
     const handleChange = (query) => {
         setQuery(query);
@@ -86,8 +88,9 @@ function CalorieTracker() {
         }
     }
 
-    const handleDateChange = async (newDate) => {
+    const handleDateChange = (newDate) => {
         setSelectedDate(newDate);
+        setCurrentMonthText(newDate.format('MMMM YYYY')); // Update the month text when the date changes
     };
     useEffect(() => {
         const fetchCalCount = async () => {
@@ -241,6 +244,12 @@ function CalorieTracker() {
                         <Paper elevation={4}>
                             <CalorieGraph/>
                         </Paper>
+                        <Typography
+                            variant="h6"
+                            sx={{ mt: 2, textAlign: 'center' }}
+                            >
+                            {currentMonthText} {/* Displaying the month and year */}
+                            </Typography>
                     </Box>
                 </Grid>
                 <Grid sx={{
