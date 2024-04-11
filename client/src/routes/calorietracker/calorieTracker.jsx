@@ -39,7 +39,7 @@ function CalorieTracker() {
     const [calCount, setCalCount] = useState(0);
     const [calData, setCalData] = useState(null);
     const [selectedIngredient, setSelectedIngredient] = useState(null);
-    const [selectedDate, setSelectedDate] = useState(dayjs('2024-03-23'));
+    const [selectedDate, setSelectedDate] = useState(dayjs());
     const [selectedMeal, setSelectedMeal] = useState("");
     const username = useSelector(state => state.auth.user.username);
 
