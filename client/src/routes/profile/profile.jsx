@@ -18,12 +18,9 @@ const Profile = () => {
     const [addUserWeight] = useAddUserWeightMutation()
     const [getUserWeightList] = useGetUserWeightListMutation()
     const [uploadFile] = useUploadFileMutation()
-  const mDispatch = useDispatch()
-  const mNavigate = useNavigate()
-  const mLine = useRef()
-
-
-
+    const mDispatch = useDispatch()
+    const mNavigate = useNavigate()
+    const mLine = useRef()
 
     async function init() {
         const mDom = mLine.current
@@ -60,7 +57,7 @@ const Profile = () => {
         init()
     }, [])
 
-    const onSubmit = async (event) => {
+    const onSubmit = async(event) => {
         event.preventDefault();
         const mForm = event.target.elements;
         const mBody = JSON.parse(JSON.stringify(user || {}))
@@ -103,7 +100,7 @@ const Profile = () => {
         await init()
     }
 
-      /**
+    /**
    * upload user avatar
    */
   const uploadAvatar = () => {
@@ -128,6 +125,7 @@ const Profile = () => {
     }
     mDom.remove()
   }
+  
 
     return (
         <Stack direction="row" alignItem="center" justifyContent="space-around">
@@ -320,13 +318,13 @@ const Profile = () => {
                         marginBottom="50px"
                     >
                         <Stack direction="row" spacing="10px" alignItems="center">
-                            <Avatar sx={{width: 100, height: 100}}/>
+                        <Avatar sx={{ width: 100, height: 100 }} src={user.picture} />
                             <Stack>
                                 <Typography>{user.username}</Typography>
                             </Stack>
                         </Stack>
                         <Stack direction="row" spacing={4}>
-                            <Button variant="contained">Upload New Photo</Button>
+                        <Button variant="contained" onClick={uploadAvatar}>Upload New Photo</Button>
                             <Button variant="contained" color="error">Delete</Button>
                         </Stack>
                     </Stack>
@@ -344,11 +342,11 @@ const Profile = () => {
                             >
                                 <Stack flex="1">
                                     <FormLabel>First Name</FormLabel>
-                                    <TextField defaultValue={user.firstName} size="small"></TextField>
+                                    <TextField name="firstName" defaultValue={user.firstName} size="small"></TextField>
                                 </Stack>
                                 <Stack flex="1">
                                     <FormLabel>Last Name</FormLabel>
-                                    <TextField defaultValue={user.lastName} size="small"></TextField>
+                                    <TextField name="lastName" defaultValue={user.lastName} size="small"></TextField>
                                 </Stack>
                             </Stack>
                             <Stack
@@ -358,11 +356,11 @@ const Profile = () => {
                             >
                                 <Stack flex="1">
                                     <FormLabel>User Name</FormLabel>
-                                    <TextField defaultValue={user.username} size="small"></TextField>
+                                    <TextField name="username" defaultValue={user.username} size="small"></TextField>
                                 </Stack>
                                 <Stack flex="1">
                                     <FormLabel>Email</FormLabel>
-                                    <TextField defaultValue={user.email} size="small"></TextField>
+                                    <TextField name="email" defaultValue={user.email} size="small"></TextField>
                                 </Stack>
                             </Stack>
                         </Stack>

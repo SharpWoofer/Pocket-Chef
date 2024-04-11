@@ -5,7 +5,7 @@ import User from '../Models/user.js';
 import UserWeight from '../Models/userWeight.js';
 
 const createToken = (_id) => {
-    return jwt.sign({_id}, process.env.SECRET_KEY);
+    return jwt.sign({ _id }, process.env.SECRET_KEY);
 }
 
 /* REGISTER USER */

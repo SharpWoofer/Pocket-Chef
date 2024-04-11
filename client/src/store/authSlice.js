@@ -18,10 +18,6 @@ export const authSlice = createSlice({
             state.user = user;
             state.token = token;
         },
-        clearCredentials: (state) => {
-            state.user = null;
-            state.token = null;
-        },
         //set info for logout
         setLocalUserInfo: (state, { payload: { user } }) => {
             state.user = user
