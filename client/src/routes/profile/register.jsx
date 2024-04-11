@@ -24,24 +24,34 @@ const Register = () => {
     const [register] = useRegisterMutation();
 
     const handleRegister = async (event) => {
-        event.preventDefault()
-        const mForm = event.target.elements
-        const mBody = {}
+        event.preventDefault();
+        const mForm = event.target.elements;
+        const mBody = {};
+    
         for (const item of mForm) {
             if (item.name) {
-                mBody[item.name] = item.value
+                mBody[item.name] = item.value;
             }
         }
-        const {data, error} = await register(mBody)
+    
+        // Check if passwords match
+        if (mBody.password !== mBody.passwordConfirmation) {
+            setMessage({ msg: 'Passwords do not match' });
+            return; // Stop registration process
+        }
+    
+        // Proceed with registration
+        const { data, error } = await register(mBody);
         if (data) {
-            setMessage({msg: 'register successful!!!'})
+            setMessage({ msg: 'Registration successful!!!' });
             setTimeout(() => {
-                mNavigate('/login')
+                mNavigate('/login');
             }, 1500);
         } else {
-            setMessage({msg: error.data.error})
+            setMessage({ msg: error.data.error });
         }
-    }
+    };
+    
 
     return (
         <Box
@@ -187,6 +197,13 @@ const Register = () => {
                                     title: "Password must contain at least 8 characters, including 1 uppercase, 1 lowercase, 1 number, and 1 special character such as @, $, !, %, *, ?, &, or ."
                                 }}
                             />
+                            <TextField
+                                size="small"
+                                name="passwordConfirmation"
+                                required
+                                label='Confirm Password'
+                                type='password'
+                                />
 
 
                             {/* <Stack direction={'row'} spacing={1}>
