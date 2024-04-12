@@ -5,38 +5,58 @@ import {Box, Grid, Stack, Typography} from "@mui/material";
 const CalculatorPage = () => {
     const [weight, setWeight] = useState('');
     const [height, setHeight] = useState('');
-    const [bmi, setBmi] = useState(null);
+    const [bmi, setBmi] = useState({ value: null, category: '' });
     const [value, setValue] = useState('');
     const [fromUnit, setFromUnit] = useState('grams');
     const [toUnit, setToUnit] = useState('grams');
     const [convertedValue, setConvertedValue] = useState(null);
+    
     const conversionRates = {
         grams: 1,
         ounces: 28.3495,
         tablespoons: 14.3,
-        // Add any other units you want to convert from/to grams
+        pounds: 453.592,
+        kilograms: 1000,
+        teaspoons: 5.69,
+        cups: 150,
+        milliliters: 1,
+        liters: 1000,
+        fluidOunces: 28.3495,
     };
     const calculateBMI = () => {
         if (weight > 0 && height > 0) {
             const heightInMeters = height / 100;
-            const bmi = weight / (heightInMeters ** 2);
-            setBmi(bmi.toFixed(2));
+            const bmiValue = weight / (heightInMeters ** 2);
+            const bmiCategory = getBmiCategory(bmiValue);
+    
+            setBmi({ value: bmiValue.toFixed(2), category: bmiCategory });
         } else {
             setBmi(null);
             alert("Please enter valid weight and height values.");
         }
     };
+    
     const convertMeasurement = () => {
         const fromRate = conversionRates[fromUnit];
         const toRate = conversionRates[toUnit];
-
+        if (value < 0)
+            return alert("Please enter a valid value to convert.");
+        else{
         if (fromRate && toRate) {
             const result = (value * fromRate) / toRate;
             setConvertedValue(result.toFixed(2));
         } else {
             setConvertedValue('Conversion rate not found');
         }
+    }
     };
+    const getBmiCategory = (bmi) => {
+        if (bmi < 18.5) return 'Underweight, please consult a doctor for advice.';
+        if (bmi >= 18.5 && bmi < 25) return 'Normal (healthy weight), keep up the good work!';
+        if (bmi >= 25 && bmi < 30) return 'Overweight, please consult a doctor for advice.';
+        if (bmi >= 30 ) return 'Obese, please consult a doctor for advice.';
+    };
+    
 
 
     return (
@@ -111,9 +131,10 @@ const CalculatorPage = () => {
                             />
                         </div>
                         <button className="button" onClick={calculateBMI}>Calculate BMI</button>
-                        {bmi && (
+                        {bmi.value && (
                             <div className="result-container">
-                                <h2>Your BMI is: {bmi}</h2>
+                                <h2>Your BMI is: {bmi.value}</h2>
+                                <p>You are currently: {bmi.category}</p>
                             </div>
                         )}
                     </div>
@@ -137,6 +158,13 @@ const CalculatorPage = () => {
                                     <option value="grams">Grams</option>
                                     <option value="ounces">Ounces</option>
                                     <option value="tablespoons">Tablespoons</option>
+                                    <option value="pounds">Pounds</option>
+                                    <option value="kilograms">Kilograms</option>
+                                    <option value="teaspoons">Teaspoons</option>
+                                    <option value="cups">Cups</option>
+                                    <option value="milliliters">Milliliters</option>
+                                    <option value="liters">Liters</option>
+                                    <option value="fluidOunces">Fluid Ounces</option>
                                     {/* Add more options as needed here*/}
                                 </select>
                             </div>
@@ -147,6 +175,14 @@ const CalculatorPage = () => {
                                     <option value="grams">Grams</option>
                                     <option value="ounces">Ounces</option>
                                     <option value="tablespoons">Tablespoons</option>
+                                    <option value="pounds">Pounds</option>
+                                    <option value="kilograms">Kilograms</option>
+                                    <option value="teaspoons">Teaspoons</option>
+                                    <option value="cups">Cups</option>
+                                    <option value="milliliters">Milliliters</option>
+                                    <option value="liters">Liters</option>
+                                    <option value="fluidOunces">Fluid Ounces</option>
+                                    {/* Add more options as needed here*/}
                                 </select>
                             </div>
                             <button className="button" onClick={convertMeasurement}>Convert</button>
