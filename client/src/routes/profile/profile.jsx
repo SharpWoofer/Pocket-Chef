@@ -57,22 +57,33 @@ const Profile = () => {
         init()
     }, [])
 
-    const onSubmit = async(event) => {
+    const onSubmit = async (event) => {
         event.preventDefault();
         const mForm = event.target.elements;
-        const mBody = JSON.parse(JSON.stringify(user || {}))
+        const mBody = JSON.parse(JSON.stringify(user || {}));
+        
+        let hasError = false;
         for (const item of mForm) {
             if (item.name) {
                 mBody[item.name] = item.value;
+                // Check for negative values on specific fields
+                if ((item.name === 'age' || item.name === 'weight' || item.name === 'height') && item.value < 0) {
+                    hasError = true;
+                    setMessage({ msg: `${item.name} cannot be negative`, type: 'error' });
+                    break;
+                }
             }
         }
+        
+        if (hasError) return;
+    
         await setUserInfo({
             ...mBody,
             token
-          })
-          mDispatch(setLocalUserInfo({
+        });
+        mDispatch(setLocalUserInfo({
             user: mBody
-          }))
+        }));
           setMessage({ msg: 'update successful!!!' })
     };
 
@@ -88,16 +99,26 @@ const Profile = () => {
 
     const onAddWeight = async (event) => {
         event.preventDefault()
-
+    
         const mForm = event.target.elements
         const mBody = {}
+        let hasError = false;
         for (const item of mForm) {
             if (item.name) {
                 mBody[item.name] = item.value
+                // Check for negative weight
+                if (item.name === 'weight' && item.value < 0) {
+                    hasError = true;
+                    setMessage({ msg: 'Weight cannot be negative', type: 'error' });
+                    break;
+                }
             }
         }
-        await addUserWeight({...mBody, token})
-        await init()
+        
+        if (hasError) return;
+    
+        await addUserWeight({...mBody, token});
+        await init();
     }
 
     /**
