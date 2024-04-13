@@ -48,8 +48,8 @@ function CalorieTracker() {
     const [getCalCount] = useGetCalCountMutation();
     const [createCalCount] = useCreateCalCountMutation();
     const [updateCalCount] = useUpdateCalCountMutation();
-    const [currentDate, setCurrentDate] = useState(dayjs());
     const [currentMonthText, setCurrentMonthText] = useState(dayjs().format('MMMM YYYY'));
+    const [graphData, setGraphData] = useState([]);
 
     const handleChange = (query) => {
         setQuery(query);
@@ -242,7 +242,8 @@ function CalorieTracker() {
                             nutrition has never been more straightforward or more motivating. Track, adjust, and
                             conquer—your path to a healthier you starts here! </Typography>
                         <Paper elevation={4}>
-                            <CalorieGraph/>
+                        <CalorieGraph selectedDate={selectedDate} />
+
                         </Paper>
                         <Typography
                             variant="h6"
