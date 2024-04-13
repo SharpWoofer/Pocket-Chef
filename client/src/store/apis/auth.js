@@ -1,4 +1,4 @@
-import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
+import {createApi, fetchBaseQuery} from '@reduxjs/toolkit/query/react';
 
 const BACKEND_URL = import.meta.env.VITE_BACKEND_URL ?? 'http://localhost:5001';
 
@@ -23,6 +23,7 @@ export const authApi = createApi({
                 body: payload
             })
         }),
+        //set user info
         setUserInfo: builder.mutation({
             query: (payload) => ({
                 url: `/setUserInfo`,
@@ -54,5 +55,6 @@ export const authApi = createApi({
         }),
     }),
 });
+//updated export
 
 export const { useLoginMutation, useRegisterMutation, useAddUserWeightMutation, useGetUserWeightListMutation, useSetUserInfoMutation } = authApi;

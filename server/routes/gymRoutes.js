@@ -1,5 +1,5 @@
 import express from "express";
-import { searchGym } from "../controllers/gymController.js";
+import {searchGym} from "../controllers/gymController.js";
 
 const gymRouter = express.Router();
 

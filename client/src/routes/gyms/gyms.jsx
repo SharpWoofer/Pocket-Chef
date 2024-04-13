@@ -1,7 +1,21 @@
-import { useState, useEffect } from "react";
-import { Box, List, ListItem, ListItemText, InputAdornment, Stack, TextField, Typography, Button, InputLabel, Select, MenuItem, Container} from "@mui/material";
-import { useSearchGymMutation } from "../../store/apis/gymLocator";
-import { Search } from "@mui/icons-material";
+import React, {useRef, useState} from "react";
+import {
+    Box,
+    Button,
+    Grid,
+    InputAdornment,
+    List,
+    ListItem,
+    ListItemText,
+    Stack,
+    TextField,
+    Typography
+} from "@mui/material";
+import {useSearchGymMutation} from "../../store/apis/gymLocator";
+import {Search} from "@mui/icons-material";
+import GoogleMapReact from 'google-map-react';
+
+
 
 function Gyms() {
 
@@ -9,17 +23,22 @@ function Gyms() {
     const [searchResults, setSearchResults] = useState([]);
     const [searchGym] = useSearchGymMutation();
     const [selectedGym, setSelectedGym] = useState("");
+    const [userLocation, setUserLocation] = useState(null);
     const handleChange = (query) => {
         setQuery(query);
     }
+    const selectedGymRef = useRef(null);
     const handleClickGym = (gym) => {
         setSelectedGym(gym);
+        setTimeout(() => {
+            selectedGymRef.current?.scrollIntoView({ behavior: 'smooth' });
+        }, 100);
     }
     const handleSubmitSearch = async (event) => {
         event.preventDefault();
         setSelectedGym(null);
         try {
-            const {data: results} = await searchGym({ query: query });
+            const {data: results} = await searchGym({query: query});
             setSearchResults(results);
             //console.log(results);
             // for debugging purposes
@@ -27,69 +46,252 @@ function Gyms() {
             console.error('Error fetching search results:', error);
         }
     }
+    const Marker = ({ text }) => <div style={{
+        color: 'white',
+        background: 'red',
+        padding: '10px',
+        display: 'inline-flex',
+        textAlign: 'center',
+        alignItems: 'center',
+        justifyContent: 'center',
+        borderRadius: '100%',
+        transform: 'translate(-50%, -50%)'
+    }}>{text}</div>;
+    const handleLocateMe = () => {
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(
+                position => {
+                    const loc = {
+                        lat: position.coords.latitude,
+                        lng: position.coords.longitude
+                    };
+                    setUserLocation(loc); 
+                },
+                err => {
+                    console.error(err);
+                    alert('Failed to retrieve your location');
+                }
+            );
+        } else {
+            alert('Geolocation is not supported by this browser.');
+        }
+    };
+
+
     return (
-        <Container maxWidth="sm" sx={{
-            paddingY: 2
-        }}>
-            <Stack>
-                <Box>
-                    <Typography variant="body1" noWrap>Search for a gym</Typography>
-                </Box>
-                <form onSubmit={handleSubmitSearch}>
-                    <TextField
-                        type="search"
-                        placeholder="Input name of town or name of gym..."
-                        InputProps={{
-                            startAdornment: (
-                                <InputAdornment position="start">
-                                    <Search />
-                                </InputAdornment>
-                            ),
-                        }}
-                        variant="standard"
-                        fullWidth
-                        onChange={(e) => handleChange(e.target.value)}
-                    /><Button type="submit" variant="contained">Search</Button>
-                </form>
-                { selectedGym ? (
-                    <Stack
-                        direction='column'
-                        spacing={2}
-                        py={2}
-                    >
-                        <Typography>Gym name: { selectedGym.name }</Typography>
-                        <Typography>Located in: { selectedGym.addressBuildingName }</Typography>
-                        <Typography>Address: { selectedGym.addressStreetName }, { selectedGym.addressPostalCode }</Typography>
-                        <Typography>Operating Hours:</Typography>
-                        <Box>
-                        {selectedGym.operatingHours.map((days, index) => (
-                            <Box key={index}>
-                                {days}
-                            </Box>))}
-                        </Box>
-                        <Typography>Phone number: { selectedGym.phoneNumber }</Typography>
-                        <Box>
-                            <Typography> Coordinates: { selectedGym.coordinates[0] }, {selectedGym.coordinates[1] }</Typography>
-                        </Box>
-                    </Stack>
-                ) : (
-                    searchResults.length > 0 ? (
-                        <List>
-                            {searchResults.map(result => (
-                                <ListItem key={result.id} button onClick={() => handleClickGym(result)}>
-                                    <ListItemText primary={result.name} />
-                                </ListItem>
-                            ))}
-                        </List> 
+        <Stack>
+            <Stack direction="row">
+                <Grid sx={{width: "55%"}}>
+                    <Typography
+                        variant="h1" // Changed from 'header1' to 'h1' for correct variant usage
+                        sx={{
+                            color: '#12365F',
+                            textAlign: 'start',
+                            fontSize: "9vh",
+                            paddingLeft: "0.2em",
+                            fontWeight: "bolder",
+                            letterSpacing: "2px",
+                            paddingBottom: "0.25em", 
+                        }}>
+                        Find a Neighbourhood Gym Near You
+                    </Typography>
+
+                    <Typography style={{
+                        color: '#1236F',
+                        textAlign: 'start',
+                        fontSize: "1.8vh",
+                        paddingLeft: "0.2em",
+                        letterSpacing: "2px",
+                        marginLeft: "1em",
+                        marginTop: "1em",
+                        marginBottom: "2em"
+                    }}>
+                        Discover your perfect fitness space with ease! Our website is your ultimate gym locator, guiding
+                        you to your next workout haven. Whether you're seeking a local spot for a quick session or a
+                        fully equipped center for a rigorous routine, we connect you to a variety of gyms in your
+                        vicinity. Say goodbye to endless searches and hello to more time lifting, running, and achieving
+                        your fitness goals!
+                    </Typography>
+                    <Box component="form" onSubmit={handleSubmitSearch} sx={{display: 'flex', gap: 2, mt: 12, ml: 4}}>
+                        <TextField
+                            type="search"
+                            placeholder="Input name of town or name of gym..."
+                            InputProps={{
+                                startAdornment: (
+                                    <InputAdornment position="start">
+                                        <Search/>
+                                    </InputAdornment>
+                                ),
+                            }}
+                            variant="outlined"
+                            fullWidth
+                            onChange={(e) => handleChange(e.target.value)}
+                        />
+                        <Button type="submit" variant="contained" color="primary">
+                            Search
+                        </Button>
+                        <Button type="button" variant="contained" onClick={handleLocateMe} color="secondary">
+        Use My Location
+    </Button>
+                    </Box>
+                    <Stack style={{width: "50em", marginLeft: 40}}>
+                        {searchResults.length > 0 ? (
+                            <List sx={{
+                                bgcolor: 'background.paper',
+                                overflow: 'auto',
+                                maxHeight: 300,
+                                borderRadius: 1,
+                                boxShadow: 1
+                            }}>
+                                {searchResults.map(result => (
+                                    <ListItem key={result.id} button onClick={() => handleClickGym(result)}
+                                              sx={{'&:hover': {bgcolor: 'action.hover'}}}>
+                                        <ListItemText primary={result.name}/>
+                                    </ListItem>
+                                ))}
+                            </List>
                         ) : (
-                            <Typography> No gyms found </Typography>
-                        )
+                            <Typography variant="subtitle1">No gyms found</Typography>
+                        )}
+                    </Stack>
+                </Grid>
+                <Grid sx={{width: "40%"}}>
+                    <img src="./work-out.png" alt="eating" style={{
+                        width: "100%",
+                        height: "95%",
+                    }}/>
+                </Grid>
+            </Stack>
+            <Stack spacing={3} ref={selectedGymRef}>
+                {selectedGym ? (
+                    <Stack style={{position: 'relative', height: '30vh'}}>
+                        <img src="./gym1.png" style={{width: '100%', height: '100%', objectFit: 'cover'}}
+                             alt="Gym banner"/>
+                        <Box
+                            style={{
+                                position: 'absolute',
+                                top: 0,
+                                left: 0,
+                                width: '100%',
+                                height: '100%',
+                                backgroundColor: 'rgba(0, 0, 0, 0.5)', // This gives the translucent effect
+                                display: 'flex',
+                                justifyContent: 'center',
+                                alignItems: 'center',
+                            }}
+                        >
+                            <Typography variant="header1" style={{
+                                color: '#fff',
+                                textAlign: 'start',
+                                fontSize: "9vh",
+                                paddingLeft: "0.2em",
+                                fontWeight: "bolder",
+                                letterSpacing: "2px"
+                            }}>
+                                {selectedGym.name}
+                            </Typography>
+                        </Box>
+                        <Stack direction="row">
+                            <Box sx={{
+                                height: "55vh",
+                                width: '60%',
+                                mt: 2,
+                                border: 1,
+                                borderColor: "divider",
+                                borderRadius: 2
+                            }}>
+                                <GoogleMapReact
+                                    bootstrapURLKeys={{key: "AIzaSyCK1FFoRojFpDYrLA28EWLZLbYmvnGs7ok"}}
+                                    defaultCenter={{
+                                        lat: selectedGym ? selectedGym.coordinates[0] : 0,
+                                        lng: selectedGym ? selectedGym.coordinates[1] : 0
+                                    }}
+                                    defaultZoom={15}
+                                >
+                                    {selectedGym && (
+                                        <Marker
+                                            lat={selectedGym.coordinates[0]}
+                                            lng={selectedGym.coordinates[1]}
+                                            text={'Gym'}
+                                        />
+                                        
+                                    )}
+                                    {userLocation && (
+                                        <Marker
+                                            lat={userLocation.lat}
+                                            lng={userLocation.lng}
+                                            text={'You'}
+                                        />
+                                    )}
+                                    
+                                </GoogleMapReact>
+                            </Box>
+                            <Box
+                                sx={{
+                                    mt: 2,
+                                    width: "40%",
+                                    ml: "2em",  // This is the same as marginLeft but using the shorthand property
+                                    border: 1,
+                                    borderColor: 'divider',
+                                    borderRadius: 2,
+                                    p: 2,
+                                    bgcolor: 'background.paper',
+                                    boxShadow: 1,
+                                    '&:hover': {
+                                        boxShadow: 3,
+                                    },
+                                }}
+                            >
+                                <Typography variant="body1" color="primary"
+                                            sx={{mb: 1, fontWeight: 'bold', fontSize: '1.1rem'}}>
+                                    Located in:
+                                </Typography>
+                                <Typography variant="body1" color="text.primary" sx={{mb: 1, fontSize: '1.1rem'}}>
+                                    {selectedGym.addressBuildingName}
+                                </Typography>
+
+                                <Typography variant="body1" color="primary"
+                                            sx={{mb: 1, fontWeight: 'bold', fontSize: '1.1rem'}}>
+                                    Address:
+                                </Typography>
+                                <Typography variant="body1" color="text.primary" sx={{mb: 1, fontSize: '1.1rem'}}>
+                                    {selectedGym.addressStreetName}, {selectedGym.addressPostalCode}
+                                </Typography>
+
+                                <Typography variant="body1" color="primary"
+                                            sx={{mb: 1, fontWeight: 'bold', fontSize: '1.1rem'}}>
+                                    Operating Hours:
+                                </Typography>
+                                <Box sx={{pl: 2, mb: 1}}>
+                                    {selectedGym.operatingHours.map((day, index) => (
+                                        <Typography key={index} variant="body2" color="text.primary"
+                                                    sx={{mb: 0.5, fontSize: '1.05rem'}}>
+                                            {day}
+                                        </Typography>
+                                    ))}
+                                </Box>
+
+                                <Typography variant="body1" color="primary"
+                                            sx={{fontWeight: 'bold', fontSize: '1.1rem'}}>
+                                    Phone number:
+                                </Typography>
+                                <Typography variant="body1" color="text.primary" sx={{fontSize: '1.1rem'}}>
+                                    {selectedGym.phoneNumber}
+                                </Typography>
+                            </Box>
+
+
+                        </Stack>
+
+                    </Stack>) : (
+                    <Box></Box>
+
                 )}
             </Stack>
-        </Container>
+        </Stack>
+
     )
 }
-
 
 
 export default Gyms;

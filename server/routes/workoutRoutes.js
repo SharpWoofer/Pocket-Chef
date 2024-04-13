@@ -1,9 +1,9 @@
 import express from "express";
-import {searchExercises} from "../controllers/workoutController.js";
+import { searchExercises } from "../controllers/workoutController.js";
 
 const workoutRouter = express.Router();
 
-workoutRouter.get("/searchWorkout", searchExercises);
+workoutRouter.get("/search", searchExercises);
 
 export default workoutRouter;
 

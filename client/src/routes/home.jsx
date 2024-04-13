@@ -1,13 +1,12 @@
-import { Box, Button, Container, Unstable_Grid2 as Grid, Stack, Typography } from "@mui/material";
-import { Link } from "react-router-dom";
-import { useSearchRecipesQuery } from "../store/apis/recipe";
+import {Box, Button, Container, Stack, Typography, Unstable_Grid2 as Grid} from "@mui/material";
+import {Link} from "react-router-dom";
+import {useSearchRecipesQuery} from "../store/apis/recipe";
 import cooking from "../assets/cooking.png";
-import CalorieTracker from "./calorietracker/calorieTracker";
-import { useState } from "react";
-import Workout from "./workout/workout.jsx";
+import 'swiper/css';
+import { Swiper, SwiperSlide } from 'swiper/react';
 
 const Home = () => {
-    const { data, isLoading } = useSearchRecipesQuery({
+    const {data, isLoading} = useSearchRecipesQuery({
         query: "chinese",
         number: 6,
         cuisine: '',
@@ -15,29 +14,28 @@ const Home = () => {
         maxCalories: 5000,
     });
     const recipes = data?.results ?? [];
-    const [results, setResults] = useState([])
-
     return (
         //Landing Page
-        <Container maxWidth="lg" sx={{
+        <Container maxWidth="1900px" sx={{
             paddingY: 1
         }}>
             <Stack direction="row" alignItems="center" justifyContent="space-around" gap={12} paddingY={3}>
-                <Box width="50%" >
+                <Box width="60%">
                     <Stack gap={2}>
                         <Typography variant="h2" sx={{
-                            fontSize: "4rem",
+                            fontSize: "4.3rem",
                             fontWeight: "bold"
                         }}>
                             Cooking Made Fun and Easy: Unleash Your Inner Chef
                         </Typography>
                         <Typography variant="body1" sx={{
-                            fontSize: "1rem",
+                            fontSize: "1.2rem",
                             fontWeight: "400",
                             color: "#555555",
 
                         }}>
-                            Discover new recipes, learn new cooking techniques, and explore the world of cooking. Join our community of food lovers and start cooking today!
+
+                            Unlock a universe of flavors, perfect your culinary skills, and dive into the joy of cooking with our app. Connect with fellow gourmets and embrace the art of home cooking. Get started now and transform the way you cook, one delightful dish at a time!
                         </Typography>
                     </Stack>
 
@@ -49,31 +47,32 @@ const Home = () => {
                         </Button>
                     </Link>
                 </Box>
-                <Box>
+                <Box width="40%">
                     <img src={cooking} alt="cooking" style={{
                         width: "100%",
                         height: "100%",
-                    }} />
+                    }}/>
                 </Box>
-            </Stack>
-            {/* Calorie Tracker*/}
-            <Stack alignItems="center" gap={12} paddingY={10}>
-                <CalorieTracker setResults={setResults} />
             </Stack>
 
             {/* Recipe Deck */}
             <Box>
-                <Typography variant="h2" sx={{
-                    fontSize: "2rem",
-                }}>
+                <Typography variant="h2" sx={{ fontSize: "2rem" }}>
                     Popular Recipes
                 </Typography>
-                <Grid container marginTop={3} spacing={3} justifyContent="center">
+                <Swiper
+                    spaceBetween={30}
+                    slidesPerView={'auto'}
+                    freeMode={true}
+                    grabCursor={true}
+                    style={{ marginTop: '24px' }}
+                >
                     {recipes.map((recipe) => (
-                        <Grid xs={4} key={recipe.id}>
+                        <SwiperSlide key={recipe.id} style={{ width: 'auto' }}>
                             <Link to={`/recipes/${recipe.id}`} style={{
                                 textDecoration: "none",
                                 color: "inherit",
+                                display: "block",
                             }}>
                                 <img src={recipe.image} alt={recipe.title} style={{
                                     width: "100%",
@@ -81,17 +80,16 @@ const Home = () => {
                                     objectFit: "cover",
                                     borderRadius: "8px",
                                     boxShadow: "0 0 10px rgba(0, 0, 0, 0.2)",
-                                }} />
-                                <Typography variant="body1" sx={{
-                                    fontWeight: "700",
-                                }}>
+                                }}/>
+                                <Typography variant="body1" sx={{ fontWeight: "700" }}>
                                     {recipe.title}
                                 </Typography>
                             </Link>
-                        </Grid>
+                        </SwiperSlide>
                     ))}
-                </Grid>
+                </Swiper>
             </Box>
+
         </Container>
     );
 };

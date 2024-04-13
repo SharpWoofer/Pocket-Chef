@@ -1,14 +1,5 @@
-import { combineReducers, configureStore } from "@reduxjs/toolkit/react";
-import {
-    persistReducer,
-    persistStore,
-    FLUSH,
-    REHYDRATE,
-    PAUSE,
-    PERSIST,
-    PURGE,
-    REGISTER,
-} from "redux-persist";
+import {combineReducers, configureStore} from "@reduxjs/toolkit/react";
+import {FLUSH, PAUSE, PERSIST, persistReducer, persistStore, PURGE, REGISTER, REHYDRATE,} from "redux-persist";
 import storage from "redux-persist/lib/storage";
 import authReducer from "./authSlice";
 import { authApi, recipeApi, ingredientApi,workoutApi, gymApi, commonApi } from "./apis";

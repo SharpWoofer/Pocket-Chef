@@ -1,4 +1,4 @@
-import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
+import {createApi, fetchBaseQuery} from '@reduxjs/toolkit/query/react';
 
 const BACKEND_URL = import.meta.env.VITE_BACKEND_URL ?? 'http://localhost:5001';
 
@@ -46,4 +46,10 @@ export const ingredientApi = createApi({
     }),
 });
 
-export const { useSearchIngredientMutation, useGetIngredientByIdMutation, useGetCalCountMutation, useCreateCalCountMutation, useUpdateCalCountMutation } = ingredientApi;
+export const {
+    useSearchIngredientMutation,
+    useGetIngredientByIdMutation,
+    useGetCalCountMutation,
+    useCreateCalCountMutation,
+    useUpdateCalCountMutation
+} = ingredientApi;

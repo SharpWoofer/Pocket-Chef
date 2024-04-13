@@ -7,7 +7,7 @@ import multer from "multer";
 import helmet from "helmet";
 import morgan from "morgan";
 import path from "path";
-import { fileURLToPath } from "url";
+import {fileURLToPath} from "url";
 import recipeRoutes from "./routes/recipeRoutes.js";
 import authRouter from "./routes/auth.js";
 import calorieTrackerRouter from "./routes/calorieRoutes.js";
@@ -24,10 +24,10 @@ dotenv.config();
 const app = express();
 app.use(express.json());
 app.use(helmet());
-app.use(helmet.crossOriginResourcePolicy({ policy: "cross-origin" }));
+app.use(helmet.crossOriginResourcePolicy({policy: "cross-origin"}));
 app.use(morgan("common"));
-app.use(bodyParser.json({ limit: "30mb", extended: true }));
-app.use(bodyParser.urlencoded({ limit: "30mb", extended: true }));
+app.use(bodyParser.json({limit: "30mb", extended: true}));
+app.use(bodyParser.urlencoded({limit: "30mb", extended: true}));
 app.use(cors());
 app.use("/assets", express.static(path.join(__dirname, "public/assets"))); // Serve static files stored locally
 // app.use('/api', userRoutes);
@@ -41,16 +41,13 @@ app.use("/assets", express.static(path.join(__dirname, "public/assets"))); // Se
 //         cb(null, `${file.originalname}`);
 //     }
 // });
-// const upload = multer({ storage: storage }); //when using upload.single("file") in the route, the file will be stored in the public/assets folder
+// const upload = multer({storage: storage}); //when using upload.single("file") in the route, the file will be stored in the public/assets folder
 
 /* ROUTES  WITH FILES */
 //app.post("/auth/register", upload.single("picture"),register);
 
 /* ROUTES */
 app.use("/auth", authRouter);
-
-// common router
-app.use("/common", CommonRouter);
 //app.use("/user", userRoutes);
 
 /* INTEGRATING SPOONACULAR ROUTES */
@@ -58,11 +55,12 @@ app.use("/recipes", recipeRoutes); // Use the spoonacular routes here
 
 app.use("/ingredients", calorieTrackerRouter);
 
-app.use("/searchWorkout", workoutRouter);
+app.use("/workout", workoutRouter);
 
 app.use('/recipes/favorites', favoriteRoutes);
 
 app.use('/gyms', gymRouter);
+app.use("/common", CommonRouter);
 
 
 /* MONGOOSE SETUP */
