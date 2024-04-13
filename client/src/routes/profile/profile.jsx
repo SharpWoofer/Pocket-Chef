@@ -61,7 +61,21 @@ const Profile = () => {
         event.preventDefault();
         const mForm = event.target.elements;
         const mBody = JSON.parse(JSON.stringify(user || {}));
+        let isValid = true;
+
         
+            // Check all input fields for values
+        ['firstName', 'lastName', 'username', 'email', 'height', 'weight', 'age'].forEach(field => {
+            if (!mForm[field].value.trim()) {
+                isValid = false;
+                setMessage({ msg: `Please fill in your ${field}.`, type: 'error' });
+            }
+        });
+
+        if (!isValid) {
+            return; // stop form submission
+        }
+
         let hasError = false;
         for (const item of mForm) {
             if (item.name) {
@@ -363,11 +377,11 @@ const Profile = () => {
                             >
                                 <Stack flex="1">
                                     <FormLabel>First Name</FormLabel>
-                                    <TextField name="firstName" defaultValue={user.firstName} size="small"></TextField>
+                                    <TextField required name="firstName" defaultValue={user.firstName} size="small"></TextField>
                                 </Stack>
                                 <Stack flex="1">
                                     <FormLabel>Last Name</FormLabel>
-                                    <TextField name="lastName" defaultValue={user.lastName} size="small"></TextField>
+                                    <TextField required name="lastName" defaultValue={user.lastName} size="small"></TextField>
                                 </Stack>
                             </Stack>
                             <Stack
@@ -377,11 +391,11 @@ const Profile = () => {
                             >
                                 <Stack flex="1">
                                     <FormLabel>User Name</FormLabel>
-                                    <TextField name="username" defaultValue={user.username} size="small"></TextField>
+                                    <TextField required name="username" defaultValue={user.username} size="small"></TextField>
                                 </Stack>
                                 <Stack flex="1">
                                     <FormLabel>Email</FormLabel>
-                                    <TextField name="email" defaultValue={user.email} size="small"></TextField>
+                                    <TextField required name="email" defaultValue={user.email} size="small"></TextField>
                                 </Stack>
                             </Stack>
                         </Stack>
@@ -424,7 +438,7 @@ const Profile = () => {
                             <Stack direction={'row'} spacing={2}>
                                 <Stack flex="1">
                                     <FormLabel>Height / cm</FormLabel>
-                                    <TextField
+                                    <TextField required
                                         size="small"
                                         name="height"
                                         defaultValue={user.height}
@@ -432,7 +446,7 @@ const Profile = () => {
                                 </Stack>
                                 <Stack flex="1">
                                     <FormLabel>Weight / kg</FormLabel>
-                                    <TextField
+                                    <TextField required
                                         size="small"
                                         name="weight"
                                         defaultValue={user.weight}
@@ -443,7 +457,7 @@ const Profile = () => {
                             <Stack direction={'row'} spacing={2}>
                                 <Stack flex="1">
                                     <FormLabel>Age</FormLabel>
-                                    <TextField
+                                    <TextField required
                                         size="small"
                                         name="age"
                                         defaultValue={user.age}
