@@ -304,17 +304,18 @@ const Profile = () => {
         }}
       >
         <Typography
-          sx={{ display: 'inline-block' }}
+          // sx={{ display: 'inline-block' }}
           borderBottom="1px solid #e0e0e0"
-          marginBottom="50px"
-          paddingLeft="2%"
+          marginBottom="20px"
+          // paddingLeft="2%"
           paddingTop="2%"
+          paddingBottom="10px"
         >
-          User Profile
+          User Info
         </Typography>
 
         <form onSubmit={onSubmit}>
-          <Stack
+          {/* <Stack
             direction="row"
             justifyContent="space-between"
             alignItems="center"
@@ -332,7 +333,7 @@ const Profile = () => {
               <Button variant="contained" onClick={uploadAvatar}>Upload New Photo</Button>
               <Button variant="contained" color="error">Delete</Button>
             </Stack>
-          </Stack>
+          </Stack> */}
 
           <Stack
             paddingBottom={5}
