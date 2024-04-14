@@ -1,5 +1,5 @@
 import {Link} from "react-router-dom";
-import {Container, ImageList, ImageListItem, ImageListItemBar} from "@mui/material";
+import {Container, ImageList, ImageListItem} from "@mui/material";
 import React, {useEffect, useState} from 'react';
 import axios from 'axios';
 import Box from "@mui/material/Box";
@@ -28,7 +28,7 @@ function FavoriteRecipes({favoriteRecipes}) {
             <ImageList variant="masonry" gap={16} rowHeight={200} sx={{paddingY: 2}}>
                 {favoriteRecipesDetails.map((recipe) => (
                     <Box key={recipe.id} position="relative">
-                        <Link to={`/recipes/${recipe.id}`} style={{ textDecoration: 'none' }}>
+                        <Link to={`/recipes/${recipe.id}`} style={{textDecoration: 'none'}}>
                             <ImageListItem sx={{
                                 borderRadius: 2,
                                 overflow: 'hidden',
@@ -46,7 +46,7 @@ function FavoriteRecipes({favoriteRecipes}) {
                                     src={recipe.image}
                                     alt={recipe.title}
                                     loading="lazy"
-                                    style={{ width: '100%', height: '100%', display: 'block' }}
+                                    style={{width: '100%', height: '100%', display: 'block'}}
                                 />
                                 <Box className="image-title-overlay" sx={{
                                     position: 'absolute',
@@ -68,12 +68,12 @@ function FavoriteRecipes({favoriteRecipes}) {
                                 top: 8,
                                 right: 8,
                                 backgroundColor: 'white',
-                                '&:hover': { backgroundColor: '#f4f4f4' }
+                                '&:hover': {backgroundColor: '#f4f4f4'}
                             }}
                             onClick={(event) => handleToggleFavorite(event, recipe.id, recipe.title)}
                             aria-label={`add to favorites ${recipe.title}`}
                         >
-                            <FavoriteBorder />
+                            <FavoriteBorder/>
                         </IconButton>
                     </Box>
 

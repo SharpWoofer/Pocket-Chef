@@ -27,31 +27,31 @@ const Register = () => {
         event.preventDefault();
         const mForm = event.target.elements;
         const mBody = {};
-    
+
         for (const item of mForm) {
             if (item.name) {
                 mBody[item.name] = item.value;
             }
         }
-    
+
         // Check if passwords match
         if (mBody.password !== mBody.passwordConfirmation) {
-            setMessage({ msg: 'Passwords do not match' });
+            setMessage({msg: 'Passwords do not match'});
             return; // Stop registration process
         }
-    
+
         // Proceed with registration
-        const { data, error } = await register(mBody);
+        const {data, error} = await register(mBody);
         if (data) {
-            setMessage({ msg: 'Registration successful!!!' });
+            setMessage({msg: 'Registration successful!!!'});
             setTimeout(() => {
                 mNavigate('/login');
             }, 1500);
         } else {
-            setMessage({ msg: error.data.error });
+            setMessage({msg: error.data.error});
         }
     };
-    
+
 
     return (
         <Box
@@ -203,7 +203,7 @@ const Register = () => {
                                 required
                                 label='Confirm Password'
                                 type='password'
-                                />
+                            />
 
 
                             {/* <Stack direction={'row'} spacing={1}>

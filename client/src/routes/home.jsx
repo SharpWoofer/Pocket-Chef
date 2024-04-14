@@ -1,9 +1,9 @@
-import {Box, Button, Container, Stack, Typography, Unstable_Grid2 as Grid} from "@mui/material";
+import {Box, Button, Container, Stack, Typography} from "@mui/material";
 import {Link} from "react-router-dom";
 import {useSearchRecipesQuery} from "../store/apis/recipe";
 import cooking from "../assets/cooking.png";
 import 'swiper/css';
-import { Swiper, SwiperSlide } from 'swiper/react';
+import {Swiper, SwiperSlide} from 'swiper/react';
 
 const Home = () => {
     const {data, isLoading} = useSearchRecipesQuery({
@@ -35,7 +35,9 @@ const Home = () => {
 
                         }}>
 
-                            Unlock a universe of flavors, perfect your culinary skills, and dive into the joy of cooking with our app. Connect with fellow gourmets and embrace the art of home cooking. Get started now and transform the way you cook, one delightful dish at a time!
+                            Unlock a universe of flavors, perfect your culinary skills, and dive into the joy of cooking
+                            with our app. Connect with fellow gourmets and embrace the art of home cooking. Get started
+                            now and transform the way you cook, one delightful dish at a time!
                         </Typography>
                     </Stack>
 
@@ -57,7 +59,7 @@ const Home = () => {
 
             {/* Recipe Deck */}
             <Box>
-                <Typography variant="h2" sx={{ fontSize: "2rem" }}>
+                <Typography variant="h2" sx={{fontSize: "2rem"}}>
                     Popular Recipes
                 </Typography>
                 <Swiper
@@ -65,10 +67,10 @@ const Home = () => {
                     slidesPerView={'auto'}
                     freeMode={true}
                     grabCursor={true}
-                    style={{ marginTop: '24px' }}
+                    style={{marginTop: '24px'}}
                 >
                     {recipes.map((recipe) => (
-                        <SwiperSlide key={recipe.id} style={{ width: 'auto' }}>
+                        <SwiperSlide key={recipe.id} style={{width: 'auto'}}>
                             <Link to={`/recipes/${recipe.id}`} style={{
                                 textDecoration: "none",
                                 color: "inherit",
@@ -81,7 +83,7 @@ const Home = () => {
                                     borderRadius: "8px",
                                     boxShadow: "0 0 10px rgba(0, 0, 0, 0.2)",
                                 }}/>
-                                <Typography variant="body1" sx={{ fontWeight: "700" }}>
+                                <Typography variant="body1" sx={{fontWeight: "700"}}>
                                     {recipe.title}
                                 </Typography>
                             </Link>

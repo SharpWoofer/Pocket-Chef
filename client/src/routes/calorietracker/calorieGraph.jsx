@@ -2,12 +2,11 @@ import {useEffect, useState} from "react";
 //import { Search } from "@mui/icons-material";
 //import { useDebounce } from "@uidotdev/usehooks"
 import {useGetCalCountMutation} from '../../store/apis/ingredient';
-import dayjs from 'dayjs';
 import {useSelector} from 'react-redux';
 import {LineChart} from '@mui/x-charts/LineChart';
 
 
-function CalorieGraph({ selectedDate }) {
+function CalorieGraph({selectedDate}) {
     const currentUser = useSelector(state => state.auth.user.username);
     const [getCalCount] = useGetCalCountMutation();
     const [calData, setCalData] = useState([]);

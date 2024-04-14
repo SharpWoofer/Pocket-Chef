@@ -1,14 +1,4 @@
-import {
-    Box, Button,
-    Container,
-    Grid,
-    ImageList,
-    ImageListItem,
-    InputAdornment, List, ListItem, ListItemText,
-    Stack,
-    TextField,
-    Typography
-} from "@mui/material";
+import {Box, Grid, ImageList, ImageListItem, InputAdornment, Stack, TextField, Typography} from "@mui/material";
 import CuisineSelector from "../../components/Selector";
 import {Search} from "@mui/icons-material";
 import RangeSlider from "../../components/Slider"
@@ -21,7 +11,12 @@ import FavoriteBorder from '@mui/icons-material/FavoriteBorder';
 import Snackbar from '@mui/material/Snackbar';
 import CloseIcon from '@mui/icons-material/Close';
 import {useSelector} from 'react-redux';
-import {useAddFavoriteRecipeMutation, useRemoveFavoriteRecipeMutation, useGetFavoriteRecipesQuery, useSearchRecipesQuery} from "../../store/apis/recipe";
+import {
+    useAddFavoriteRecipeMutation,
+    useGetFavoriteRecipesQuery,
+    useRemoveFavoriteRecipeMutation,
+    useSearchRecipesQuery
+} from "../../store/apis/recipe";
 
 function Recipes() {
     const numRecipes = 20;
@@ -77,16 +72,15 @@ function Recipes() {
 
     const handleToggleFavorite = async (event, recipeId, recipeTitle) => {
         console.log('Current favoriteRecipes:', favoriteRecipes);
-console.log('Type of favorite recipe ID:', typeof favoriteRecipes[0]);
-console.log('Recipe ID to check:', recipeId, 'Type:', typeof recipeId);
+        console.log('Type of favorite recipe ID:', typeof favoriteRecipes[0]);
+        console.log('Recipe ID to check:', recipeId, 'Type:', typeof recipeId);
 
 // If recipeId is not a string, convert it to a string for the comparison
-const isFavorite = favoriteRecipes.some(fav => fav === recipeId.toString());
+        const isFavorite = favoriteRecipes.some(fav => fav === recipeId.toString());
 
-console.log('Is favorite:', isFavorite);
+        console.log('Is favorite:', isFavorite);
 
 
-        
         try {
             let user;
             if (isFavorite) {
@@ -116,9 +110,9 @@ console.log('Is favorite:', isFavorite);
 
 
     return (
-        <Stack sx={{padding:"2em"}}>
+        <Stack sx={{padding: "2em"}}>
             <Stack direction="row">
-                <Grid sx={{width: "70%", pt:10}}>
+                <Grid sx={{width: "70%", pt: 10}}>
                     <Typography
                         variant="h1" // Changed from 'header1' to 'h1' for correct variant usage
                         sx={{
@@ -143,7 +137,12 @@ console.log('Is favorite:', isFavorite);
                         marginTop: "1em",
                         marginBottom: "2em"
                     }}>
-                        Unleash the chef within with our comprehensive recipe book! Our website is your go-to destination for exploring an array of delicious recipes. Whether you're counting calories, craving comfort food, or looking for that perfect dish to impress, our detailed search options cater to all your culinary needs. Dive into our extensive collection and filter recipes by calorie count, ingredients, or cooking time. Say farewell to aimless browsing and welcome a world of flavorful possibilities. Cook, create, and celebrate every meal with confidence!
+                        Unleash the chef within with our comprehensive recipe book! Our website is your go-to
+                        destination for exploring an array of delicious recipes. Whether you're counting calories,
+                        craving comfort food, or looking for that perfect dish to impress, our detailed search options
+                        cater to all your culinary needs. Dive into our extensive collection and filter recipes by
+                        calorie count, ingredients, or cooking time. Say farewell to aimless browsing and welcome a
+                        world of flavorful possibilities. Cook, create, and celebrate every meal with confidence!
                     </Typography>
                     <Stack direction="row" spacing={0}>
                         <Box
@@ -194,7 +193,7 @@ console.log('Is favorite:', isFavorite);
                         </Box>
                     </Stack>
                 </Grid>
-                <Grid sx={{width:"30%"}}>
+                <Grid sx={{width: "30%"}}>
                     <img src="cook.png"/>
                 </Grid>
             </Stack>
@@ -216,7 +215,12 @@ console.log('Is favorite:', isFavorite);
                     ) :
                     recipes.length ?
                         (
-                            <Box width={1} sx={{py:2, background:'linear-gradient(120deg, #f6f8fa 0%, #eaf1f8 100%)',borderRadius:"8px",boxShadow:'0 4px 20px rgba(0,0,0,0.1)'}}>
+                            <Box width={1} sx={{
+                                py: 2,
+                                background: 'linear-gradient(120deg, #f6f8fa 0%, #eaf1f8 100%)',
+                                borderRadius: "8px",
+                                boxShadow: '0 4px 20px rgba(0,0,0,0.1)'
+                            }}>
                                 <ImageList variant="masonry" cols={4} gap={16} sx={{
                                     overflow: "visible"
                                 }}>
