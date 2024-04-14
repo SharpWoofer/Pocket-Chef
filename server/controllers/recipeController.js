@@ -1,7 +1,7 @@
 import axios from 'axios';
 import Recipe from '../Models/recipeModel.js';
 
-const apiKey = 'e5735f1495384efd839f2f84d9531754';
+const apiKey = '9dcc520e32224a79850c022ccaf1632f';
 
 
 const searchRecipe = async (req, res) => {

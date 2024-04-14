@@ -69,9 +69,9 @@ const NavBar = () => {
                             <NavLink key={name} to={path} style={{
                                 fontSize: "1.1em",
                                 textDecoration: "none",
-                                color: "black",
+                                color: "#003366",
                                 transition: "color 0.2s ease-in-out", // Smooth transition for color change
-                                fontWeight: 500,
+                                fontWeight: "500",
                             }}>
                                 <LinkWrapper paddingX={1} paddingY={2} style={{
                                     ":hover": {

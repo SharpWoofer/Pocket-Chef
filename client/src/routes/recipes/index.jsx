@@ -199,6 +199,14 @@ console.log('Is favorite:', isFavorite);
                 </Grid>
             </Stack>
             <Stack>
+                <Typography>
+                    Favorite Recipes
+                </Typography>
+                <Grid item xs={12} md={6} lg={4}>
+                    <FavoriteRecipes favoriteRecipes={favoriteRecipes}/>
+                </Grid>
+            </Stack>
+            <Stack>
                 {isLoading ? (
                         <Box width={1}>
                             <Typography variant="h6" align="center">
@@ -275,6 +283,22 @@ console.log('Is favorite:', isFavorite);
                         </Box>
                 }
             </Stack>
+            <Snackbar
+                open={snackbarOpen}
+                autoHideDuration={6000}
+                onClose={() => setSnackbarOpen(false)}
+                message={snackbarMessage}
+                action={
+                    <IconButton
+                        size="small"
+                        aria-label="close"
+                        color="inherit"
+                        onClick={() => setSnackbarOpen(false)}
+                    >
+                        <CloseIcon fontSize="small"/>
+                    </IconButton>
+                }
+            />
         </Stack>
     )
 }
