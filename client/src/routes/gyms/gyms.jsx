@@ -81,7 +81,7 @@ function Gyms() {
     return (
         <Stack sx={{padding:"2em"}}>
             <Stack direction="row">
-                <Grid sx={{width: "55%"}}>
+                <Grid sx={{width: "55%", pt:8}}>
                     <Typography
                         variant="h1" // Changed from 'header1' to 'h1' for correct variant usage
                         sx={{
@@ -112,7 +112,7 @@ function Gyms() {
                         vicinity. Say goodbye to endless searches and hello to more time lifting, running, and achieving
                         your fitness goals!
                     </Typography>
-                    <Box component="form" onSubmit={handleSubmitSearch} sx={{display: 'flex', gap: 2, mt: 12, ml: 4}}>
+                    <Box component="form" onSubmit={handleSubmitSearch} sx={{display: 'flex', gap: 2, mt: 5, ml: 4}}>
                         <TextField
                             type="search"
                             placeholder="Input name of town or name of gym..."

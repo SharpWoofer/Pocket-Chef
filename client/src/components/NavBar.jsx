@@ -71,6 +71,7 @@ const NavBar = () => {
                                 textDecoration: "none",
                                 color: "black",
                                 transition: "color 0.2s ease-in-out", // Smooth transition for color change
+                                fontWeight: 500,
                             }}>
                                 <LinkWrapper paddingX={1} paddingY={2} style={{
                                     ":hover": {
@@ -82,7 +83,7 @@ const NavBar = () => {
                             </NavLink>
                         ))}
                     </Stack>
-                    <Stack direction="row">
+                    <Stack direction="row" style={{height:"100%",width:"10em", display:"flex", justifyContent:"center"}}>
                         <NavLink to={user.token ? "/profile" : "/login"}>
                             <Stack justifyContent="center" sx={{
                                 padding: 2,
@@ -102,8 +103,8 @@ const NavBar = () => {
                                     height: '2px',
                                     backgroundColor: '#1c7b00', // Underline effect on hover
                                 }
-                            }}>
-                                <AccountIcon fontSize="large"/>
+                            }} style={{width:"100%", height:"100%"}}>
+                                <img src={"man.png"} style={{height:"140%"}}/>
                             </Stack>
                         </NavLink>
                     </Stack>
