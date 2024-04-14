@@ -5,12 +5,12 @@ import {Box, Grid, Stack, Typography} from "@mui/material";
 const CalculatorPage = () => {
     const [weight, setWeight] = useState('');
     const [height, setHeight] = useState('');
-    const [bmi, setBmi] = useState({ value: null, category: '' });
+    const [bmi, setBmi] = useState({value: null, category: ''});
     const [value, setValue] = useState('');
     const [fromUnit, setFromUnit] = useState('grams');
     const [toUnit, setToUnit] = useState('grams');
     const [convertedValue, setConvertedValue] = useState(null);
-    
+
     const conversionRates = {
         grams: 1,
         ounces: 28.3495,
@@ -28,35 +28,34 @@ const CalculatorPage = () => {
             const heightInMeters = height / 100;
             const bmiValue = weight / (heightInMeters ** 2);
             const bmiCategory = getBmiCategory(bmiValue);
-    
-            setBmi({ value: bmiValue.toFixed(2), category: bmiCategory });
+
+            setBmi({value: bmiValue.toFixed(2), category: bmiCategory});
         } else {
             setBmi(null);
             alert("Please enter valid weight and height values.");
         }
     };
-    
+
     const convertMeasurement = () => {
         const fromRate = conversionRates[fromUnit];
         const toRate = conversionRates[toUnit];
         if (value < 0)
             return alert("Please enter a valid value to convert.");
-        else{
-        if (fromRate && toRate) {
-            const result = (value * fromRate) / toRate;
-            setConvertedValue(result.toFixed(2));
-        } else {
-            setConvertedValue('Conversion rate not found');
+        else {
+            if (fromRate && toRate) {
+                const result = (value * fromRate) / toRate;
+                setConvertedValue(result.toFixed(2));
+            } else {
+                setConvertedValue('Conversion rate not found');
+            }
         }
-    }
     };
     const getBmiCategory = (bmi) => {
         if (bmi < 18.5) return 'Underweight, please consult a doctor for advice.';
         if (bmi >= 18.5 && bmi < 25) return 'Normal (healthy weight), keep up the good work!';
         if (bmi >= 25 && bmi < 30) return 'Overweight, please consult a doctor for advice.';
-        if (bmi >= 30 ) return 'Obese, please consult a doctor for advice.';
+        if (bmi >= 30) return 'Obese, please consult a doctor for advice.';
     };
-    
 
 
     return (
@@ -64,7 +63,7 @@ const CalculatorPage = () => {
             display: "flex",
             justifyContent: "space-around",
             height: "100vh",
-            padding:"2em"
+            padding: "2em"
         }}>
             <Grid sx={{
                 width: "55%",

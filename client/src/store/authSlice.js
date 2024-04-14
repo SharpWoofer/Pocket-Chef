@@ -19,7 +19,7 @@ export const authSlice = createSlice({
             state.token = token;
         },
         //set info for logout
-        setLocalUserInfo: (state, { payload: { user } }) => {
+        setLocalUserInfo: (state, {payload: {user}}) => {
             state.user = user
         },
         clearUserInfo: (state) => {
@@ -29,5 +29,5 @@ export const authSlice = createSlice({
     },
 });
 
-export const { setCredentials, setLocalUserInfo, clearUserInfo } = authSlice.actions;
+export const {setCredentials, setLocalUserInfo, clearUserInfo} = authSlice.actions;
 export default authSlice.reducer;

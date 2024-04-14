@@ -1,14 +1,14 @@
-import {Avatar, Box, Button, FormLabel, Grid, MenuItem, Snackbar, Select, Stack, TextField, Typography} from "@mui/material"
-import { useDispatch, useSelector } from "react-redux"
+import {Box, Button, FormLabel, Grid, MenuItem, Select, Snackbar, Stack, TextField, Typography} from "@mui/material"
+import {useDispatch, useSelector} from "react-redux"
 import * as echatrs from 'echarts'
 //import CalorieGraph from "../calorietracker/calorieGraph"
 import "./profile.css"
-import { useEffect, useRef, useState } from "react"
-import { useAddUserWeightMutation, useGetUserWeightListMutation, useSetUserInfoMutation } from "../../store/apis/auth"
+import {useEffect, useRef, useState} from "react"
+import {useAddUserWeightMutation, useGetUserWeightListMutation, useSetUserInfoMutation} from "../../store/apis/auth"
 import {DateTimePicker} from "@mui/x-date-pickers"
-import { useUploadFileMutation } from "../../store/apis/common"
-import { clearUserInfo, setLocalUserInfo } from "../../store/authSlice"
-import { useNavigate } from "react-router-dom"
+import {useUploadFileMutation} from "../../store/apis/common"
+import {clearUserInfo, setLocalUserInfo} from "../../store/authSlice"
+import {useNavigate} from "react-router-dom"
 
 
 const Profile = () => {
@@ -63,12 +63,12 @@ const Profile = () => {
         const mBody = JSON.parse(JSON.stringify(user || {}));
         let isValid = true;
 
-        
-            // Check all input fields for values
+
+        // Check all input fields for values
         ['firstName', 'lastName', 'username', 'email', 'height', 'weight', 'age'].forEach(field => {
             if (!mForm[field].value.trim()) {
                 isValid = false;
-                setMessage({ msg: `Please fill in your ${field}.`, type: 'error' });
+                setMessage({msg: `Please fill in your ${field}.`, type: 'error'});
             }
         });
 
@@ -83,14 +83,14 @@ const Profile = () => {
                 // Check for negative values on specific fields
                 if ((item.name === 'age' || item.name === 'weight' || item.name === 'height') && item.value < 0) {
                     hasError = true;
-                    setMessage({ msg: `${item.name} cannot be negative`, type: 'error' });
+                    setMessage({msg: `${item.name} cannot be negative`, type: 'error'});
                     break;
                 }
             }
         }
-        
+
         if (hasError) return;
-    
+
         await setUserInfo({
             ...mBody,
             token
@@ -98,7 +98,7 @@ const Profile = () => {
         mDispatch(setLocalUserInfo({
             user: mBody
         }));
-          setMessage({ msg: 'update successful!!!' })
+        setMessage({msg: 'update successful!!!'})
     };
 
     const onLogout = () => {
@@ -108,12 +108,11 @@ const Profile = () => {
         mDispatch(clearUserInfo());
         mNavigate('/login');
     };
-    
-    
+
 
     const onAddWeight = async (event) => {
         event.preventDefault()
-    
+
         const mForm = event.target.elements
         const mBody = {}
         let hasError = false;
@@ -123,54 +122,54 @@ const Profile = () => {
                 // Check for negative weight
                 if (item.name === 'weight' && item.value < 0) {
                     hasError = true;
-                    setMessage({ msg: 'Weight cannot be negative', type: 'error' });
+                    setMessage({msg: 'Weight cannot be negative', type: 'error'});
                     break;
                 }
             }
         }
-        
+
         if (hasError) return;
-    
+
         await addUserWeight({...mBody, token});
         await init();
     }
 
     /**
-   * upload user avatar
-   */
-  const uploadAvatar = () => {
-    const mDom = document.createElement('input')
-    mDom.type = 'file'
-    mDom.click()
-    mDom.onchange = async({ target }) => {
-      const [mFile] = target.files
-      const mFormData = new FormData()
-      mFormData.append('file', mFile)
-      const { data } = await uploadFile(mFormData)
-      const picture = import.meta.env.VITE_BACKEND_URL + data.path
-      await setUserInfo({ picture, token })
-      
-      mDispatch(setLocalUserInfo({
-        user: {
-          ...user,
-          picture
+     * upload user avatar
+     */
+    const uploadAvatar = () => {
+        const mDom = document.createElement('input')
+        mDom.type = 'file'
+        mDom.click()
+        mDom.onchange = async ({target}) => {
+            const [mFile] = target.files
+            const mFormData = new FormData()
+            mFormData.append('file', mFile)
+            const {data} = await uploadFile(mFormData)
+            const picture = import.meta.env.VITE_BACKEND_URL + data.path
+            await setUserInfo({picture, token})
+
+            mDispatch(setLocalUserInfo({
+                user: {
+                    ...user,
+                    picture
+                }
+            }))
+            setMessage({msg: 'update successful!!!'})
         }
-      }))
-      setMessage({ msg: 'update successful!!!' })
+        mDom.remove()
     }
-    mDom.remove()
-  }
-  
+
 
     return (
         <Stack direction="row" alignItem="center" justifyContent="space-around">
             <Snackbar
-        anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
-        open={message ? true : false}
-        autoHideDuration={1500}
-        message={message?.msg}
-        onClose={() => setMessage(null)}
-      />
+                anchorOrigin={{vertical: 'top', horizontal: 'center'}}
+                open={message ? true : false}
+                autoHideDuration={1500}
+                message={message?.msg}
+                onClose={() => setMessage(null)}
+            />
             <Box
                 width="45%"
             >
@@ -378,11 +377,13 @@ const Profile = () => {
                             >
                                 <Stack flex="1">
                                     <FormLabel>First Name</FormLabel>
-                                    <TextField required name="firstName" defaultValue={user.firstName} size="small"></TextField>
+                                    <TextField required name="firstName" defaultValue={user.firstName}
+                                               size="small"></TextField>
                                 </Stack>
                                 <Stack flex="1">
                                     <FormLabel>Last Name</FormLabel>
-                                    <TextField required name="lastName" defaultValue={user.lastName} size="small"></TextField>
+                                    <TextField required name="lastName" defaultValue={user.lastName}
+                                               size="small"></TextField>
                                 </Stack>
                             </Stack>
                             <Stack
@@ -392,7 +393,8 @@ const Profile = () => {
                             >
                                 <Stack flex="1">
                                     <FormLabel>User Name</FormLabel>
-                                    <TextField required name="username" defaultValue={user.username} size="small"></TextField>
+                                    <TextField required name="username" defaultValue={user.username}
+                                               size="small"></TextField>
                                 </Stack>
                                 <Stack flex="1">
                                     <FormLabel>Email</FormLabel>
@@ -440,17 +442,17 @@ const Profile = () => {
                                 <Stack flex="1">
                                     <FormLabel>Height / cm</FormLabel>
                                     <TextField required
-                                        size="small"
-                                        name="height"
-                                        defaultValue={user.height}
+                                               size="small"
+                                               name="height"
+                                               defaultValue={user.height}
                                     />
                                 </Stack>
                                 <Stack flex="1">
                                     <FormLabel>Weight / kg</FormLabel>
                                     <TextField required
-                                        size="small"
-                                        name="weight"
-                                        defaultValue={user.weight}
+                                               size="small"
+                                               name="weight"
+                                               defaultValue={user.weight}
                                     />
                                 </Stack>
                             </Stack>
@@ -459,9 +461,9 @@ const Profile = () => {
                                 <Stack flex="1">
                                     <FormLabel>Age</FormLabel>
                                     <TextField required
-                                        size="small"
-                                        name="age"
-                                        defaultValue={user.age}
+                                               size="small"
+                                               name="age"
+                                               defaultValue={user.age}
                                     />
                                 </Stack>
                                 <Stack flex="1">
