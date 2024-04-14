@@ -63,7 +63,8 @@ const CalculatorPage = () => {
         <Stack direction="row" sx={{
             display: "flex",
             justifyContent: "space-around",
-            height: "100vh"
+            height: "100vh",
+            padding:"2em"
         }}>
             <Grid sx={{
                 width: "55%",

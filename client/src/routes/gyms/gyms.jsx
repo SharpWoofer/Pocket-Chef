@@ -79,7 +79,7 @@ function Gyms() {
 
 
     return (
-        <Stack>
+        <Stack sx={{padding:"2em"}}>
             <Stack direction="row">
                 <Grid sx={{width: "55%"}}>
                     <Typography
