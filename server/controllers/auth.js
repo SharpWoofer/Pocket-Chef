@@ -152,3 +152,20 @@ export const getUserWeightList = async (req, res) => {
         res.status(500).json({error: error.message});
     }
 }
+
+/**
+ * setUserInfo
+ * @param {import('express').Request} req
+ * @param {import('express').Response} res
+ */
+export const setUserInfo = async (req, res) => {
+    try {
+        const mUser = req.user
+        const mBody = req.body
+        delete mBody._id
+        const mRes = await User.updateOne({_id: mUser._id}, mBody)
+        res.send(mRes)
+    } catch (error) {
+        res.status(500).json({error: error.message});
+    }
+}

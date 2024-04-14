@@ -26,8 +26,8 @@ export const searchExercises = async (req, res) => {
         res.json(response.data); // Sending the results back to the frontend
     } catch (error) {
         console.error('Error fetching data:', error);
-        res.status(500).json({ error: error.message });
+        res.status(500).json({error: error.message});
     }
 };
 
-export default { searchExercises };
+export default {searchExercises};

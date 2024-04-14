@@ -1,5 +1,5 @@
 import express from "express";
-import {addUserWeight, getUserWeightList, login, register} from "../controllers/auth.js";
+import {addUserWeight, getUserWeightList, login, register, setUserInfo} from "../controllers/auth.js";
 import multer from "multer";
 import {verifyToken} from "../middleware/auth.js";
 
@@ -19,5 +19,6 @@ authRouter.post("/login", login);
 authRouter.post("/register", register);
 
 authRouter.post("/addUserWeight", verifyToken, addUserWeight);
+authRouter.post("/setUserInfo", verifyToken, setUserInfo);
 authRouter.get("/getUserWeightList", verifyToken, getUserWeightList);
 export default authRouter;

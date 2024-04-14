@@ -30,6 +30,13 @@ export const recipeApi = createApi({
         getFavoriteRecipes: builder.query({
             query: (username) => `/favorites/${username}`,
         }),
+        removeFavoriteRecipe: builder.mutation({
+            query: ({username, recipeId}) => ({
+                url: `/favorites/${recipeId}`,
+                method: 'DELETE',
+                body: {username, recipeId},
+            }),
+        }),
 
     }),
 });
@@ -38,5 +45,6 @@ export const {
     useGetRecipeByIdQuery,
     useSearchRecipesQuery,
     useAddFavoriteRecipeMutation,
-    useGetFavoriteRecipesQuery
+    useGetFavoriteRecipesQuery,
+    useRemoveFavoriteRecipeMutation
 } = recipeApi;

@@ -2,12 +2,11 @@ import {useEffect, useState} from "react";
 //import { Search } from "@mui/icons-material";
 //import { useDebounce } from "@uidotdev/usehooks"
 import {useGetCalCountMutation} from '../../store/apis/ingredient';
-import dayjs from 'dayjs';
 import {useSelector} from 'react-redux';
 import {LineChart} from '@mui/x-charts/LineChart';
 
 
-function CalorieGraph() {
+function CalorieGraph({selectedDate}) {
     const currentUser = useSelector(state => state.auth.user.username);
     const [getCalCount] = useGetCalCountMutation();
     const [calData, setCalData] = useState([]);
@@ -16,8 +15,8 @@ function CalorieGraph() {
         const fetchData = async () => {
             try {
                 //const startDate = dayjs().startOf("month");
-                const startDate = dayjs('2024-03-01');
-                const endDate = dayjs('2024-03-30');
+                const startDate = selectedDate.clone().startOf('month');
+                const endDate = selectedDate.clone().endOf('month');
                 //const endDate = dayjs().endOf("month");
 
                 // Array to store calorie data for each day of the month
@@ -49,7 +48,7 @@ function CalorieGraph() {
         };
 
         fetchData();
-    }, []);
+    }, [selectedDate, currentUser, getCalCount]);
 
     return (
         <LineChart

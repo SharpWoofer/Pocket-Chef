@@ -1,14 +1,4 @@
-import {
-    Box,
-    Container,
-    Grid,
-    ImageList,
-    ImageListItem,
-    InputAdornment,
-    Stack,
-    TextField,
-    Typography
-} from "@mui/material";
+import {Box, Grid, ImageList, ImageListItem, InputAdornment, Stack, TextField, Typography} from "@mui/material";
 import CuisineSelector from "../../components/Selector";
 import {Search} from "@mui/icons-material";
 import RangeSlider from "../../components/Slider"
@@ -21,8 +11,12 @@ import FavoriteBorder from '@mui/icons-material/FavoriteBorder';
 import Snackbar from '@mui/material/Snackbar';
 import CloseIcon from '@mui/icons-material/Close';
 import {useSelector} from 'react-redux';
-import {useAddFavoriteRecipeMutation, useGetFavoriteRecipesQuery, useSearchRecipesQuery} from "../../store/apis/recipe";
-
+import {
+    useAddFavoriteRecipeMutation,
+    useGetFavoriteRecipesQuery,
+    useRemoveFavoriteRecipeMutation,
+    useSearchRecipesQuery
+} from "../../store/apis/recipe";
 
 function Recipes() {
     const numRecipes = 20;
@@ -40,7 +34,8 @@ function Recipes() {
         maxCalories: debouncedCalories[1],
     });
     const {data: favoriteRecipesData} = useGetFavoriteRecipesQuery(username, {skip: !username});
-    const [addFavoriteRecipe, {isError, isSuccess}] = useAddFavoriteRecipeMutation();
+    const [addFavoriteRecipe] = useAddFavoriteRecipeMutation();
+    const [removeFavoriteRecipe] = useRemoveFavoriteRecipeMutation();
     const recipes = data?.results ?? [];
     const [favoriteRecipes, setFavoriteRecipes] = useState(favoriteRecipesData?.favoriteRecipes ?? []);
 
@@ -73,14 +68,37 @@ function Recipes() {
         'Thai',
         'Vietnamese',
     ];
-    const handleAddToFavorites = async (event, recipeId, recipeTitle) => {
+    //handleToggleFavorite function
+
+    const handleToggleFavorite = async (event, recipeId, recipeTitle) => {
+        console.log('Current favoriteRecipes:', favoriteRecipes);
+        console.log('Type of favorite recipe ID:', typeof favoriteRecipes[0]);
+        console.log('Recipe ID to check:', recipeId, 'Type:', typeof recipeId);
+
+// If recipeId is not a string, convert it to a string for the comparison
+        const isFavorite = favoriteRecipes.some(fav => fav === recipeId.toString());
+
+        console.log('Is favorite:', isFavorite);
+
+
         try {
-            const {user} = await addFavoriteRecipe({username, recipeId}).unwrap();
-            setSnackbarMessage(`Added "${recipeTitle}" to favorites.`);
+            let user;
+            if (isFavorite) {
+                // Remove from favorites
+                const result = await removeFavoriteRecipe({username, recipeId}).unwrap();
+                user = result.user;
+                setSnackbarMessage(`Removed "${recipeTitle}" from favorites.`);
+            } else {
+                // Add to favorites
+                const result = await addFavoriteRecipe({username, recipeId}).unwrap();
+                user = result.user;
+                setSnackbarMessage(`Added "${recipeTitle}" to favorites.`);
+            }
+
             setFavoriteRecipes(user.favoriteRecipes ?? []);
         } catch (error) {
-            console.error('Error adding to favorites:', error);
-            setSnackbarMessage(`Failed to add "${recipeTitle}" to favorites.`);
+            console.error('Error toggling favorite:', error);
+            setSnackbarMessage(`Failed to toggle favorite for "${recipeTitle}".`);
         } finally {
             setSnackbarOpen(true);
         }
@@ -92,23 +110,40 @@ function Recipes() {
 
 
     return (
-        <Container maxWidth="lg">
-            <Grid container spacing={2}>
-                <Grid item xs={12}>
-                    <Typography variant="overline" sx={{fontSize: '1.5rem', letterSpacing: 0.75, fontWeight: 550}}>
-                        Welcome
+        <Stack sx={{padding: "2em"}}>
+            <Stack direction="row">
+                <Grid sx={{width: "70%", pt: 10}}>
+                    <Typography
+                        variant="h1" // Changed from 'header1' to 'h1' for correct variant usage
+                        sx={{
+                            color: '#12365F',
+                            textAlign: 'start',
+                            fontSize: "9vh",
+                            paddingLeft: "0.2em",
+                            fontWeight: "bolder",
+                            letterSpacing: "2px",
+                            paddingBottom: "0.25em", // Adjust this value as needed for proper underline spacing
+                        }}>
+                        Recipe Book
                     </Typography>
-                </Grid>
 
-                <Grid item xs={12} md={6} lg={4}>
-                    <FavoriteRecipes favoriteRecipes={favoriteRecipes}/>
-
-
-                </Grid>
-
-                <Grid item xs={12} md={6} lg={8}></Grid>
-
-                <Grid item xs={12}>
+                    <Typography style={{
+                        color: '#1236F',
+                        textAlign: 'start',
+                        fontSize: "1.8vh",
+                        paddingLeft: "0.2em",
+                        letterSpacing: "2px",
+                        marginLeft: "1em",
+                        marginTop: "1em",
+                        marginBottom: "2em"
+                    }}>
+                        Unleash the chef within with our comprehensive recipe book! Our website is your go-to
+                        destination for exploring an array of delicious recipes. Whether you're counting calories,
+                        craving comfort food, or looking for that perfect dish to impress, our detailed search options
+                        cater to all your culinary needs. Dive into our extensive collection and filter recipes by
+                        calorie count, ingredients, or cooking time. Say farewell to aimless browsing and welcome a
+                        world of flavorful possibilities. Cook, create, and celebrate every meal with confidence!
+                    </Typography>
                     <Stack direction="row" spacing={0}>
                         <Box
                             paddingX={4}
@@ -158,8 +193,19 @@ function Recipes() {
                         </Box>
                     </Stack>
                 </Grid>
-
-
+                <Grid sx={{width: "30%"}}>
+                    <img src="cook.png"/>
+                </Grid>
+            </Stack>
+            <Stack>
+                <Typography>
+                    Favorite Recipes
+                </Typography>
+                <Grid item xs={12} md={6} lg={4}>
+                    <FavoriteRecipes favoriteRecipes={favoriteRecipes}/>
+                </Grid>
+            </Stack>
+            <Stack>
                 {isLoading ? (
                         <Box width={1}>
                             <Typography variant="h6" align="center">
@@ -169,7 +215,12 @@ function Recipes() {
                     ) :
                     recipes.length ?
                         (
-                            <Box width={1} sx={{py: 2}}>
+                            <Box width={1} sx={{
+                                py: 2,
+                                background: 'linear-gradient(120deg, #f6f8fa 0%, #eaf1f8 100%)',
+                                borderRadius: "8px",
+                                boxShadow: '0 4px 20px rgba(0,0,0,0.1)'
+                            }}>
                                 <ImageList variant="masonry" cols={4} gap={16} sx={{
                                     overflow: "visible"
                                 }}>
@@ -219,7 +270,7 @@ function Recipes() {
                                                     backgroundColor: 'white',
                                                     '&:hover': {backgroundColor: '#f4f4f4'}
                                                 }}
-                                                onClick={(event) => handleAddToFavorites(event, id, title)}
+                                                onClick={(event) => handleToggleFavorite(event, id, title)}
                                                 aria-label={`add to favorites ${title}`}
                                             >
                                                 <FavoriteBorder/>
@@ -235,7 +286,7 @@ function Recipes() {
                             </Typography>
                         </Box>
                 }
-            </Grid>
+            </Stack>
             <Snackbar
                 open={snackbarOpen}
                 autoHideDuration={6000}
@@ -252,9 +303,7 @@ function Recipes() {
                     </IconButton>
                 }
             />
-
-        </Container>
-
+        </Stack>
     )
 }
 

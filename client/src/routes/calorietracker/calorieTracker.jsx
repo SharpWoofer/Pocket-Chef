@@ -39,7 +39,7 @@ function CalorieTracker() {
     const [calCount, setCalCount] = useState(0);
     const [calData, setCalData] = useState(null);
     const [selectedIngredient, setSelectedIngredient] = useState(null);
-    const [selectedDate, setSelectedDate] = useState(dayjs('2024-03-23'));
+    const [selectedDate, setSelectedDate] = useState(dayjs());
     const [selectedMeal, setSelectedMeal] = useState("");
     const username = useSelector(state => state.auth.user.username);
 
@@ -48,6 +48,8 @@ function CalorieTracker() {
     const [getCalCount] = useGetCalCountMutation();
     const [createCalCount] = useCreateCalCountMutation();
     const [updateCalCount] = useUpdateCalCountMutation();
+    const [currentMonthText, setCurrentMonthText] = useState(dayjs().format('MMMM YYYY'));
+    const [graphData, setGraphData] = useState([]);
 
     const handleChange = (query) => {
         setQuery(query);
@@ -86,8 +88,9 @@ function CalorieTracker() {
         }
     }
 
-    const handleDateChange = async (newDate) => {
+    const handleDateChange = (newDate) => {
         setSelectedDate(newDate);
+        setCurrentMonthText(newDate.format('MMMM YYYY')); // Update the month text when the date changes
     };
     useEffect(() => {
         const fetchCalCount = async () => {
@@ -239,8 +242,15 @@ function CalorieTracker() {
                             nutrition has never been more straightforward or more motivating. Track, adjust, and
                             conquer—your path to a healthier you starts here! </Typography>
                         <Paper elevation={4}>
-                            <CalorieGraph/>
+                            <CalorieGraph selectedDate={selectedDate}/>
+
                         </Paper>
+                        <Typography
+                            variant="h6"
+                            sx={{mt: 2, textAlign: 'center'}}
+                        >
+                            {currentMonthText} {/* Displaying the month and year */}
+                        </Typography>
                     </Box>
                 </Grid>
                 <Grid sx={{

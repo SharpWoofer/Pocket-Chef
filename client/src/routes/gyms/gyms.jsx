@@ -22,6 +22,7 @@ function Gyms() {
     const [searchResults, setSearchResults] = useState([]);
     const [searchGym] = useSearchGymMutation();
     const [selectedGym, setSelectedGym] = useState("");
+    const [userLocation, setUserLocation] = useState(null);
     const handleChange = (query) => {
         setQuery(query);
     }
@@ -29,7 +30,7 @@ function Gyms() {
     const handleClickGym = (gym) => {
         setSelectedGym(gym);
         setTimeout(() => {
-            selectedGymRef.current?.scrollIntoView({ behavior: 'smooth' });
+            selectedGymRef.current?.scrollIntoView({behavior: 'smooth'});
         }, 100);
     }
     const handleSubmitSearch = async (event) => {
@@ -44,12 +45,42 @@ function Gyms() {
             console.error('Error fetching search results:', error);
         }
     }
+    const Marker = ({text}) => <div style={{
+        color: 'white',
+        background: 'red',
+        padding: '10px',
+        display: 'inline-flex',
+        textAlign: 'center',
+        alignItems: 'center',
+        justifyContent: 'center',
+        borderRadius: '100%',
+        transform: 'translate(-50%, -50%)'
+    }}>{text}</div>;
+    const handleLocateMe = () => {
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(
+                position => {
+                    const loc = {
+                        lat: position.coords.latitude,
+                        lng: position.coords.longitude
+                    };
+                    setUserLocation(loc);
+                },
+                err => {
+                    console.error(err);
+                    alert('Failed to retrieve your location');
+                }
+            );
+        } else {
+            alert('Geolocation is not supported by this browser.');
+        }
+    };
 
 
     return (
-        <Stack>
+        <Stack sx={{padding: "2em"}}>
             <Stack direction="row">
-                <Grid sx={{width: "55%"}}>
+                <Grid sx={{width: "55%", pt: 8}}>
                     <Typography
                         variant="h1" // Changed from 'header1' to 'h1' for correct variant usage
                         sx={{
@@ -59,7 +90,7 @@ function Gyms() {
                             paddingLeft: "0.2em",
                             fontWeight: "bolder",
                             letterSpacing: "2px",
-                            paddingBottom: "0.25em", // Adjust this value as needed for proper underline spacing
+                            paddingBottom: "0.25em",
                         }}>
                         Find a Neighbourhood Gym Near You
                     </Typography>
@@ -80,7 +111,7 @@ function Gyms() {
                         vicinity. Say goodbye to endless searches and hello to more time lifting, running, and achieving
                         your fitness goals!
                     </Typography>
-                    <Box component="form" onSubmit={handleSubmitSearch} sx={{display: 'flex', gap: 2, mt: 12, ml: 4}}>
+                    <Box component="form" onSubmit={handleSubmitSearch} sx={{display: 'flex', gap: 2, mt: 5, ml: 4}}>
                         <TextField
                             type="search"
                             placeholder="Input name of town or name of gym..."
@@ -97,6 +128,9 @@ function Gyms() {
                         />
                         <Button type="submit" variant="contained" color="primary">
                             Search
+                        </Button>
+                        <Button type="button" variant="contained" onClick={handleLocateMe} color="secondary">
+                            Use My Location
                         </Button>
                     </Box>
                     <Stack style={{width: "50em", marginLeft: 40}}>
@@ -167,21 +201,28 @@ function Gyms() {
                             }}>
                                 <GoogleMapReact
                                     bootstrapURLKeys={{key: "AIzaSyCK1FFoRojFpDYrLA28EWLZLbYmvnGs7ok"}}
-                                    defaultCenter={{lat: selectedGym.coordinates[0], lng: selectedGym.coordinates[1]}}
+                                    defaultCenter={{
+                                        lat: selectedGym ? selectedGym.coordinates[0] : 0,
+                                        lng: selectedGym ? selectedGym.coordinates[1] : 0
+                                    }}
                                     defaultZoom={15}
                                 >
-                                    <div style={{
-                                        color: 'white',
-                                        background: 'red',
-                                        padding: '10px',
-                                        display: 'inline-flex',
-                                        textAlign: 'center',
-                                        alignItems: 'center',
-                                        justifyContent: 'center',
-                                        borderRadius: '100%',
-                                        transform: 'translate(-50%, -50%)'
-                                    }}>
-                                    </div>
+                                    {selectedGym && (
+                                        <Marker
+                                            lat={selectedGym.coordinates[0]}
+                                            lng={selectedGym.coordinates[1]}
+                                            text={'Gym'}
+                                        />
+
+                                    )}
+                                    {userLocation && (
+                                        <Marker
+                                            lat={userLocation.lat}
+                                            lng={userLocation.lng}
+                                            text={'You'}
+                                        />
+                                    )}
+
                                 </GoogleMapReact>
                             </Box>
                             <Box

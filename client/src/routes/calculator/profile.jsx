@@ -10,7 +10,6 @@ import {useUploadFileMutation} from "../../store/apis/common"
 import {clearUserInfo, setLocalUserInfo} from "../../store/authSlice"
 import {useNavigate} from "react-router-dom"
 
-
 const Profile = () => {
     const {user, token} = useSelector((state) => state.auth)
     const [message, setMessage] = useState()
@@ -58,80 +57,48 @@ const Profile = () => {
     }, [])
 
     const onSubmit = async (event) => {
-        event.preventDefault();
-        const mForm = event.target.elements;
-        const mBody = JSON.parse(JSON.stringify(user || {}));
-        let isValid = true;
-
-
-        // Check all input fields for values
-        ['firstName', 'lastName', 'username', 'email', 'height', 'weight', 'age'].forEach(field => {
-            if (!mForm[field].value.trim()) {
-                isValid = false;
-                setMessage({msg: `Please fill in your ${field}.`, type: 'error'});
-            }
-        });
-
-        if (!isValid) {
-            return; // stop form submission
-        }
-
-        let hasError = false;
+        event.preventDefault()
+        const mForm = event.target.elements
+        const mBody = JSON.parse(JSON.stringify(user || {}))
         for (const item of mForm) {
             if (item.name) {
-                mBody[item.name] = item.value;
-                // Check for negative values on specific fields
-                if ((item.name === 'age' || item.name === 'weight' || item.name === 'height') && item.value < 0) {
-                    hasError = true;
-                    setMessage({msg: `${item.name} cannot be negative`, type: 'error'});
-                    break;
-                }
+                mBody[item.name] = item.value
             }
         }
-
-        if (hasError) return;
-
         await setUserInfo({
             ...mBody,
             token
-        });
+        })
         mDispatch(setLocalUserInfo({
             user: mBody
-        }));
+        }))
         setMessage({msg: 'update successful!!!'})
-    };
+    }
 
     const onLogout = () => {
-        if (!window.confirm('Really logout?')) {
-            return;
+        if (!confirm('Rally logout?')) {
+            return
         }
-        mDispatch(clearUserInfo());
-        mNavigate('/login');
-    };
+        mDispatch(clearUserInfo())
+        mNavigate('/login')
+    }
 
-
+    /**
+     * add user weight
+     * @param {Event} event
+     */
     const onAddWeight = async (event) => {
         event.preventDefault()
 
         const mForm = event.target.elements
         const mBody = {}
-        let hasError = false;
         for (const item of mForm) {
             if (item.name) {
                 mBody[item.name] = item.value
-                // Check for negative weight
-                if (item.name === 'weight' && item.value < 0) {
-                    hasError = true;
-                    setMessage({msg: 'Weight cannot be negative', type: 'error'});
-                    break;
-                }
             }
         }
-
-        if (hasError) return;
-
-        await addUserWeight({...mBody, token});
-        await init();
+        await addUserWeight({...mBody, token})
+        await init()
     }
 
     /**
@@ -159,7 +126,6 @@ const Profile = () => {
         }
         mDom.remove()
     }
-
 
     return (
         <Stack direction="row" alignItem="center" justifyContent="space-around">
@@ -333,36 +299,36 @@ const Profile = () => {
                 }}
             >
                 <Typography
-                    // sx={{display: 'inline-block'}}
+                    // sx={{ display: 'inline-block' }}
                     borderBottom="1px solid #e0e0e0"
                     marginBottom="20px"
                     // paddingLeft="2%"
                     paddingTop="2%"
                     paddingBottom="10px"
                 >
-                    User Profile
+                    User Info
                 </Typography>
 
                 <form onSubmit={onSubmit}>
                     {/* <Stack
-                        direction="row"
-                        justifyContent="space-between"
-                        alignItems="center"
-                        paddingBottom={5}
-                        borderBottom="1px solid #e0e0e0"
-                        marginBottom="50px"
-                    >
-                        <Stack direction="row" spacing="10px" alignItems="center">
-                        <Avatar sx={{ width: 100, height: 100 }} src={user.picture} />
-                            <Stack>
-                                <Typography>{user.username}</Typography>
-                            </Stack>
-                        </Stack>
-                        <Stack direction="row" spacing={4}>
-                        <Button variant="contained" onClick={uploadAvatar}>Upload New Photo</Button>
-                            <Button variant="contained" color="error">Delete</Button>
-                        </Stack>
-                    </Stack> */}
+            direction="row"
+            justifyContent="space-between"
+            alignItems="center"
+            paddingBottom={5}
+            borderBottom="1px solid #e0e0e0"
+            marginBottom="50px"
+          >
+            <Stack direction="row" spacing="10px" alignItems="center">
+              <Avatar sx={{ width: 100, height: 100 }} src={user.picture} />
+              <Stack>
+                <Typography>{user.username}</Typography>
+              </Stack>
+            </Stack>
+            <Stack direction="row" spacing={4}>
+              <Button variant="contained" onClick={uploadAvatar}>Upload New Photo</Button>
+              <Button variant="contained" color="error">Delete</Button>
+            </Stack>
+          </Stack> */}
 
                     <Stack
                         paddingBottom={5}
@@ -377,13 +343,11 @@ const Profile = () => {
                             >
                                 <Stack flex="1">
                                     <FormLabel>First Name</FormLabel>
-                                    <TextField required name="firstName" defaultValue={user.firstName}
-                                               size="small"></TextField>
+                                    <TextField name="firstName" defaultValue={user.firstName} size="small"></TextField>
                                 </Stack>
                                 <Stack flex="1">
                                     <FormLabel>Last Name</FormLabel>
-                                    <TextField required name="lastName" defaultValue={user.lastName}
-                                               size="small"></TextField>
+                                    <TextField name="lastName" defaultValue={user.lastName} size="small"></TextField>
                                 </Stack>
                             </Stack>
                             <Stack
@@ -393,12 +357,11 @@ const Profile = () => {
                             >
                                 <Stack flex="1">
                                     <FormLabel>User Name</FormLabel>
-                                    <TextField required name="username" defaultValue={user.username}
-                                               size="small"></TextField>
+                                    <TextField name="username" defaultValue={user.username} size="small"></TextField>
                                 </Stack>
                                 <Stack flex="1">
                                     <FormLabel>Email</FormLabel>
-                                    <TextField required name="email" defaultValue={user.email} size="small"></TextField>
+                                    <TextField name="email" defaultValue={user.email} size="small"></TextField>
                                 </Stack>
                             </Stack>
                         </Stack>
@@ -441,18 +404,18 @@ const Profile = () => {
                             <Stack direction={'row'} spacing={2}>
                                 <Stack flex="1">
                                     <FormLabel>Height / cm</FormLabel>
-                                    <TextField required
-                                               size="small"
-                                               name="height"
-                                               defaultValue={user.height}
+                                    <TextField
+                                        size="small"
+                                        name="height"
+                                        defaultValue={user.height}
                                     />
                                 </Stack>
                                 <Stack flex="1">
                                     <FormLabel>Weight / kg</FormLabel>
-                                    <TextField required
-                                               size="small"
-                                               name="weight"
-                                               defaultValue={user.weight}
+                                    <TextField
+                                        size="small"
+                                        name="weight"
+                                        defaultValue={user.weight}
                                     />
                                 </Stack>
                             </Stack>
@@ -460,10 +423,10 @@ const Profile = () => {
                             <Stack direction={'row'} spacing={2}>
                                 <Stack flex="1">
                                     <FormLabel>Age</FormLabel>
-                                    <TextField required
-                                               size="small"
-                                               name="age"
-                                               defaultValue={user.age}
+                                    <TextField
+                                        size="small"
+                                        name="age"
+                                        defaultValue={user.age}
                                     />
                                 </Stack>
                                 <Stack flex="1">
