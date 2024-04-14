@@ -32,7 +32,7 @@ export const recipeApi = createApi({
         }),
         removeFavoriteRecipe: builder.mutation({
             query: ({username, recipeId}) => ({
-                url: `/favorites/${recipeId}`,
+                url: `/favorites/${recipeId}`, 
                 method: 'DELETE',
                 body: {username, recipeId},
             }),

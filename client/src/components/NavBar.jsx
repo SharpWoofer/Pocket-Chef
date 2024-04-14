@@ -1,6 +1,7 @@
-import {Box, Stack} from '@mui/material';
+import {Box, Container, Stack, Typography} from '@mui/material';
 import {styled} from '@mui/material/styles';
 import {NavLink} from 'react-router-dom';
+import AccountIcon from '@mui/icons-material/AccountCircleOutlined';
 import {useSelector} from 'react-redux';
 
 const LinkWrapper = styled(Box)(({theme}) => ({
@@ -58,14 +59,12 @@ const NavBar = () => {
             backgroundColor: 'white',
             boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)' // Add a subtle shadow for depth
         }}>
-            <Stack style={{height: "13vh"}}>
-                <Stack padding={2} direction="row" justifyContent="space-between" alignItems="center"
-                       style={{height: "100%"}}>
-                    <Stack direction="row" spacing={2} alignItems="center" style={{height: "100%", width: "14em"}}>
-                        <img src="logo.png" alt="Logo" style={{width: '100%', height: '180%'}}/>
+            <Stack style={{height:"13vh"}}>
+                <Stack padding={2} direction="row" justifyContent="space-between" alignItems="center" style={{ height:"100%"}}>
+                    <Stack direction="row" spacing={2} alignItems="center" style={{ height:"100%", width:"14em"}}>
+                        <img src="logo.png" alt="Logo" style={{ width: '100%', height: '180%' }}/>
                     </Stack>
-                    <Stack direction="row" spacing={2} alignItems="center"
-                           style={{width: "70em", justifyContent: "space-around"}}>
+                    <Stack direction="row" spacing={2} alignItems="center" style={{width:"70em", justifyContent:"space-around"}}>
                         {links.map(({name, path}) => (
                             <NavLink key={name} to={path} style={{
                                 fontSize: "1.1em",
@@ -84,8 +83,7 @@ const NavBar = () => {
                             </NavLink>
                         ))}
                     </Stack>
-                    <Stack direction="row"
-                           style={{height: "100%", width: "10em", display: "flex", justifyContent: "center"}}>
+                    <Stack direction="row" style={{height:"100%",width:"10em", display:"flex", justifyContent:"center"}}>
                         <NavLink to={user.token ? "/profile" : "/login"}>
                             <Stack justifyContent="center" sx={{
                                 padding: 2,
@@ -105,8 +103,8 @@ const NavBar = () => {
                                     height: '2px',
                                     backgroundColor: '#1c7b00', // Underline effect on hover
                                 }
-                            }} style={{width: "100%", height: "100%"}}>
-                                <img src={"man.png"} style={{height: "140%"}}/>
+                            }} style={{width:"100%", height:"100%"}}>
+                                <img src={"man.png"} style={{height:"140%"}}/>
                             </Stack>
                         </NavLink>
                     </Stack>

@@ -16,6 +16,7 @@ import {Search} from "@mui/icons-material";
 import GoogleMapReact from 'google-map-react';
 
 
+
 function Gyms() {
 
     const [query, setQuery] = useState("");
@@ -30,7 +31,7 @@ function Gyms() {
     const handleClickGym = (gym) => {
         setSelectedGym(gym);
         setTimeout(() => {
-            selectedGymRef.current?.scrollIntoView({behavior: 'smooth'});
+            selectedGymRef.current?.scrollIntoView({ behavior: 'smooth' });
         }, 100);
     }
     const handleSubmitSearch = async (event) => {
@@ -45,7 +46,7 @@ function Gyms() {
             console.error('Error fetching search results:', error);
         }
     }
-    const Marker = ({text}) => <div style={{
+    const Marker = ({ text }) => <div style={{
         color: 'white',
         background: 'red',
         padding: '10px',
@@ -64,7 +65,7 @@ function Gyms() {
                         lat: position.coords.latitude,
                         lng: position.coords.longitude
                     };
-                    setUserLocation(loc);
+                    setUserLocation(loc); 
                 },
                 err => {
                     console.error(err);
@@ -78,9 +79,9 @@ function Gyms() {
 
 
     return (
-        <Stack sx={{padding: "2em"}}>
+        <Stack sx={{padding:"2em"}}>
             <Stack direction="row">
-                <Grid sx={{width: "55%", pt: 8}}>
+                <Grid sx={{width: "55%", pt:8}}>
                     <Typography
                         variant="h1" // Changed from 'header1' to 'h1' for correct variant usage
                         sx={{
@@ -90,7 +91,7 @@ function Gyms() {
                             paddingLeft: "0.2em",
                             fontWeight: "bolder",
                             letterSpacing: "2px",
-                            paddingBottom: "0.25em",
+                            paddingBottom: "0.25em", 
                         }}>
                         Find a Neighbourhood Gym Near You
                     </Typography>
@@ -130,8 +131,8 @@ function Gyms() {
                             Search
                         </Button>
                         <Button type="button" variant="contained" onClick={handleLocateMe} color="secondary">
-                            Use My Location
-                        </Button>
+        Use My Location
+    </Button>
                     </Box>
                     <Stack style={{width: "50em", marginLeft: 40}}>
                         {searchResults.length > 0 ? (
@@ -213,7 +214,7 @@ function Gyms() {
                                             lng={selectedGym.coordinates[1]}
                                             text={'Gym'}
                                         />
-
+                                        
                                     )}
                                     {userLocation && (
                                         <Marker
@@ -222,7 +223,7 @@ function Gyms() {
                                             text={'You'}
                                         />
                                     )}
-
+                                    
                                 </GoogleMapReact>
                             </Box>
                             <Box

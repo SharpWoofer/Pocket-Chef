@@ -1,4 +1,4 @@
-import {Grid, Stack, Typography} from "@mui/material";
+import {Container, Grid, Stack, Typography} from "@mui/material";
 import {useParams} from "react-router-dom";
 import {useGetRecipeByIdQuery} from '../../store/apis/recipe';
 import React from "react";
@@ -13,7 +13,7 @@ export default function Recipe() {
     return (
         <Stack>
             {isLoading ? (
-                <Typography variant="body1" align="center" style={{color: '#666', margin: '20px 0'}}>
+                <Typography variant="body1" align="center" style={{ color: '#666', margin: '20px 0' }}>
                     Loading recipe...
                 </Typography>
             ) : (
@@ -40,9 +40,9 @@ export default function Recipe() {
                             </Typography>
                         </Box>
 
-                        <Stack direction="row" style={{justifyContent: "space-around"}}>
-                            <Grid sx={{width: "45%", heigt: "100%"}}>
-                                <Stack style={{display: "flex", justifyContent: "center", height: "100%"}}>
+                        <Stack direction="row" style={{justifyContent:"space-around"}}>
+                            <Grid sx={{width:"45%",heigt:"100%"}}>
+                                <Stack style={{display:"flex", justifyContent:"center", height:"100%"}}>
                                     <Box
                                         sx={{
                                             height: "100%",
@@ -60,12 +60,11 @@ export default function Recipe() {
                                             },
                                         }}
                                     >
-                                        <img src={recipe.image}
-                                             style={{width: "100%", height: "100%", objectFit: "cover"}}/>
+                                        <img src={recipe.image} style={{width:"100%",height:"100%",objectFit:"cover"}}/>
                                     </Box>
                                 </Stack>
                             </Grid>
-                            <Grid sx={{width: "60%"}}>
+                            <Grid sx={{width:"60%"}} >
                                 <Box
                                     sx={{
                                         mt: 2,
@@ -86,8 +85,7 @@ export default function Recipe() {
                                         Incredient List
                                     </Typography>
                                     {recipe.extendedIngredients.map(ingredient => (
-                                        <Typography variant="body1" color="text.primary"
-                                                    sx={{mt: 0.1, ml: 1, fontSize: '1.1rem'}}>
+                                        <Typography variant="body1" color="text.primary" sx={{mt: 0.1,ml:1, fontSize: '1.1rem'}}>
                                             ⚫ {ingredient.original}
                                         </Typography>
                                     ))}
@@ -111,14 +109,13 @@ export default function Recipe() {
                                                 sx={{mb: 1, fontWeight: 'bold', fontSize: '1.7rem'}}>
                                         Recipe Instructions
                                     </Typography>
-                                    <Typography variant="body1" color="text.primary"
-                                                sx={{mt: 0.1, ml: 1, fontSize: '1.1rem'}}>
+                                    <Typography variant="body1" color="text.primary" sx={{mt: 0.1,ml:1, fontSize: '1.1rem'}}>
                                         {recipe.instructions}
                                     </Typography>
                                 </Box>
                             </Grid>
                         </Stack>
-                        <Stack sx={{ml: 2}} style={{width: "70%"}}>
+                        <Stack sx={{ml:2}} style={{width:"70%"}}>
                             <Box
                                 sx={{
                                     mt: 2,
@@ -133,22 +130,20 @@ export default function Recipe() {
                                         boxShadow: 3,
                                     },
                                 }}
-                                style={{display: "flex", justifyContent: "start"}}
+                                style={{display:"flex", justifyContent:"start"}}
                             >
                                 <Typography variant="body1" color="primary"
                                             sx={{mb: 0.2, fontWeight: 'bold', fontSize: '1.7rem'}}>
                                     Time to Cook:
                                 </Typography>
-                                <Typography variant="body1" color="text.primary"
-                                            sx={{fontSize: '1.3rem', mt: 0.7, mr: 2, ml: 1}}>
+                                <Typography variant="body1" color="text.primary" sx={{ fontSize: '1.3rem',mt:0.7,mr:2, ml:1}}>
                                     {recipe.readyInMinutes} minutes
                                 </Typography>
                                 <Typography variant="body1" color="primary"
                                             sx={{mb: 0.2, fontWeight: 'bold', fontSize: '1.7rem'}}>
                                     Suitable for:
                                 </Typography>
-                                <Typography variant="body1" color="text.primary"
-                                            sx={{fontSize: '1.3rem', mt: 0.7, mr: 2, ml: 1}}>
+                                <Typography variant="body1" color="text.primary" sx={{fontSize: '1.3rem', mt:0.7,mr:2, ml:1}}>
                                     {recipe.servings} servings
                                 </Typography>
                             </Box>

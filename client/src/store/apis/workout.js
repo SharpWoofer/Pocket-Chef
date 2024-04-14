@@ -9,7 +9,7 @@ export const workoutApi = createApi({
     }),
     endpoints: (builder) => ({
         searchWorkout: builder.query({
-            query: ({name, type, muscle, difficulty}) => ({
+            query: ({ name, type, muscle, difficulty }) => ({
                 url: '/search',
                 params: {
                     name,
@@ -22,4 +22,4 @@ export const workoutApi = createApi({
     }),
 });
 
-export const {useSearchWorkoutQuery} = workoutApi;
+export const { useSearchWorkoutQuery } = workoutApi;

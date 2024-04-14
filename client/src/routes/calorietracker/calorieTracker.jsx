@@ -242,15 +242,15 @@ function CalorieTracker() {
                             nutrition has never been more straightforward or more motivating. Track, adjust, and
                             conquer—your path to a healthier you starts here! </Typography>
                         <Paper elevation={4}>
-                            <CalorieGraph selectedDate={selectedDate}/>
+                        <CalorieGraph selectedDate={selectedDate} />
 
                         </Paper>
                         <Typography
                             variant="h6"
-                            sx={{mt: 2, textAlign: 'center'}}
-                        >
+                            sx={{ mt: 2, textAlign: 'center' }}
+                            >
                             {currentMonthText} {/* Displaying the month and year */}
-                        </Typography>
+                            </Typography>
                     </Box>
                 </Grid>
                 <Grid sx={{

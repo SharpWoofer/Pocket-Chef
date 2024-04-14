@@ -1,19 +1,20 @@
 import {
+    Container,
     Collapse,
-    darken,
     FormControl,
-    Grid,
-    InputLabel,
-    MenuItem,
-    Select,
     Stack,
+    MenuItem,
+    InputLabel,
+    Select,
+    Typography,
+    Grid,
     TextField,
-    Typography
+    Button, darken
 } from "@mui/material";
-import {useSearchWorkoutQuery} from '../../store/apis/workout';
+import { useSearchWorkoutQuery } from '../../store/apis/workout';
 import Box from "@mui/material/Box";
-import {useDebounce} from "@uidotdev/usehooks"
-import React, {useState} from "react";
+import { useDebounce } from "@uidotdev/usehooks"
+import React, { useState } from "react";
 import IconButton from '@mui/material/IconButton';
 
 export default function Workout() {
@@ -25,7 +26,7 @@ export default function Workout() {
     const [showInstructions, setShowInstructions] = useState(null);
     const instructionsTextSize = '1.25rem';
 
-    const {data: workout, isLoading} = useSearchWorkoutQuery({
+    const { data: workout, isLoading } = useSearchWorkoutQuery({
         name: debouncedName,
         type: type,
         muscle: muscle,
@@ -80,7 +81,7 @@ export default function Workout() {
     };
 
     return (
-        <Stack sx={{padding: "2em"}}>
+        <Stack sx={{padding:"2em"}}>
             <Stack direction="row">
                 <Grid sx={{width: "70%", pt: 5}}>
                     <Typography
@@ -107,12 +108,7 @@ export default function Workout() {
                         marginTop: "1em",
                         marginBottom: "2em"
                     }}>
-                        Find your next workout move effortlessly with our dynamic workout library! Our platform is the
-                        ideal resource for discovering the perfect exercise for every muscle group. From classic bench
-                        presses to innovative core exercises, easily search and filter workouts by equipment, difficulty
-                        level, or targeted body part. Whether you're a beginner looking to start a fitness journey or an
-                        experienced athlete aiming to refine your technique, our extensive database empowers you to
-                        elevate your fitness routine. Stop guessing and start lifting with precision and confidence!
+                        Find your next workout move effortlessly with our dynamic workout library! Our platform is the ideal resource for discovering the perfect exercise for every muscle group. From classic bench presses to innovative core exercises, easily search and filter workouts by equipment, difficulty level, or targeted body part. Whether you're a beginner looking to start a fitness journey or an experienced athlete aiming to refine your technique, our extensive database empowers you to elevate your fitness routine. Stop guessing and start lifting with precision and confidence!
                     </Typography>
                     <Stack direction="row" spacing={2} justifyContent={"center"}>
                         <TextField
@@ -120,9 +116,9 @@ export default function Workout() {
                             variant="outlined"
                             value={name}
                             onChange={(e) => setName(e.target.value)}
-                            sx={{flexGrow: 1, marginBottom: 2}} // Add some margin at the bottom
+                            sx={{ flexGrow: 1, marginBottom: 2 }} // Add some margin at the bottom
                         />
-                        <FormControl sx={{width: 150}}>
+                        <FormControl sx={{ width: 150 }} >
                             <InputLabel id="exercise-type-label">Exercise Type</InputLabel>
                             <Select
                                 labelId="exercise-type-label"
@@ -142,7 +138,7 @@ export default function Workout() {
                             </Select>
                         </FormControl>
 
-                        <FormControl sx={{width: 150}}>
+                        <FormControl sx={{ width: 150 }}>
                             <InputLabel id="muscle-group-label">Muscle Group</InputLabel>
                             <Select
                                 labelId="muscle-group-label"
@@ -163,7 +159,7 @@ export default function Workout() {
                             </Select>
                         </FormControl>
 
-                        <FormControl sx={{width: 200}}>
+                        <FormControl sx={{ width: 200 }} >
                             <InputLabel id="exercise-difficulty-label">Exercise Difficulty</InputLabel>
                             <Select
                                 labelId="exercise-difficulty-label"
@@ -199,9 +195,8 @@ export default function Workout() {
                         workout.length ?
                             (
                                 <Grid container spacing={2}>
-                                    {workout.map(({name, muscle, difficulty, instructions}, index) => (
-                                        <Grid item xs={12} sm={6} md={4} key={index}
-                                              style={{display: 'flex', justifyContent: 'center'}}>
+                                    {workout.map(({ name, muscle, difficulty, instructions }, index) => (
+                                        <Grid item xs={12} sm={6} md={4} key={index} style={{ display: 'flex', justifyContent: 'center' }}>
                                             <Box sx={{
                                                 width: '100%',
                                                 marginY: 2,
@@ -227,17 +222,13 @@ export default function Workout() {
                                                         transition: 'all 0.3s ease' // smooth transition for the hover effects
                                                     }}
                                                 >
-                                                    <Typography variant="h6" sx={{
-                                                        fontWeight: 700,
-                                                        color: 'white',
-                                                        textTransform: 'uppercase'
-                                                    }}>
+                                                    <Typography variant="h6" sx={{ fontWeight: 700, color: 'white', textTransform: 'uppercase' }}>
                                                         {name}
                                                     </Typography>
                                                 </IconButton>
 
 
-                                                <Collapse in={showInstructions === index} style={{width: '100%'}}>
+                                                <Collapse in={showInstructions === index} style={{ width: '100%' }}>
                                                     <Box padding={2} bgcolor="background.paper" boxShadow={1}>
                                                         <Typography variant="subtitle1" gutterBottom>
                                                             Muscle: {muscle.toUpperCase()}
