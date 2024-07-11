@@ -61,10 +61,36 @@ app.use('/recipes/favorites', favoriteRoutes);
 app.use('/gyms', gymRouter);
 app.use("/common", CommonRouter);
 
+// Add a root route handler
+app.get('/', (req, res) => {
+    res.send(`
+        <!DOCTYPE html>
+        <html lang="en">
+        <head>
+            <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <title>Server Status</title>
+            <style>
+                body { font-family: Arial, sans-serif; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; background-color: #f0f0f0; }
+                .status { text-align: center; }
+                .message { font-size: 24px; color: #333; }
+                .footer { margin-top: 20px; font-size: 16px; color: #666; }
+            </style>
+        </head>
+        <body>
+            <div class="status">
+                <p class="message">Server is running!</p>
+                <p class="footer">Welcome to our service.</p>
+            </div>
+        </body>
+        </html>
+    `);
+});
+
 
 /* MONGOOSE SETUP */
-const PORT = process.env.PORT || 5001;
-// const PORT = 5001;
+// const PORT = process.env.PORT || 5001;
+const PORT = 5001;
 mongoose.connect(process.env.MONGO_URL, {
     useNewUrlParser: true,
     useUnifiedTopology: true
