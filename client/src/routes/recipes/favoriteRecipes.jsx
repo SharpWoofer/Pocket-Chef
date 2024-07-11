@@ -11,7 +11,7 @@ function FavoriteRecipes({favoriteRecipes}) {
 
     const fetchRecipeDetails = async (favoriteRecipes) => {
         const detailsPromises = favoriteRecipes.map(recipeId =>
-            axios.get(`https://pocket-chef-backend-5q8gfx9dg-pocket-chefs-projects.vercel.app/recipes/${recipeId}`)
+            axios.get(`https://pocket-chef-sigma.vercel.app/recipes/${recipeId}`)
         );
         const detailsResponses = await Promise.all(detailsPromises);
         const details = detailsResponses.map(response => response.data);
