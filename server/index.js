@@ -63,8 +63,8 @@ app.use("/common", CommonRouter);
 
 
 /* MONGOOSE SETUP */
-// const PORT = process.env.PORT || 5000;
-const PORT = 5001;
+const PORT = process.env.PORT || 5001;
+// const PORT = 5001;
 mongoose.connect(process.env.MONGO_URL, {
     useNewUrlParser: true,
     useUnifiedTopology: true
