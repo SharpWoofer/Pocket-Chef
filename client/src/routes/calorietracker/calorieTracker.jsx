@@ -30,6 +30,7 @@ import {AdapterDayjs} from '@mui/x-date-pickers/AdapterDayjs';
 import {LocalizationProvider} from '@mui/x-date-pickers/LocalizationProvider';
 import {StaticDatePicker} from '@mui/x-date-pickers/StaticDatePicker';
 import {useSelector} from 'react-redux';
+import {useNavigate} from "react-router-dom"
 import CalorieGraph from "./calorieGraph.jsx";
 
 function CalorieTracker() {
@@ -41,8 +42,21 @@ function CalorieTracker() {
     const [selectedIngredient, setSelectedIngredient] = useState(null);
     const [selectedDate, setSelectedDate] = useState(dayjs());
     const [selectedMeal, setSelectedMeal] = useState("");
-    const username = useSelector(state => state.auth.user.username);
+    const user = useSelector(state => state.auth.user);
+    const navigate = useNavigate();
 
+    // If the user object does not exist, redirect to login or show a message
+    if (!user) {
+        // Redirect to the login page
+        return (
+            <div style={{ textAlign: 'center', marginTop: '30px', fontSize: '20px', color: '#4A90E2' }}>
+                <p>Please <a href="/Pocket-Chef/login" style={{ color: '#4A90E2', textDecoration: 'underline' }}>log in</a> to access this feature.</p>
+            </div>
+        );
+    }
+
+    // If the user exists, destructure the username from the user object
+    const { username } = user;
     const [searchIngredient] = useSearchIngredientMutation();
     const [getIngredientById] = useGetIngredientByIdMutation();
     const [getCalCount] = useGetCalCountMutation();

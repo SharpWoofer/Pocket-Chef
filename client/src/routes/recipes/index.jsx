@@ -10,6 +10,7 @@ import IconButton from '@mui/material/IconButton';
 import FavoriteBorder from '@mui/icons-material/FavoriteBorder';
 import Snackbar from '@mui/material/Snackbar';
 import CloseIcon from '@mui/icons-material/Close';
+import {useNavigate} from "react-router-dom"
 import {useSelector} from 'react-redux';
 import {
     useAddFavoriteRecipeMutation,
@@ -25,7 +26,21 @@ function Recipes() {
     const [calories, setCalories] = useState([0, 2000]);
     const debouncedQuery = useDebounce(query, 500);
     const debouncedCalories = useDebounce(calories, 1000);
-    const username = useSelector(state => state.auth.user.username);
+    const user = useSelector(state => state.auth.user);
+    const navigate = useNavigate();
+
+    // If the user object does not exist, redirect to login or show a message
+    if (!user) {
+        // Redirect to the login page
+        return (
+            <div style={{ textAlign: 'center', marginTop: '30px', fontSize: '20px', color: '#4A90E2' }}>
+                <p>Please <a href="/Pocket-Chef/login" style={{ color: '#4A90E2', textDecoration: 'underline' }}>log in</a> to access this feature.</p>
+            </div>
+        );
+    }
+
+    // If the user exists, destructure the username from the user object
+    const { username } = user;
     const {data, isLoading} = useSearchRecipesQuery({
         query: debouncedQuery,
         number: numRecipes,

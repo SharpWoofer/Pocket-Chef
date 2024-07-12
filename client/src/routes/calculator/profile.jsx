@@ -76,7 +76,7 @@ const Profile = () => {
     }
 
     const onLogout = () => {
-        if (!confirm('Rally logout?')) {
+        if (!confirm('Confirm logout?')) {
             return
         }
         mDispatch(clearUserInfo())
