@@ -50,7 +50,7 @@ function CalorieTracker() {
         // Redirect to the login page
         return (
             <div style={{ textAlign: 'center', marginTop: '30px', fontSize: '20px', color: '#4A90E2' }}>
-                <p>Please <a href="/Pocket-Chef/login" style={{ color: '#4A90E2', textDecoration: 'underline' }}>log in</a> to access this feature.</p>
+                <p>Please <a href="/login" style={{ color: '#4A90E2', textDecoration: 'underline' }}>log in</a> to access this feature.</p>
             </div>
         );
     }

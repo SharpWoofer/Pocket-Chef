@@ -20,7 +20,7 @@ function App() {
     return (
         <div className="app">
             <LocalizationProvider dateAdapter={AdapterDayjs}>
-                <BrowserRouter basename="/Pocket-Chef/">
+                <BrowserRouter>
                     <Routes>
                         <Route path="/" element={<Root/>}>
                             <Route index element={<Home/>}/>
