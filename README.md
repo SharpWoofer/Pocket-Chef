@@ -70,4 +70,4 @@ Welcome to **PocketChef**, your ultimate digital companion for wellness and culi
    node index.js
    ```
 ## License
-This project is licensed under the MIT License. See LICENSE for more information.
+This project is licensed under the MIT License. See [LICENSE](LICENSE) for more information.
