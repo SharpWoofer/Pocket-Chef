@@ -72,15 +72,19 @@ app.get('/', (req, res) => {
             <title>Server Status</title>
             <style>
                 body { font-family: Arial, sans-serif; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; background-color: #f0f0f0; }
-                .status { text-align: center; }
-                .message { font-size: 24px; color: #333; }
-                .footer { margin-top: 20px; font-size: 16px; color: #666; }
+                .status { text-align: center; padding: 20px; background-color: #f8f9fa; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+                .message { font-size: 24px; color: #28a745; margin: 0; }
+                .footer { margin-top: 20px; font-size: 16px; color: #007bff; }
+                a { color: #007bff; text-decoration: none; }
             </style>
         </head>
         <body>
             <div class="status">
                 <p class="message">Server is running!</p>
-                <p class="footer">Welcome to our service.</p>
+                <p>Welcome to Pocket Chef</p>
+                <p class="footer">
+                    Looking for the client? Access it <a href="https://pocketchef-sg.netlify.app/">here</a>.
+                </p>
             </div>
         </body>
         </html>
