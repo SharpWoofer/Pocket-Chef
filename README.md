@@ -18,9 +18,10 @@ Welcome to **PocketChef**, your ultimate digital companion for wellness and culi
 
 ## Features
 
-### Gym Locator
-🔍 **Find fitness centers in your area with ease.** Our locator service simplifies your search, letting you focus more on working out and less on looking around.
+### Gym Locator 
 ![Gym](https://img.icons8.com/color/48/000000/gym.png)
+🔍 **Find fitness centers in your area with ease.** Our locator service simplifies your search, letting you focus more on working out and less on looking around.
+
 
 ### Calorie Tracker
 🍎 **Keep a close eye on your dietary habits.** Log meals, compare foods, and stay on top of your nutrition with our intuitive calorie tracking.
@@ -45,7 +46,7 @@ Welcome to **PocketChef**, your ultimate digital companion for wellness and culi
 - **React**: A JavaScript library for building user interfaces, used by the front end application.
 - **Node.js**: The premier JavaScript runtime, employed by the back end application.
 
-![MERN Stack](https://img.icons8.com/color/48/000000/mongodb.png) ![Express.js](https://img.icons8.com/color/48/000000/express-js.png) ![React](https://icons8.com/icon/NfbyHexzVEDk/react) ![Node.js](https://img.icons8.com/color/48/000000/nodejs.png)
+![MERN Stack](https://img.icons8.com/color/48/000000/mongodb.png) ![Express.js](https://img.icons8.com/color/48/000000/express-js.png) ![React](https://img.icons8.com/?size=100&id=NfbyHexzVEDk&format=png&color=000000) ![Node.js](https://img.icons8.com/color/48/000000/nodejs.png)
 
 ## Authentication
 🔐 **Secure authentication with JSON Web Token (JWT)** ensures your data remains protected.
@@ -64,7 +65,7 @@ Welcome to **PocketChef**, your ultimate digital companion for wellness and culi
    npm install
    ```
 3. **Run the client:**
-  ```bash
+   ```bash
    cd client
    npm run dev
    ```
