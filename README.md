@@ -45,7 +45,7 @@ Welcome to **PocketChef**, your ultimate digital companion for wellness and culi
 - **React**: A JavaScript library for building user interfaces, used by the front end application.
 - **Node.js**: The premier JavaScript runtime, employed by the back end application.
 
-![MERN Stack](https://img.icons8.com/color/48/000000/mongodb.png) ![Express.js](https://img.icons8.com/color/48/000000/express-js.png) ![React](https://img.icons8.com/color/48/000000/react.png) ![Node.js](https://img.icons8.com/color/48/000000/nodejs.png)
+![MERN Stack](https://img.icons8.com/color/48/000000/mongodb.png) ![Express.js](https://img.icons8.com/color/48/000000/express-js.png) ![React](https://icons8.com/icon/NfbyHexzVEDk/react) ![Node.js](https://img.icons8.com/color/48/000000/nodejs.png)
 
 ## Authentication
 🔐 **Secure authentication with JSON Web Token (JWT)** ensures your data remains protected.
